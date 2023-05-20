@@ -51,7 +51,7 @@ public class AdminController {
     @Autowired
     private PurchaseRepository purchaseRepository;
 
-    // adding common data
+    // adding common datazz
 
     @ModelAttribute
     public void addCommonData(Model model, Principal principal) {
