@@ -1,10 +1,11 @@
 # Cinema_management
 ## Features
 
-- Create, view detail of savings account
-- Make a deposit or withdrawal
-- View dashboard
-- Security
+- Create, Login account.
+- View dashboard.
+- Ad: Manage theaters, movies, showtimes.
+- Cus: Book tickets
+- ...
 
 ## Tech Stack
 
@@ -18,10 +19,10 @@
     - [XAMPP](https://www.apachefriends.org/download.html)
     - [VSCode](https://code.visualstudio.com/) or [IntelliJ](https://code.visualstudio.com/)
     - [Spring Boot]()
-- Clone PJ
-- .....
-- .....
-- .....
+- Step:
+    - Clone PJ
+    - .....
+    - .....
 
 ## Authors
 
