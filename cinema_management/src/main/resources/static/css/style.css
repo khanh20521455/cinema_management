@@ -42,38 +42,41 @@ body{
 	font-size: 30px;
 }
 
+.brandtext{
+	font-size: 30px;
+	font-weight: bold;
+	padding-left: 10px;
+}
+
 .my-card{
 	
-	padding: 20px; 
+	padding: 20px;
 	background: #FFFFFF;
 }
 
 #bannerimage {
-  width: 100%;
-  background-image: url(../img/dashboard_banner.jpg);
-  height: 305px;
-  background-position: center;
+	width: 100%;
+	background-image: url(../img/dashboard_banner.jpg);
+	height: 305px;
+	background-position: center;
 }
-
-
 
 
 #login .container #login-row #login-column #login-box {
-  margin-top: 120px;
-  max-width: 600px;
-  height: 420px;
+	margin-top: 120px;
+	max-width: 600px;
+	height: 420px;
 }
 #login .container #login-row #login-column #login-box #login-form {
-  padding: 20px;
+	padding: 20px;
 }
 #login .container #login-row #login-column #login-box #login-form #register-link {
-  margin-top: -85px;
+	margin-top: -85px;
 }
 
 /* side bar */
 
 @media only screen and (max-width: 600 px){
-	
 	.sidebar{
 		display: none;
 		width: 80%!important;
@@ -81,23 +84,18 @@ body{
 		height: 100vh;
 		position: fixed;
 		padding-top: 45px;
-		
 	}
-	
 	.content{
 		margin-left: 0%!important;
-	}	
-	
+	}
 }
 
 .sidebar{
-	
 	width: 18%;
 	background:white;
 	height: 100%;
 	position: fixed;
 	padding-top: 45px;
-		
 }
 
 .sidebar a{
@@ -120,12 +118,10 @@ body{
 }
 
 .content{
-	
 	margin-left: 20%;
 }
 
 .sidebar .crossBtn{
-	
 	position: absolute;
 	top: 0;
 	right: 35px;
@@ -134,19 +130,16 @@ body{
 }
 
 .my_movie_poster{
-	
 	width: 200px;
 	height: 200px;
 	object-fit:cover;
 	border:3px solid black;
-	
 }
 
 .my_movie_poster_single{
 	width: 350px;
 	height: 350px;
 	object-fit:cover;
-	
 }
 
 .my_user_profile{
@@ -164,16 +157,13 @@ body{
 .my_div_right{
 	text-align: right;
 	width:85.33%;
-
 }
 
 .my_div_left{
-	
 	width:33.33%;
 }
 
 .my_div_middle{
-	
 	width:60.33%;
 	margin : 0 auto;
 }
@@ -191,7 +181,6 @@ body{
 	padding: 10px;
 	border: 1px solid gray;
 	display: none;
-	
 }
 .text-register {
 	color: #e4a8a8
