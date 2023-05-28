@@ -12,6 +12,8 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
+import cinema_management.entities.*;
+import cinema_management.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
@@ -27,12 +29,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import cinema_management.repository.MovieticketRepository;
-import cinema_management.repository.PurchaseRepository;
-import cinema_management.repository.UserRepository;
-import cinema_management.entities.Movieticket;
-import cinema_management.entities.Purchase;
-import cinema_management.entities.User;
 import cinema_management.helper.Message;
 
 
@@ -50,6 +46,10 @@ public class AdminController {
 
     @Autowired
     private PurchaseRepository purchaseRepository;
+    @Autowired
+    private MovieRepository movieRepository;
+    @Autowired
+    private RoomRepository roomRepository;
 
     // adding common datazz
 
@@ -69,9 +69,59 @@ public class AdminController {
         return "adminuser/admin_dashboard";
     }
 
+//    //movie upload form
+//    @GetMapping("upload_movie")
+//    public String uploadMovie(Model model){
+//        model.addAttribute("title", "Uploadmovie");
+//        model.addAttribute("movie", new Movie());
+//        return "admin/upload_movie_form";
+//    }
+//    //insert movie to database
+//    @PostMapping("admin/upload_movie_process")
+//    public String processUploadMovie(@ModelAttribute Movie movie,@RequestParam("poster") MultipartFile file, HttpSession session){
+//        try {
+//
+//            if (file.isEmpty()) {
+//                movie.setPoster("Movie Poster Default Photo.png");
+//            } else {
+//
+//                movie.setPoster(file.getOriginalFilename());
+//                File saveFile = new ClassPathResource("static/img").getFile();
+//                Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+//                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+//            }
+//
+//            session.setAttribute("message", new Message("New Movie has been successfully uploaded", "success"));
+//
+//            movieRepository.save(movie);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            session.setAttribute("message", new Message("Something went wrong, try again ! ", "danger"));
+//        }
+//        return "admin/upload_movie_process";
+//
+//    }
 
-    // movie upload form
+    // movieticket upload form
+    @GetMapping("/add_room")
+    public String addRoom(Model model){
+        model.addAttribute("title","Add Room");
+        model.addAttribute("room", new Room());
+        return "adminuser/add_room";
+    }
+    @PostMapping("/add_room_process")
+    public String addRoomProcess(@ModelAttribute Room room,HttpSession session){
+        try{
+            roomRepository.save(room);
+            session.setAttribute("message",new Message("New room has successfully added","success"));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            session.setAttribute("message", new Message("Something went wrong, try again ! ", "danger"));
+        }
+        return "adminuser/add_room_process";
 
+    }
     @GetMapping("/upload-movie")
     public String uploadMovie(Model model) {
         model.addAttribute("title", "Upload Movie");

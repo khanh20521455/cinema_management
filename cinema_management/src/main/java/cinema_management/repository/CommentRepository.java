@@ -1,2 +1,9 @@
-package cinema_management.repository;public interface CommentRepository {
+package cinema_management.repository;
+
+import cinema_management.entities.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface CommentRepository extends JpaRepository<Comment, Integer> {
 }

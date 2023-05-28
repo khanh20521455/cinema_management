@@ -34,12 +34,14 @@ public class User {
     private String imgUrl;
     private int refundAmount;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch =FetchType.EAGER, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Purchase> purchaseList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Booking> bookingList;
+
 
     public User() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public int getUserId() {
@@ -145,6 +147,14 @@ public class User {
 
     public void setPurchaseList(List<Purchase> purchaseList) {
         this.purchaseList = purchaseList;
+    }
+
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(List<Booking> bookingList) {
+        this.bookingList = bookingList;
     }
 
     @Override
