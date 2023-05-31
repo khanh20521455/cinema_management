@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="adminuser/base::layout(~{::section})">
+
+<head>
+    <meta charset = "UTF-8" />
+    <title> This is Normal User Dashboard. </title>
+</head>
+<body>
+<section>
+    <div class="card me-3 ms-3">
+        <div class="card-body">
+
+            <h1 class="text-center"> Update Movie</h1>
+
+            <div class="container-fluid m1-1">
+
+                <div class="row">
+
+                    <div class="col-md-10 offset-md-1">
+
+                        <form action="#"
+                              th:object="${room}"
+                              enctype="multipart/form-data"
+                              method="POST"
+                              th:action="@{'/admin/update_room_process/'+${room.id}}"
+                        >
+                            <!--Room Name-->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fa fa-plus"></i> </span>
+                                <input
+                                        th:value="${room.name}"
+                                        name="name"
+                                        type="text"
+                                        class="form-control"
+                                        id="room_name_field"
+                                        placeholder="Update Room Name here"
+                                />
+                            </div>
+
+                            <!--Type Screen-->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fas fa-compact-disc"></i> </span>
+                                <input
+                                        th:value="${room.typeScreen}"
+                                        name="typeScreen"
+                                        type="text"
+                                        class="form-control"
+                                        id="type_screen_field"
+                                        placeholder="Update type screen here"
+                                />
+                            </div>
+
+                            <!--Room status-->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fas fa-hand-holding-usd"></i> </span>
+                                <input
+                                        th:value="${room.status}"
+                                        name="status"
+                                        type="text"
+                                        class="form-control"
+                                        id="status_field"
+                                        placeholder="Update status here"
+                                        required
+                                />
+                            </div>
+                            <div class="container text-center mb-3">
+                                <button class="btn btn-outline-primary"> Update Room </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+</section>
+</body>
+</html>
