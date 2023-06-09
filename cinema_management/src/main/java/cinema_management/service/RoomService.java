@@ -24,7 +24,7 @@ public class RoomService {
 
     public String getRoomManagement(Integer page, Model model) {
         Pageable pageable = PageRequest.of(page, 3);
-        Page<Room> roomList = roomRepository.findAllOrderByRoomNameDateAsc(pageable);
+        Page<Room> roomList = roomRepository.findAllOrderByRoomNameAsc(pageable);
         model.addAttribute("title", "Get room list");
         model.addAttribute("roomList", roomList);
         model.addAttribute("currentPage", page);
@@ -88,7 +88,7 @@ public class RoomService {
         m.addAttribute("room", room);
         return "adminuser/room/update_room";
     }
-    public String deleteRoom(Integer id, Model m, HttpSession session){
+    public String deleteRoom(Integer id){
         roomRepository.deleteById(id);
         return "redirect:/admin/room_management/0";
     }
