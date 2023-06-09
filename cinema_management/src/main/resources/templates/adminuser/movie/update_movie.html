@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="adminuser/base::layout(~{::section})">
+
+<head>
+    <meta charset = "UTF-8" />
+    <title> This is Normal User Dashboard. </title>
+</head>
+<body>
+<section>
+    <div class="card me-3 ms-3">
+        <div class="card-body">
+
+            <h1 class="text-center"> Update Movie</h1>
+
+            <div class="container-fluid m1-1">
+
+                <div class="row">
+
+                    <div class="col-md-10 offset-md-1">
+
+                        <form action="#"
+                              th:object="${movie}"
+                              enctype="multipart/form-data"
+                              method="POST"
+                              th:action="@{'/admin/update_movie_process/'+${movie.id}}"
+                        >
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fa fa-plus"></i> </span>
+                                <input
+                                        th:value="${movie.name}"
+                                        name="name"
+                                        type="text"
+                                        class="form-control"
+                                        id="movie_name_field"
+                                        placeholder="Update Movie Name here"
+                                />
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                                <input
+                                        th:value="${movie.time}"
+                                        name="time"
+                                        type="text"
+                                        class="form-control"
+                                        id="movie_time_field"
+                                        placeholder="Update Movie time here"
+                                />
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                                <input
+                                        th:value="${movie.genre}"
+                                        name="genre"
+                                        type="text"
+                                        class="form-control"
+                                        id="movie_genre_field"
+                                        placeholder="Update Movie genre here"
+                                />
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                                <input
+                                        th:value="${movie.director}"
+                                        name="director"
+                                        type="text"
+                                        class="form-control"
+                                        id="movie_director_field"
+                                        placeholder="Update Movie director here"
+                                />
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                                <input
+                                        th:value="${movie.actor}"
+                                        name="actor"
+                                        type="text"
+                                        class="form-control"
+                                        id="movie_actor_field"
+                                        placeholder="Update Movie actor here"
+                                />
+                            </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                                    <input
+                                            th:value="${movie.year}"
+                                            name="year"
+                                            type="number"
+                                            class="form-control"
+                                            id="movie_year_field"
+                                            placeholder="Update Movie year here"
+                                    />
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                                    <input
+                                            th:value="${movie.start}"
+                                            name="start"
+                                            type="date"
+                                            class="form-control"
+                                            id="movie_start_field"
+                                            placeholder="Update Movie genre here"
+                                    />
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                                    <input
+                                            th:value="${movie.end}"
+                                            name="end"
+                                            type="date"
+                                            class="form-control"
+                                            id="movie_end_field"
+                                            placeholder="Update Movie end here"
+                                    />
+                                </div>
+                            <div class="container">
+                                <img style="width: 150px; height: 150px;" class="img-fluid .my_user_profile2" src="" th:src="@{'/img/'+${movie.poster}}" alt="" />
+                            </div>
+
+                            <div class="custom-file">
+                                <input
+                                        type="file"
+                                        name="movieImageUrl"
+                                />
+                            </div>
+                            <div class="container text-center mb-3">
+                                <button class="btn btn-outline-primary"> Update Movie </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -11,5 +11,5 @@ import javax.persistence.criteria.CriteriaBuilder;
 
 public interface RoomRepository extends JpaRepository<Room, Integer> {
     @Query("FROM Room as r ORDER  BY r.name")
-    public Page<Room> findAllOrderByRoomNameDateAsc(Pageable pageable);
+    public Page<Room> findAllOrderByRoomNameAsc(Pageable pageable);
 }
