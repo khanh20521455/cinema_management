@@ -6,6 +6,7 @@ import cinema_management.entities.*;
 import cinema_management.repository.*;
 import cinema_management.service.MovieService;
 import cinema_management.service.RoomService;
+import cinema_management.service.ShowtimesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,8 @@ public class AdminController {
     private RoomService roomService;
     @Autowired
     private MovieService movieService;
+    @Autowired
+    private ShowtimesService showtimesService;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -69,7 +72,7 @@ public class AdminController {
             @PathVariable("id") Integer id,
             @ModelAttribute Room room,
             Model model, HttpSession session) {
-        return roomService.movieUpdateProcess(id,room, model,session);
+        return roomService.roomUpdateProcess(id,room, model,session);
     }
     @GetMapping("/delete_room/{id}")
     public String deleteRoom(@PathVariable("id") Integer id){
@@ -106,6 +109,31 @@ public class AdminController {
     @GetMapping("delete_movie/{id}")
     public String deleteMovie(@PathVariable("id") Integer id){
         return movieService.deleteMovie(id);
+    }
+    //Showtimes management
+    @GetMapping("showtimes_management/{page}")
+    public String showtimesManagement(@PathVariable("page") Integer page, Model model){
+        return showtimesService.showtimesManagement(page,model);
+    }
+    @GetMapping("add_showtimes")
+    public String addShowtimes(Model model){
+        return showtimesService.addShowtimes(model);
+    }
+    @PostMapping("add_showtimes_process")
+    public String addShowtimesProcess(@ModelAttribute Showtimes showtimes, HttpSession session){
+        return showtimesService.addShowtimesProcess(showtimes,session);
+    }
+    @GetMapping("update_showtimes/{id}")
+    public String updateShowtimes(@PathVariable("id") Integer id, Model model){
+        return showtimesService.updateShowtimes(id, model);
+    }
+    @PostMapping("update_showtimes_process/{id}")
+    public String updateShowtimesProcess(@PathVariable("id") Integer id,@ModelAttribute Showtimes showtimes, Model model,HttpSession session){
+        return showtimesService.showtimesUpdateProcess(id, showtimes,model,session);
+    }
+    @GetMapping("delete_showtimes/{id}")
+    public String deleteShowtimes(@PathVariable("id") Integer id){
+        return showtimesService.deleteShowtimes(id);
     }
 }
 
