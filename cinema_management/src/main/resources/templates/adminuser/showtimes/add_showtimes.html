@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="adminuser/base::layout(~{::section})">
+
+<head>
+    <meta charset = "UTF-8" />
+    <title> Add Showtimes </title>
+</head>
+<body>
+<section>
+    <div class="card me-3 ms-3">
+        <div class="card-body">
+            <h1 class="text-center"> Add showtimes</h1>
+            <div class="container-fluid m1-1">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        <form action="#"
+                              th:object="${showtimes}"
+                              enctype="multipart/form-data"
+                              method="POST"
+                              th:action="@{/admin/add_showtimes_process}"
+                        >
+                            <!--Movie-->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fa fa-plus"></i> </span>
+                                <select class="form-control"
+                                        name="movie"
+                                        id="movie_field"
+                                        required>
+                                    <option>--select movie--</option>
+                                    <option
+                                    th:each="movie : ${movieList}"
+                                    th:value="${movie.id}"
+                                    th:text="${movie.name}"></option>
+                                </select>
+                            </div>
+
+                            <!--Room-->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fa fa-plus"></i> </span>
+                                <select class="form-control"
+                                        name="room"
+                                        id="room_field"
+                                        required>
+                                    <option>--select room--</option>
+                                    <option
+                                            th:each="room : ${roomList}"
+                                            th:value="${room.id}"
+                                            th:text="${room.name}"></option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fas fa-compact-disc"></i> </span>
+                                <input
+                                        name="time"
+                                        type="time"
+                                        class="form-control"
+                                        id="time_field"
+                                        placeholder="Enter Screen Type here"
+                                        required
+                                />
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fas fa-compact-disc"></i> </span>
+                                <input
+                                        name="date"
+                                        type="date"
+                                        class="form-control"
+                                        id="date_field"
+                                        placeholder="Enter Screen Type here"
+                                        required
+                                />
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fas fa-compact-disc"></i> </span>
+                                <input
+                                        name="price"
+                                        type="number"
+                                        class="form-control"
+                                        id="price_field"
+                                        placeholder="Enter price here"
+                                        required
+                                />
+                            </div>
+                            <div class="container text-center mb-3">
+                                <button class="btn btn-outline-primary"> Add showtimes </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
