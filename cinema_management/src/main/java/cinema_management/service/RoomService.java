@@ -59,7 +59,7 @@ public class RoomService {
         return "adminuser/room/update_room";
     }
 
-    public String movieUpdateProcess(
+    public String roomUpdateProcess(
             @PathVariable("id") Integer id,
             @ModelAttribute Room room,
             Model m, HttpSession session) {

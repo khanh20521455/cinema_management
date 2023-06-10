@@ -8,8 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
 
 public interface RoomRepository extends JpaRepository<Room, Integer> {
     @Query("FROM Room as r ORDER  BY r.name")
     public Page<Room> findAllOrderByRoomNameAsc(Pageable pageable);
+    @Query("FROM Room as r ORDER  BY r.name")
+    public List<Room> roomList();
 }
