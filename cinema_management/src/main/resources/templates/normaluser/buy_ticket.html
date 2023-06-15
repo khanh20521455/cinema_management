@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="adminuser/base::layout(~{::section})">
+
+<head>
+    <meta charset = "UTF-8" />
+    <title> Buy movie ticket </title>
+</head>
+<body>
+<section>
+    <div class="card me-3 ms-3">
+        <div class="card-body">
+            <h1 class="text-center"> Buy ticket</h1>
+            <div class="container-fluid m1-1">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        <form action="#"
+                              th:object="${booking}"
+                              enctype="multipart/form-data"
+                              method="POST"
+                              th:action="@{'/user/buy_ticket_process/'+${movie.id}}"
+                        >
+                            <!--Showtimes-->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fa fa-plus"></i> </span>
+                                <select class="form-control"
+                                        name="showtimes"
+                                        id="showtimes_field"
+                                        required>
+                                    <option>--select schedual--</option>
+                                    <option
+                                            th:each="showtimes : ${showtimesList}"
+                                            th:value="${showtimes.id}"
+                                            th:text="${showtimes.time}+'-'+${showtimes.date}+'-'+${showtimes.room.typeScreen}"></option>
+                                </select>
+                            </div>
+                            <!--Movie Time-->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="far fa-clock"></i> </span>
+                                <input
+                                        name="numberOfSeat"
+                                        type="number"
+                                        class="form-control"
+                                        id="number_seat_field"
+                                        placeholder="Enter number of seat"
+                                        required
+                                >
+                            </div>
+                            <!--Movie Genre-->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"> <i class="fas fa-compact-disc"></i> </span>
+                                <input
+                                        name="seatList"
+                                        type="text"
+                                        class="form-control"
+                                        id="seat_list_field"
+                                        placeholder="Enter seat here"
+                                        required
+                                />
+                            </div>
+                            <div class="container text-center mb-3">
+                                <button class="btn btn-outline-primary"> Book </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -52,8 +52,9 @@
     <!-- start of sidebar-->
     <div class="sidebar mt-3">
     		<span onclick="toggleSidebar()" class="crossBtn"> &times; </span>
-    		
+
     		<a href="#" th:href="@{/user/dashboard}" class="item"> <i class="fas fa-home"></i>  Home </a>
+            <a href="#" th:href="@{/user/home}" class="item"> <i class="fas fa-clipboard-list"></i> Watch List </a>
     		<a href="#" th:href="@{/user/show-user-purchase/0}" class="item"> <i class="fas fa-clipboard-list"></i> Watch List </a>
     		<a href="#" th:href="@{/user/show-user-transaction/0}" class="item"> <i class="fas fa-file-invoice-dollar"></i> Payment History </a>
     		<a href="#" th:href="@{/user/user-profile}"class="item"> <i class="fas fa-user-circle"></i> Profile </a>
