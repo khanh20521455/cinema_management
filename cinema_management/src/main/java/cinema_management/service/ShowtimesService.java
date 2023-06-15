@@ -2,10 +2,12 @@ package cinema_management.service;
 
 import cinema_management.entities.Movie;
 import cinema_management.entities.Room;
+import cinema_management.entities.Seat;
 import cinema_management.entities.Showtimes;
 import cinema_management.helper.Message;
 import cinema_management.repository.MovieRepository;
 import cinema_management.repository.RoomRepository;
+import cinema_management.repository.SeatRepository;
 import cinema_management.repository.ShowtimesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +30,8 @@ public class ShowtimesService {
     private RoomRepository roomRepository;
     @Autowired
     private MovieRepository movieRepository;
+    @Autowired
+    private SeatRepository seatRepository;
     public String showtimesManagement(Integer page, Model model){
         Pageable pageable = PageRequest.of(page, 3);
         Page<Showtimes> showtimesList = showtimesRepository.findAllOrderByDateAsc(pageable);
@@ -51,6 +55,13 @@ public class ShowtimesService {
         } catch (Exception e) {
             e.printStackTrace();
             session.setAttribute("message", new Message("Something went wrong, try again ! ", "danger"));
+        }
+        for (int i=0; i<40;i++){
+            Seat seat=new Seat();
+            seat.setSeat(i+1);
+            seat.setStatus(0);
+            seat.setShowtimes(showtimes);
+            seatRepository.save(seat);
         }
         return "adminuser/showtimes/add_showtimes";
     }
@@ -92,6 +103,7 @@ public class ShowtimesService {
         return "adminuser/showtimes/update_showtimes";
     }
     public String deleteShowtimes(Integer id){
+        seatRepository.deleteSeatBaseShowtimes(id);
         showtimesRepository.deleteById(id);
         return "redirect:/admin/showtimes_management/0";
     }

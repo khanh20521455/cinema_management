@@ -46,7 +46,7 @@
                                     <option
                                             th:each="room : ${roomList}"
                                             th:value="${room.id}"
-                                            th:text="${room.name}"></option>
+                                            th:text="${room.name} +'-'+ ${room.typeScreen}"></option>
                                 </select>
                             </div>
                             <div class="input-group mb-3">

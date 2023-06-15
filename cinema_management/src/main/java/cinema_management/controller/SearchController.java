@@ -2,6 +2,8 @@ package cinema_management.controller;
 
 import java.util.List;
 
+import cinema_management.entities.Movie;
+import cinema_management.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,16 +19,12 @@ public class SearchController {
 
 
     @Autowired
-    private MovieticketRepository movieticketRepository;
-
-    // search handler
-
+    private MovieRepository movieRepository;
 
     @GetMapping("/search/{query}")
-    public ResponseEntity<?> searchByMovieName(@PathVariable("query") String query){
-
-        List<Movieticket> movieticketList = movieticketRepository.findByMovieNameContaining(query);
-        return ResponseEntity.ok(movieticketList);
+    public ResponseEntity<?> searchByName(@PathVariable("query") String query){
+        List<Movie> movieList= movieRepository.findByNameContaining(query);
+        return ResponseEntity.ok(movieList);
 
     }
 }

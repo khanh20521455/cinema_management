@@ -68,8 +68,8 @@ const searchByMovieNameUser = () => {
 
                 let text=`<div class='list-group'>`;
 
-                data.forEach( (movieTicket) => {
-                    text+=`<a href='/user/buy-movie-ticket/${movieTicket.movieId}' class='list-group-item list-group-action'> ${movieTicket.movieName} </a>`
+                data.forEach( (movie) => {
+                    text+=`<a href='/user/movie_detail/${movie.id}' class='list-group-item list-group-action'> ${movie.name} </a>`
                 });
 
                 text+=`</div>`;

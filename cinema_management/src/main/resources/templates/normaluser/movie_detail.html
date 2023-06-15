@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normaluser/base::layout(~{::section})">
+<head>
+    <meta charset = "UTF-8" />
+    <title> This is movie detail page. </title>
+</head>
+<body>
+<section>
+
+    <div class="card ms-3 me-3">
+        <div class="card-body">
+            <div class="container-fluid m1-1">
+                <div class="row">
+                    <div class="my_div_left">
+                        <img scr=""  class="my_movie_poster_single" th:src="@{'/img/'+${movie.poster}}" alt="movie poster" />
+                    </div>
+                    <div>
+                    <a href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}">
+                        <button class="btn btn-lg btn-outline-primary bg-primary text-white "> Buy Ticket </button>
+                    </a>
+                    </div>
+                    <div>
+                        <h3 class="mt-3"> <pre>Movie Name      <span> <i class="fas fa-film"></i></span> <span th:text= "${movie.name}"> </span> </pre></h3>
+                        <h3 class="mt-3"> <pre>Time            <span> <i class="fas fa-compact-disc"></i> </span><span th:text= "${movie.time}"> </span> </pre> </h3>
+                        <h3 class="mt-3"> <pre>Genre           <span> <i class="far fa-calendar-alt"></i> </span><span th:text= "${movie.genre}"> </span> </pre> </h3>
+                        <h3 class="mt-3"> <pre>Director        <span> <i class="far fa-clock"></i> </span><span th:text= "${movie.director}"> </span></pre> </h3>
+                        <h3 class="mt-3"> <pre>Actors          <span> <i class="fas fa-user"></i> </span><span th:text= "${movie.actor}"> </span></pre> </h3>
+                        <h3 class="mt-3"> <pre>Start           <span> <i class="fas fa-hand-holding-usd"></i> </span><span th:text= "${movie.start}"> </span> VND</pre> </h3>
+
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+</section>
+</body>
+</html>
