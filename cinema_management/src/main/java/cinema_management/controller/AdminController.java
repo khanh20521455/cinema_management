@@ -30,8 +30,7 @@ public class AdminController {
     private ShowtimesService showtimesService;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private PurchaseRepository purchaseRepository;
+
     @Autowired
     private MovieRepository movieRepository;
 

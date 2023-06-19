@@ -4,31 +4,43 @@
 
 <head>
     <meta charset = "UTF-8" />
-    <title> This is movie manage page </title>
 </head>
 <body>
 <section>
     <div class="card ms-3 me-3">
-
         <div class="card-body">
-
-            <h1 class="text-center"> Movie Management </h1>
+            <h1 class="text-center"> Movie List </h1>
             <a href="#" th:href="@{/admin/add_movie}">
-                <button class="btn btn-light-sm"> Add movie </button>
+                <button class="btn btn-light-sm"> Thêm phim </button>
             </a>
+            <!--search-->
+            <div class="search-container my-4">
+                <input
+                        onkeyup="searchByMovieNameAdmin()"
+                        id="searchInput"
+                        type="text"
+                        class="form-control"
+                        placeholder="Tìm phim"
+                />
+                <div class="search-result">
+                    <h1> 	This is Result </h1>
+                </div>
+
+            </div>
+
             <table class="table mt-3">
                 <thead>
                 <tr>
                     <th scope="col">Poster</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Genre</th>
-                    <th scope="col">Director</th>
-                    <th scope="col">Actor</th>
-                    <th scope="col">Year</th>
-                    <th scope="col">Start</th>
-                    <th scope="col">End</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Tên phim</th>
+                    <th scope="col">Thời lượng</th>
+                    <th scope="col">Thể loại</th>
+                    <th scope="col">Đạo diễn</th>
+                    <th scope="col">Diễn viên</th>
+                    <th scope="col">Năm sản xuất</th>
+                    <th scope="col">Khởi chiếu</th>
+                    <th scope="col">Kết thúc</th>
+                    <th scope="col">Hành động</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,15 +50,15 @@
                     </td>
                     <td th:text="${movie.name}"></td>
                     <td th:text="${movie.time}"></td>
-                    <td th:text="${movie.genre}"></td>
+                    <td th:text="${#strings.listJoin(movie.genre, ',')}"></td>
                     <td th:text="${movie.director}"></td>
                     <td th:text="${movie.actor}"></td>
                     <td th:text="${movie.year}"></td>
                     <td th:text="${movie.start}"></td>
                     <td th:text="${movie.end}"></td>
                     <td>
-                        <a th:href = "@{'/admin/update_movie/'+${movie.id}}" class="btn btn-primary btn-sm"> Update </a>
-                        <a th:href = "@{'/admin/delete_movie/'+${movie.id}}" class="btn btn-primary btn-sm"> Delete </a>
+                        <a th:href = "@{'/admin/update_movie/'+${movie.id}}" class="btn btn-primary btn-sm"> Cập nhật </a>
+                        <a th:href = "@{'/admin/delete_movie/'+${movie.id}}" class="btn btn-primary btn-sm"> Xóa </a>
                     </td>
                 </tr>
                 </tbody>
@@ -55,7 +67,7 @@
             <nav aria-label="Page navigation example">
                 <ul th:if="${totalPages != 0}" class="pagination">
                     <li th:if="${currentPage != 0}" class="page-item">
-                        <a th:href="@{'/admin/movie_management/'+${currentPage-1}}"  class="page-link" href="#">Previous</a></li>
+                        <a th:href="@{'/admin/movie_management/'+${currentPage-1}}"  class="page-link" href="#">Trước</a></li>
                     <li th:classappend="${currentPage==iter-1?'active':''}"
                         th:each="iter : ${#numbers.sequence(1,totalPages)}"
                         class="page-item">
@@ -63,7 +75,7 @@
                             <span th:text="${iter}"> </span>
                         </a></li>
                     <li th:if="${currentPage+1 != totalPages}" class="page-item">
-                        <a th:href="@{'/admin/movie_management/'+${currentPage+1}}" class="page-link" href="#">Next</a></li>
+                        <a th:href="@{'/admin/movie_management/'+${currentPage+1}}" class="page-link" href="#">Sau</a></li>
                 </ul>
             </nav>
         </div>

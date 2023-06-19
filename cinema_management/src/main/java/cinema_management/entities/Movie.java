@@ -1,16 +1,11 @@
 package cinema_management.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.sql.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="MOVIE")
@@ -20,7 +15,8 @@ public class Movie {
     private int id;
     private String name;
     private String time;
-    private String genre;
+
+    private String[] genre;
     private String director;
     private  String actor;
     private int year;
@@ -30,7 +26,8 @@ public class Movie {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
     private List<Comment> commentList;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "movie")
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER,mappedBy = "movie")
     private List<Showtimes> showtimesList;
 
     public Movie() {
@@ -61,11 +58,11 @@ public class Movie {
         this.time = time;
     }
 
-    public String getGenre() {
+    public String[] getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(String[] genre) {
         this.genre = genre;
     }
 
