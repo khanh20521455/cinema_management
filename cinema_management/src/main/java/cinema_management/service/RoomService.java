@@ -1,8 +1,12 @@
 package cinema_management.service;
 
 import cinema_management.entities.Room;
+import cinema_management.entities.Showtimes;
 import cinema_management.helper.Message;
+import cinema_management.repository.BookingRepository;
 import cinema_management.repository.RoomRepository;
+import cinema_management.repository.SeatRepository;
+import cinema_management.repository.ShowtimesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,15 +19,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class RoomService {
     @Autowired
     private RoomRepository roomRepository;
-
+    @Autowired
+    private ShowtimesRepository showtimesRepository;
+    @Autowired
+    private SeatRepository seatRepository;
+    @Autowired
+    private BookingRepository bookingRepository;
     public String getRoomManagement(Integer page, Model model) {
-        Pageable pageable = PageRequest.of(page, 3);
+        Pageable pageable = PageRequest.of(page, 10);
         Page<Room> roomList = roomRepository.findAllOrderByRoomNameAsc(pageable);
         model.addAttribute("title", "Get room list");
         model.addAttribute("roomList", roomList);
@@ -41,12 +51,12 @@ public class RoomService {
     public String addRoomProcess(Room room, HttpSession session) {
         try {
             roomRepository.save(room);
-            session.setAttribute("message", new Message("New room has successfully added", "success"));
+            session.setAttribute("message", new Message("Thêm phòng mới thành công!", "success"));
         } catch (Exception e) {
             e.printStackTrace();
-            session.setAttribute("message", new Message("Something went wrong, try again ! ", "danger"));
+            session.setAttribute("message", new Message("Đã xảy ra lỗi, vui lòng thử lại ! ", "danger"));
         }
-        return "adminuser/room/add_room";
+        return "redirect:/admin/room_management/0";
 
     }
 
@@ -75,20 +85,26 @@ public class RoomService {
             room.setStatus(room.getStatus());
             this.roomRepository.save(room);
 
-            session.setAttribute("message", new Message("Room Updated Successfully.", "success"));
+            session.setAttribute("message", new Message("Cập nhập phòng thành công!", "success"));
         } catch (Exception e) {
             e.printStackTrace();
 
             m.addAttribute("Title", "Update Room");
             m.addAttribute("room", oldRoomDetail);
-            session.setAttribute("message", new Message("Something went wrong. " + e.getMessage(), "danger"));
+            session.setAttribute("message", new Message("Đã xảy ra lỗi " + e.getMessage(), "danger"));
         }
 
         m.addAttribute("Title", "Update Room");
         m.addAttribute("room", room);
-        return "adminuser/room/update_room";
+        return "redirect:/admin/room_management/0";
     }
     public String deleteRoom(Integer id){
+        List<Showtimes> showtimesList= this.showtimesRepository.findByRoomId(id);
+        for(Showtimes showtimes: showtimesList){
+            this.seatRepository.deleteSeatBaseShowtimes(showtimes.getId());
+            this.bookingRepository.deleteBookingBaseShowtimes(showtimes.getId());
+        }
+        showtimesRepository.deleteBaseOnRoom(id);
         roomRepository.deleteById(id);
         return "redirect:/admin/room_management/0";
     }

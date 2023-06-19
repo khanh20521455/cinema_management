@@ -18,17 +18,12 @@ import cinema_management.helper.Message;
 
 @Controller
 public class HomeController {
-
-
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
-
     @Autowired
     private UserRepository userRepository;
 
     // Home Page
-
     @RequestMapping("/")
     public String home(Model model) {
         model.addAttribute("title", "Home - Online Movie Ticket Booking System");
@@ -36,25 +31,21 @@ public class HomeController {
     }
 
     // Registration Page
-
     @RequestMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("title", "Registration - Online Movie Ticket Booking System");
         model.addAttribute("user", new User() );
         return "signup";
     }
-
     @RequestMapping(value = "/do_register", method = RequestMethod.POST)
     public String registerUser(@ModelAttribute("user") User user,
                                @RequestParam(value = "agreement", defaultValue = "false") boolean agreement,
                                Model model, HttpSession session ) {
 
         try {
-
             if(!agreement) {
                 throw new Exception(" You have not agreed the terms and condition.");
             }
-
             user.setRole("ROLE_USER");
             user.setEnable(true);
             user.setImgUrl("User Profile Default Photo.png");
@@ -71,7 +62,6 @@ public class HomeController {
             session.setAttribute("message", new Message("Something went wrong." + e.getMessage(), "alert-danger"));
             return "signup";
         }
-
     }
 
 
@@ -81,7 +71,5 @@ public class HomeController {
         return "login";
 
     }
-
-
 }
 

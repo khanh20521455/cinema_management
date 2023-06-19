@@ -1,8 +1,14 @@
 package cinema_management.service;
 
+import cinema_management.entities.Booking;
 import cinema_management.entities.Movie;
+import cinema_management.entities.Seat;
+import cinema_management.entities.Showtimes;
 import cinema_management.helper.Message;
+import cinema_management.repository.BookingRepository;
 import cinema_management.repository.MovieRepository;
+import cinema_management.repository.SeatRepository;
+import cinema_management.repository.ShowtimesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
@@ -20,14 +26,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class MovieService {
     @Autowired
     private MovieRepository movieRepository;
+    @Autowired
+    private BookingRepository bookingRepository;
+    @Autowired
+    private ShowtimesRepository showtimesRepository;
+    @Autowired
+    private SeatRepository seatRepository;
+    public  String[] genreList= {"Hành động", "Tình cảm", "Hài hước","Hoạt hình", "Khoa học viễn tưởng","Kinh dị"};
     public String getMovieManagement(Integer page, Model model) {
-        Pageable pageable = PageRequest.of(page, 3);
+        Pageable pageable = PageRequest.of(page, 10);
         Page<Movie> movieList = movieRepository.findAllOrderByMovieDateAsc(pageable);
         model.addAttribute("movieList", movieList);
         model.addAttribute("currentPage", page);
@@ -36,6 +52,7 @@ public class MovieService {
     }
 
     public String addMovie(Model model) {
+        model.addAttribute("genreList",genreList);
         model.addAttribute("movie", new Movie());
         return "adminuser/movie/add_movie";
     }
@@ -56,15 +73,15 @@ public class MovieService {
                 Files.copy(file.getInputStream(), path , StandardCopyOption.REPLACE_EXISTING);
             }
 
-            session.setAttribute("message", new Message("New Movie has been successfully uploaded", "success"));
+            session.setAttribute("message", new Message("Thêm phim mới thành công", "success"));
             movieRepository.save(movie);
         }
         catch (Exception e) {
             e.printStackTrace();
-            session.setAttribute("message", new Message("Something went wrong, try again ! ", "danger"));
+            session.setAttribute("message", new Message("Đã xảy ra lỗi, vui lòng thử lại ! ", "danger"));
         }
 
-        return "adminuser/movie/add_movie";
+        return "redirect:/admin/movie_management/0";
 
     }
 
@@ -72,6 +89,7 @@ public class MovieService {
 
         Optional<Movie> movieOptional = this.movieRepository.findById(id);
         Movie movie = movieOptional.get();
+        m.addAttribute("genreList",genreList);
         m.addAttribute("movie", movie);
         return "adminuser/movie/update_movie";
     }
@@ -108,21 +126,33 @@ public class MovieService {
             movie.setId(oldMovieDetail.getId());
             this.movieRepository.save(movie);
 
-            session.setAttribute("message", new Message("Movie Updated Successfully.", "success"));
+            session.setAttribute("message", new Message("Cập nhật phim thành công", "success"));
         } catch (Exception e) {
             e.printStackTrace();
 
             m.addAttribute("Title", "Update Movie");
             m.addAttribute("movieticket", oldMovieDetail);
-            session.setAttribute("message", new Message("Something went wrong. " + e.getMessage(), "danger"));
+            session.setAttribute("message", new Message("Đã xảy ra lỗi " + e.getMessage(), "danger"));
         }
 
 
         m.addAttribute("Title", "Update Movie");
         m.addAttribute("movie", movie);
-        return "adminuser/movie/update_movie";
+        return "redirect:/admin/movie_management/0";
     }
     public String deleteMovie(Integer id){
+        List<Showtimes> showtimesList= this.showtimesRepository.ShowtimesBaseOnMovie(id);
+        for(Showtimes showtimes:showtimesList){
+            List<Booking> bookingList=this.bookingRepository.bookingBaseShowtimes(showtimes.getId());
+            for (Booking booking: bookingList){
+                this.bookingRepository.deleteById(booking.getId());
+            }
+            List<Seat> seatList=this.seatRepository.seatBaseShowtimes(showtimes.getId());
+            for (Seat seat: seatList){
+                this.seatRepository.deleteById(seat.getId());
+            }
+            this.showtimesRepository.deleteById(showtimes.getId());
+        }
         movieRepository.deleteById(id);
         return "redirect:/admin/movie_management/0";
     }

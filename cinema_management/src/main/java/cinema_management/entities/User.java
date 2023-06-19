@@ -35,8 +35,6 @@ public class User {
     private int refundAmount;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Purchase> purchaseList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Booking> bookingList;
 
 
@@ -141,13 +139,6 @@ public class User {
         this.refundAmount = refundAmount;
     }
 
-    public List<Purchase> getPurchaseList() {
-        return purchaseList;
-    }
-
-    public void setPurchaseList(List<Purchase> purchaseList) {
-        this.purchaseList = purchaseList;
-    }
 
     public List<Booking> getBookingList() {
         return bookingList;
@@ -161,7 +152,6 @@ public class User {
     public String toString() {
         return "User [userId=" + userId + ", userName=" + userName + ", email=" + email + ", password=" + password
                 + ", phone=" + phone + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", about=" + about
-                + ", role=" + role + ", enable=" + enable + ", imgUrl=" + imgUrl + ", refundAmount=" + refundAmount
-                + ", purchaseList=" + purchaseList + "]";
+                + ", role=" + role + ", enable=" + enable + ", imgUrl=" + imgUrl + ", refundAmount=" + refundAmount + "]";
     }
 }

@@ -4,13 +4,12 @@
 
 <head>
     <meta charset = "UTF-8" />
-    <title> Add Room </title>
 </head>
 <body>
 <section>
     <div class="card me-3 ms-3">
         <div class="card-body">
-            <h1 class="text-center"> Add room</h1>
+            <h1 class="text-center"> Thêm phim</h1>
             <div class="container-fluid m1-1">
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
@@ -21,98 +20,103 @@
                               th:action="@{/admin/add_movie_process}"
                         >
                             <!--Movie Name-->
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-plus"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_name_field" class="form-label">Tên phim:</label><br>
                                 <input
                                         name="name"
                                         type="text"
                                         class="form-control"
                                         id="movie_name_field"
-                                        placeholder="Enter movie Name here"
+                                        placeholder="Nhập tên phim"
                                         required
                                 />
                             </div>
                             <!--Movie Time-->
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="far fa-clock"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_time_field" class="form-label">Thời lượng:</label><br>
                                 <input
                                         name="time"
                                         type="text"
                                         class="form-control"
                                         id="movie_time_field"
-                                        placeholder="hh:mm"
+                                        placeholder="Nhập thời lượng phim"
                                         required
                                 >
                             </div>
                             <!--Movie Genre-->
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fas fa-compact-disc"></i> </span>
-                                <input
-                                        name="genre"
-                                        type="text"
+                            <div class="form-group">
+                                <label  for="movie_genre_field" class="form-label">Thể loại:</label><br>
+                                <select
                                         class="form-control"
                                         id="movie_genre_field"
-                                        placeholder="Enter movie genre here"
-                                        required
-                                />
+                                        th:field="*{genre}"
+                                        multiple
+                                        required>
+                                    <option th:each="genre: ${genreList}"
+                                    th:value="${genre}"
+                                    th:text="${genre}"
+                                    >
+                                    </option>
+
+                                </select>
                             </div>
                             <!--Movie Director-->
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fas fa-compact-disc"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_director_field" class="form-label">Đạo diễn:</label><br>
                                 <input
                                         name="director"
                                         type="text"
                                         class="form-control"
                                         id="movie_director_field"
-                                        placeholder="Enter movie director here"
+                                        placeholder="Nhập tên đạo diễn"
                                         required
                                 />
                             </div>
                             <!--Movie Actor-->
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fas fa-compact-disc"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_actor_field" class="form-label">Diễn viên:</label><br>
                                 <input
                                         name="actor"
                                         type="text"
                                         class="form-control"
                                         id="movie_actor_field"
-                                        placeholder="Enter movie actor here"
+                                        placeholder="Nhập tên diễn viên"
                                         required
                                 />
                             </div>
-                            <!--Movie Genre-->
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fas fa-compact-disc"></i> </span>
+                            <!--Movie Year-->
+                            <div class="form-group">
+                                <label  for="movie_genre_field" class="form-label">Thể loại:</label><br>
                                 <input
                                         name="year"
                                         type="number"
                                         class="form-control"
                                         id="movie_year_field"
-                                        placeholder="Enter movie year here"
+                                        placeholder="Nhập năm sản xuất"
                                         required
                                 />
                             </div>
                             <!--Start -->
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="far fa-calendar-alt"></i> </span>
+                            <div class="form-group">
+                            <label  for="movie_genre_field" class="form-label">Khởi chiếu:</label><br>
                                 <input
                                         name="start"
                                         type="date"
                                         class="form-control"
                                         id="movie_start_field"
-                                        placeholder="Enter movie start date here"
+                                        placeholder="Chọn ngày khởi chiếu"
                                         required
                                 >
                             </div>
                             <!--End-->
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="far fa-calendar-alt"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_genre_field" class="form-label">Kết thúc:</label><br>
                                 <input
                                         name="end"
                                         type="date"
                                         class="form-control"
                                         id="movie_end_field"
-                                        placeholder="Enter movie end date here"
+                                        placeholder="Chọn ngày rút khỏi rạp"
                                         required
                                 >
                             </div>
@@ -123,7 +127,7 @@
                                 />
                             </div>
                             <div class="container text-center mb-3">
-                                <button class="btn btn-outline-primary"> Add movie </button>
+                                <button class="btn btn-outline-primary"> Thêm phim </button>
                             </div>
                         </form>
                     </div>
@@ -132,5 +136,9 @@
         </div>
     </div>
 </section>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{assets/bootstrap-select-1.13.9/dist/js/bootstrap-select.js}"></script>
 </body>
 </html>

@@ -11,7 +11,7 @@
     <div class="card me-3 ms-3">
         <div class="card-body">
 
-            <h1 class="text-center"> Update Showtimes</h1>
+            <h1 class="text-center"> Cập nhật lịch chiếu</h1>
 
             <div class="container-fluid m1-1">
 
@@ -25,8 +25,8 @@
                               method="POST"
                               th:action="@{'/admin/update_showtimes_process/'+${showtimes.id}}"
                         >
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-plus"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_field" class="form-label">Phim:</label><br>
                                 <select
                                         class="form-control"
                                         name="movie"
@@ -40,8 +40,8 @@
                                             th:text="${movie.name}"></option>
                                 </select>
                             </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-plus"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_field" class="form-label">Phòng chiếu:</label><br>
                                 <select
                                         class="form-control"
                                         name="room"
@@ -55,37 +55,37 @@
                                             th:text="${room.name}"></option>
                                 </select>
                             </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-plus"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_field" class="form-label">Giờ chiếu:</label><br>
                                 <input
                                         th:value="${showtimes.time}"
                                         name="time"
                                         type="time"
                                         class="form-control"
                                         id="time_field"
-                                        placeholder="Update time here"
+                                        placeholder="Cập nhật giờ chiếu"
                                 />
                             </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_field" class="form-label">Ngày chiếu:</label><br>
                                 <input
                                         th:value="${showtimes.date}"
                                         name="date"
                                         type="date"
                                         class="form-control"
                                         id="date_field"
-                                        placeholder="Update date here"
+                                        placeholder="Cập nhật ngày chiếu"
                                 />
                             </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_field" class="form-label">Giá vé:</label><br>
                                 <input
                                         th:value="${showtimes.price}"
                                         name="price"
                                         type="number"
                                         class="form-control"
                                         id="movie_genre_field"
-                                        placeholder="Update price here"
+                                        placeholder="Cập nhật giá vé"
                                 />
                             </div>
 

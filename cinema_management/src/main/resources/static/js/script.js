@@ -25,7 +25,7 @@ const searchByMovieNameAdmin = () => {
 
         // search
         console.log(query);
-        let url = `http://localhost:8082/search/${query}`;
+        let url = `http://localhost:8082/search_admin/${query}`;
 
         fetch(url)
             .then( (response) => {
@@ -35,8 +35,8 @@ const searchByMovieNameAdmin = () => {
 
                 let text=`<div class='list-group'>`;
 
-                data.forEach( (movieTicket) => {
-                    text+=`<a href='/admin/update-movie-form/${movieTicket.movieId}' class='list-group-item list-group-action'> ${movieTicket.movieName} </a>`
+                data.forEach( (movie) => {
+                    text+=`<a href='/admin/update_movie/${movie.id}' class='list-group-item list-group-action'> ${movie.name} </a>`
                 });
 
                 text+=`</div>`;
@@ -68,8 +68,9 @@ const searchByMovieNameUser = () => {
 
                 let text=`<div class='list-group'>`;
 
-                data.forEach( (movieTicket) => {
-                    text+=`<a href='/user/buy-movie-ticket/${movieTicket.movieId}' class='list-group-item list-group-action'> ${movieTicket.movieName} </a>`
+                data.forEach( (movie) => {
+
+                    text+=`<a href='/user/movie_detail/${movie.id}' class='list-group-item list-group-action'> ${movie.name} </a>`
                 });
 
                 text+=`</div>`;
@@ -79,3 +80,10 @@ const searchByMovieNameUser = () => {
             });
     }
 };
+$( '#multiple-select-custom-field' ).select2( {
+    theme: "bootstrap-5",
+    width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+    placeholder: $( this ).data( 'placeholder' ),
+    closeOnSelect: false,
+    tags: true
+} );

@@ -4,13 +4,12 @@
 
 <head>
     <meta charset = "UTF-8" />
-    <title> Add Showtimes </title>
 </head>
 <body>
 <section>
     <div class="card me-3 ms-3">
         <div class="card-body">
-            <h1 class="text-center"> Add showtimes</h1>
+            <h1 class="text-center"> Thêm lịch chiếu</h1>
             <div class="container-fluid m1-1">
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
@@ -21,13 +20,13 @@
                               th:action="@{/admin/add_showtimes_process}"
                         >
                             <!--Movie-->
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-plus"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_field" class="form-label">Phim:</label><br>
                                 <select class="form-control"
                                         name="movie"
                                         id="movie_field"
                                         required>
-                                    <option>--select movie--</option>
+                                    <option>--Chọn phim--</option>
                                     <option
                                     th:each="movie : ${movieList}"
                                     th:value="${movie.id}"
@@ -36,54 +35,54 @@
                             </div>
 
                             <!--Room-->
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-plus"></i> </span>
+                            <div class="form-group">
+                                <label  for="room_field" class="form-label">Pòng chiếu:</label><br>
                                 <select class="form-control"
                                         name="room"
                                         id="room_field"
                                         required>
-                                    <option>--select room--</option>
+                                    <option>--Chọn phòng--</option>
                                     <option
                                             th:each="room : ${roomList}"
                                             th:value="${room.id}"
-                                            th:text="${room.name}"></option>
+                                            th:text="${room.name} +'-'+ ${room.typeScreen}"></option>
                                 </select>
                             </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fas fa-compact-disc"></i> </span>
+                            <div class="form-group">
+                                <label  for="time_field" class="form-label">Giờ chiếu:</label><br>
                                 <input
                                         name="time"
                                         type="time"
                                         class="form-control"
                                         id="time_field"
-                                        placeholder="Enter Screen Type here"
+                                        placeholder="Nhập giờ chiếu"
                                         required
                                 />
                             </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fas fa-compact-disc"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_field" class="form-label">Ngày chiếu:</label><br>
                                 <input
                                         name="date"
                                         type="date"
                                         class="form-control"
                                         id="date_field"
-                                        placeholder="Enter Screen Type here"
+                                        placeholder="Chọn ngày chiếu"
                                         required
                                 />
                             </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fas fa-compact-disc"></i> </span>
+                            <div class="form-group">
+                                <label  for="price_field" class="form-label">Giá vé:</label><br>
                                 <input
                                         name="price"
                                         type="number"
                                         class="form-control"
                                         id="price_field"
-                                        placeholder="Enter price here"
+                                        placeholder="Nhập giá vé"
                                         required
                                 />
                             </div>
                             <div class="container text-center mb-3">
-                                <button class="btn btn-outline-primary"> Add showtimes </button>
+                                <button class="btn btn-outline-primary"> Thêm lịch chiếu</button>
                             </div>
                         </form>
                     </div>
