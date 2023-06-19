@@ -12,20 +12,20 @@
 
         <div class="card-body">
 
-            <h1 class="text-center"> Showtimes Management </h1>
+            <h1 class="text-center"> Quản lý lịch chiếu </h1>
             <a href="#" th:href="@{/admin/add_showtimes}">
-                <button class="btn btn-light-sm"> Add showtimes </button>
+                <button class="btn btn-light-sm"> Thêm lịch chiếu </button>
             </a>
             <table class="table mt-3">
                 <thead>
                 <tr>
-                    <th scope="col">Movie</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Room</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Phim</th>
+                    <th scope="col">Tên phim</th>
+                    <th scope="col">Phòng chiếu</th>
+                    <th scope="col">Thời lượng</th>
+                    <th scope="col">Ngày chiếu</th>
+                    <th scope="col">Giá vé</th>
+                    <th scope="col">Hành động</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,8 +39,8 @@
                     <td th:text="${showtimes.date}"></td>
                     <td th:text="${showtimes.price}"></td>
                     <td>
-                        <a th:href = "@{'/admin/update_showtimes/'+${showtimes.id}}" class="btn btn-primary btn-sm"> Update </a>
-                        <a th:href = "@{'/admin/delete_showtimes/'+${showtimes.id}}" class="btn btn-primary btn-sm"> Delete </a>
+                        <a th:href = "@{'/admin/update_showtimes/'+${showtimes.id}}" class="btn btn-primary btn-sm"> Cập nhật </a>
+                        <a th:href = "@{'/admin/delete_showtimes/'+${showtimes.id}}" class="btn btn-primary btn-sm"> Xóa </a>
                     </td>
                 </tr>
                 </tbody>

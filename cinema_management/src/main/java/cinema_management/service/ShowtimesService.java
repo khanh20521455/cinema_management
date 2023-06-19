@@ -5,10 +5,7 @@ import cinema_management.entities.Room;
 import cinema_management.entities.Seat;
 import cinema_management.entities.Showtimes;
 import cinema_management.helper.Message;
-import cinema_management.repository.MovieRepository;
-import cinema_management.repository.RoomRepository;
-import cinema_management.repository.SeatRepository;
-import cinema_management.repository.ShowtimesRepository;
+import cinema_management.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,8 +29,10 @@ public class ShowtimesService {
     private MovieRepository movieRepository;
     @Autowired
     private SeatRepository seatRepository;
+    @Autowired
+    private BookingRepository bookingRepository;
     public String showtimesManagement(Integer page, Model model){
-        Pageable pageable = PageRequest.of(page, 3);
+        Pageable pageable = PageRequest.of(page, 10);
         Page<Showtimes> showtimesList = showtimesRepository.findAllOrderByDateAsc(pageable);
         model.addAttribute("showtimesList",showtimesList);
         model.addAttribute("currentPage", page);
@@ -63,7 +62,7 @@ public class ShowtimesService {
             seat.setShowtimes(showtimes);
             seatRepository.save(seat);
         }
-        return "adminuser/showtimes/add_showtimes";
+        return "redirect:/admin/showtimes_management/0";
     }
     public String updateShowtimes(Integer id, Model model){
         Optional<Showtimes> showtimesOptional = this.showtimesRepository.findById(id);
@@ -74,6 +73,7 @@ public class ShowtimesService {
         model.addAttribute("movieList", movieList);
         model.addAttribute("roomList", roomList);
         return "adminuser/showtimes/update_showtimes";
+
     }
     public String showtimesUpdateProcess(
             @PathVariable("id") Integer id,
@@ -100,9 +100,10 @@ public class ShowtimesService {
         }
 
         m.addAttribute("showtimes", showtimes);
-        return "adminuser/showtimes/update_showtimes";
+        return "redirect:/admin/showtimes_management/0";
     }
     public String deleteShowtimes(Integer id){
+        bookingRepository.deleteBookingBaseShowtimes(id);
         seatRepository.deleteSeatBaseShowtimes(id);
         showtimesRepository.deleteById(id);
         return "redirect:/admin/showtimes_management/0";

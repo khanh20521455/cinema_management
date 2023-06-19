@@ -4,7 +4,6 @@
 
 <head>
     <meta charset = "UTF-8" />
-    <title> This is Room manage page </title>
 </head>
 <body>
 <section>
@@ -12,17 +11,17 @@
 
         <div class="card-body">
 
-            <h1 class="text-center"> Room Management </h1>
+            <h1 class="text-center"> Quản lý phòng chiếu </h1>
             <a href="#" th:href="@{/admin/add_room}">
-                <button class="btn btn-light-sm"> Add room </button>
+                <button class="btn bg-primary text-white"> Thêm phòng chiếu </button>
             </a>
             <table class="table mt-3">
                 <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Type Screen</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Tên phòng</th>
+                    <th scope="col">Loại màn hình</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Hành động</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,8 +30,8 @@
                     <td th:text="${room.typeScreen}"></td>
                     <td th:text="${room.status}"></td>
                     <td>
-                        <a th:href = "@{'/admin/update_room/'+${room.id}}" class="btn btn-primary btn-sm"> Update </a>
-                        <a th:href = "@{'/admin/delete_room/'+${room.id}}" class="btn btn-primary btn-sm"> Delete </a>
+                        <a th:href = "@{'/admin/update_room/'+${room.id}}" class="btn btn-primary btn-sm"> Cập nhật </a>
+                        <a th:href = "@{'/admin/delete_room/'+${room.id}}" class="btn btn-primary btn-sm"> Xóa </a>
                     </td>
                 </tr>
                 </tbody>
@@ -41,7 +40,7 @@
             <nav aria-label="Page navigation example">
                 <ul th:if="${totalPages != 0}" class="pagination">
                     <li th:if="${currentPage != 0}" class="page-item">
-                        <a th:href="@{'/admin/room_management/'+${currentPage-1}}"  class="page-link" href="#">Previous</a></li>
+                        <a th:href="@{'/admin/room_management/'+${currentPage-1}}"  class="page-link" href="#">Trước</a></li>
                     <li th:classappend="${currentPage==iter-1?'active':''}"
                         th:each="iter : ${#numbers.sequence(1,totalPages)}"
                         class="page-item">
@@ -49,7 +48,7 @@
                             <span th:text="${iter}"> </span>
                         </a></li>
                     <li th:if="${currentPage+1 != totalPages}" class="page-item">
-                        <a th:href="@{'/admin/room_management/'+${currentPage+1}}" class="page-link" href="#">Next</a></li>
+                        <a th:href="@{'/admin/room_management/'+${currentPage+1}}" class="page-link" href="#">Sau</a></li>
                 </ul>
             </nav>
         </div>

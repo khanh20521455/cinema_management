@@ -1,5 +1,6 @@
 package cinema_management.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -23,7 +24,8 @@ public class Showtimes {
     private String time;
     private Date date;
     private int price;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "showtimes")
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER, mappedBy = "showtimes")
     private List<Booking> bookingList;
 
     public Showtimes() {

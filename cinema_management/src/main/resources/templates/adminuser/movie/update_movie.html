@@ -4,14 +4,13 @@
 
 <head>
     <meta charset = "UTF-8" />
-    <title> This is Normal User Dashboard. </title>
 </head>
 <body>
 <section>
     <div class="card me-3 ms-3">
         <div class="card-body">
 
-            <h1 class="text-center"> Update Movie</h1>
+            <h1 class="text-center"> Cập nhật phim</h1>
 
             <div class="container-fluid m1-1">
 
@@ -26,92 +25,97 @@
                               th:action="@{'/admin/update_movie_process/'+${movie.id}}"
                         >
 
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-plus"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_name_field" class="form-label">Tên phim:</label><br>
                                 <input
                                         th:value="${movie.name}"
                                         name="name"
                                         type="text"
                                         class="form-control"
                                         id="movie_name_field"
-                                        placeholder="Update Movie Name here"
+                                        placeholder="Cập nhật tên phim"
                                 />
                             </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_time_field" class="form-label">Thời lượng:</label><br>
                                 <input
                                         th:value="${movie.time}"
                                         name="time"
                                         type="text"
                                         class="form-control"
                                         id="movie_time_field"
-                                        placeholder="Update Movie time here"
+                                        placeholder="Cập nhật thời lượng"
                                 />
                             </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
-                                <input
-                                        th:value="${movie.genre}"
-                                        name="genre"
-                                        type="text"
+                            <div class="form-group">
+                                <label  for="movie_genre_field" class="form-label">Thể loại:</label><br>
+                                <select
                                         class="form-control"
                                         id="movie_genre_field"
-                                        placeholder="Update Movie genre here"
-                                />
+                                        th:field="*{genre}"
+                                        multiple>
+                                    <option th:text="${#strings.listJoin(movie.genre, ',')}"
+                                            th:value="${#strings.listJoin(movie.genre, ',')}"></option>
+                                    <option th:each="genre: ${genreList}"
+                                            th:value="${genre}"
+                                            th:text="${genre}"
+                                    >
+                                    </option>
+                                </select>
                             </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_director_field" class="form-label">Đạo diễn:</label><br>
                                 <input
                                         th:value="${movie.director}"
                                         name="director"
                                         type="text"
                                         class="form-control"
                                         id="movie_director_field"
-                                        placeholder="Update Movie director here"
+                                        placeholder="Cập nhật tên đạo diễn"
                                 />
                             </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_actor_field" class="form-label">Diễn viên:</label><br>
                                 <input
                                         th:value="${movie.actor}"
                                         name="actor"
                                         type="text"
                                         class="form-control"
                                         id="movie_actor_field"
-                                        placeholder="Update Movie actor here"
+                                        placeholder="Cập nhật diễn viên"
                                 />
                             </div>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_year_field" class="form-label">Năm sản xuất:</label><br>
                                     <input
                                             th:value="${movie.year}"
                                             name="year"
                                             type="number"
                                             class="form-control"
                                             id="movie_year_field"
-                                            placeholder="Update Movie year here"
+                                            placeholder="Cập nhật năm sản xuất"
                                     />
                                 </div>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_start_field" class="form-label">Khởi chiếu:</label><br>
                                     <input
                                             th:value="${movie.start}"
                                             name="start"
                                             type="date"
                                             class="form-control"
                                             id="movie_start_field"
-                                            placeholder="Update Movie genre here"
+                                            placeholder="Cập nhật ngày khởi chiếu"
                                     />
                                 </div>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text"> <i class="fa fa-clock"></i> </span>
+                            <div class="form-group">
+                                <label  for="movie_end_field" class="form-label">Kết thúc:</label><br>
                                     <input
                                             th:value="${movie.end}"
                                             name="end"
                                             type="date"
                                             class="form-control"
                                             id="movie_end_field"
-                                            placeholder="Update Movie end here"
+                                            placeholder="Cập nhật ngày rút khỏi rạp"
                                     />
                                 </div>
                             <div class="container">
@@ -125,7 +129,7 @@
                                 />
                             </div>
                             <div class="container text-center mb-3">
-                                <button class="btn btn-outline-primary"> Update Movie </button>
+                                <button class="btn btn-outline-primary"> Cập nhật phim </button>
                             </div>
                         </form>
                     </div>
