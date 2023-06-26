@@ -12,6 +12,7 @@ public class Seat {
     @JoinColumn(name = "showtimesId")
     private Showtimes showtimes;
     private int seat;
+    //0: chưa được đặt, 1: đã đc đặt
     private int status;
 
     public Seat() {

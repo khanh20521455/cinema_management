@@ -1,14 +1,8 @@
 package cinema_management.service;
 
-import cinema_management.entities.Booking;
-import cinema_management.entities.Movie;
-import cinema_management.entities.Seat;
-import cinema_management.entities.Showtimes;
+import cinema_management.entities.*;
 import cinema_management.helper.Message;
-import cinema_management.repository.BookingRepository;
-import cinema_management.repository.MovieRepository;
-import cinema_management.repository.SeatRepository;
-import cinema_management.repository.ShowtimesRepository;
+import cinema_management.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
@@ -41,8 +35,12 @@ public class MovieService {
     private ShowtimesRepository showtimesRepository;
     @Autowired
     private SeatRepository seatRepository;
-    public  String[] genreList= {"Hành động", "Tình cảm", "Hài hước","Hoạt hình", "Khoa học viễn tưởng","Kinh dị"};
+    @Autowired
+    private CommentRepository commentRepository;
+    public  String[] genreList= {"Hành động", "Tài liệu","Tình cảm", "Hài hước","Hoạt hình", "Khoa học viễn tưởng","Kinh dị", "Tội phạm", "Phiêu lưu", "Thần thoại"};
+    //Management
     public String getMovieManagement(Integer page, Model model) {
+
         Pageable pageable = PageRequest.of(page, 10);
         Page<Movie> movieList = movieRepository.findAllOrderByMovieDateAsc(pageable);
         model.addAttribute("movieList", movieList);
@@ -95,9 +93,9 @@ public class MovieService {
     }
 
     public String movieUpdateProcess(
-            @PathVariable("id") Integer id,
-            @ModelAttribute Movie movie,
-            @RequestParam("movieImageUrl") MultipartFile file,
+            Integer id,
+            Movie movie,
+            MultipartFile file,
             Model m, HttpSession session) {
 
 
@@ -155,5 +153,33 @@ public class MovieService {
         }
         movieRepository.deleteById(id);
         return "redirect:/admin/movie_management/0";
+    }
+
+    //User
+    public String movieDetail(Integer id, Model model){
+        Optional<Movie> movieOptional = this.movieRepository.findById(id);
+        Movie movie = movieOptional.get();
+        List<Comment> commentList=this.commentRepository.commentMovie(id);
+        model.addAttribute("commentList",commentList);
+        int sum = 0;
+        int dem=0;
+        for (Comment comment: commentList){
+            sum += comment.getRating();
+            dem++;
+        }
+        Double avg= ((double) sum)/((double) dem);
+        String numberString = Double.toString(avg);
+        double roundedX = Math.round(avg * 10.0) / 10.0;
+        model.addAttribute("avg",roundedX);
+        model.addAttribute("movie", movie);
+        return "normaluser/movie_detail";
+    }
+    public String homeScreen(Model model){
+        Date now= new Date(System.currentTimeMillis());
+        List<Movie> movieUpcomingList= movieRepository.movieUpcoming(now);
+        model.addAttribute("movieUpcomingList", movieUpcomingList);
+        List<Movie> moviePlayingList= movieRepository.moviePlaying(now);
+        model.addAttribute("moviePlayingList", moviePlayingList);
+        return "normaluser/home";
     }
 }

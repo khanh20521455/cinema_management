@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="adminuser/base::layout(~{::section})">
+
+<head>
+    <meta charset = "UTF-8" />
+</head>
+<body>
+<section>
+    <div class="card ms-3 me-3">
+
+        <div class="card-body">
+
+            <h1 class="text-center"> Quản lý đặt vé </h1>
+            <table class="table mt-3">
+                <thead>
+                <tr>
+                    <th scope="col">Phim</th>
+                    <th scope="col">Thời gian chiếu</th>
+                    <th scope="col">Ghế ngồi</th>
+                    <th scope="col">Khách hàng</th>
+                    <th scope="col">Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="booking : ${bookingList} ">
+                    <td th:text="${booking.showtimes.movie.name}"></td>
+                    <td th:text="${booking.showtimes.time}+' ngày '+${booking.showtimes.date}"></td>
+                    <td th:text="${#strings.listJoin(booking.seatList, ' ')}"></td>
+                    <td th:text="${booking.user.email}"></td>
+                    <td>
+                        <a th:href = "@{'/admin/confirm_booking/'+${booking.id}}" class="btn btn-primary btn-sm"> Xác nhận </a>
+                        <a th:href = "@{'/admin/cancel_booking/'+${booking.id}}" class="btn btn-primary btn-sm"> Hủy đặt </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <nav aria-label="Page navigation example">
+                <ul th:if="${totalPages != 0}" class="pagination">
+                    <li th:if="${currentPage != 0}" class="page-item">
+                        <a th:href="@{'/admin/booking_management/'+${currentPage-1}}"  class="page-link" href="#">Previous</a></li>
+                    <li th:classappend="${currentPage==iter-1?'active':''}"
+                        th:each="iter : ${#numbers.sequence(1,totalPages)}"
+                        class="page-item">
+                        <a th:href="@{'/admin/booking_management/'+${iter-1}}" class="page-link" href="#">
+                            <span th:text="${iter}"> </span>
+                        </a></li>
+                    <li th:if="${currentPage+1 != totalPages}" class="page-item">
+                        <a th:href="@{'/admin/booking_management/'+${currentPage+1}}" class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+</body>
+</html>

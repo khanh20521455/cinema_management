@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,8 +42,8 @@ public class ShowtimesService {
     }
     public String addShowtimes(Model model){
         model.addAttribute("showtimes", new Showtimes());
-        List <Movie> movieList= movieRepository.movieList();
-        List <Room> roomList= roomRepository.roomList();
+        List <Movie> movieList= movieRepository.movieUpcomingAndPlaying(new Date(System.currentTimeMillis()));
+        List <Room> roomList= roomRepository.roomActive();
         model.addAttribute("movieList", movieList);
         model.addAttribute("roomList", roomList);
         return "adminuser/showtimes/add_showtimes";
@@ -67,8 +68,8 @@ public class ShowtimesService {
     public String updateShowtimes(Integer id, Model model){
         Optional<Showtimes> showtimesOptional = this.showtimesRepository.findById(id);
         Showtimes showtimes= showtimesOptional.get();
-        List <Movie> movieList= movieRepository.movieList();
-        List <Room> roomList= roomRepository.roomList();
+        List <Movie> movieList= movieRepository.movieUpcomingAndPlaying(new Date(System.currentTimeMillis()));
+        List <Room> roomList= roomRepository.roomActive();
         model.addAttribute("showtimes", showtimes);
         model.addAttribute("movieList", movieList);
         model.addAttribute("roomList", roomList);

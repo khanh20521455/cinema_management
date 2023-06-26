@@ -1,4 +1,6 @@
 package cinema_management.entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -33,8 +35,8 @@ public class User {
 
     private String imgUrl;
     private int refundAmount;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "user")
     private List<Booking> bookingList;
 
 

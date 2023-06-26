@@ -80,10 +80,88 @@ const searchByMovieNameUser = () => {
             });
     }
 };
-$( '#multiple-select-custom-field' ).select2( {
-    theme: "bootstrap-5",
-    width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
-    placeholder: $( this ).data( 'placeholder' ),
-    closeOnSelect: false,
-    tags: true
-} );
+function onSelectDate() {
+   let date = document.getElementById("date_showtimes_field").value;
+   let movieId = document.getElementById("movie-id-data").innerText;
+   let url = `http://localhost:8082/query/?id=${movieId}&date=${date}`;
+   fetch(url)
+       .then(response => response.json())
+       .then(data => {
+           const select = document.getElementById("typeScreen_showtimes_field");
+           data.forEach(result => {
+               const option = document.createElement("option");
+               option.textContent  = result.typeScreen;
+               option.value=result.typeScreen;
+               select.add(option);
+           });
+       })
+       .catch(error => {
+           console.error(error);
+       });
+}
+function onSelectTypeScreen(){
+   let date = document.getElementById("date_showtimes_field").value;
+   let movieId = document.getElementById("movie-id-data").innerText;
+   let typeScreen=document.getElementById("typeScreen_showtimes_field").value;
+   let url = `http://localhost:8082/queryShowtimes/?id=${movieId}&date=${date}&typeScreen=${typeScreen}`;
+      fetch(url)
+          .then(response => response.json())
+          .then(data => {
+              const select = document.getElementById("time_showtimes_field");
+              data.forEach(result => {
+                  const option = document.createElement("option");
+                  option.textContent  = result.time;
+                  option.value=result.id;
+                  select.add(option);
+              });
+          })
+          .catch(error => {
+              console.error(error);
+          });
+}
+function onSelectNumberSeat(){
+    let showtimesId=document.getElementById("time_showtimes_field").value;
+    let url = `http://localhost:8082/querySeatNotSelect/?id=${showtimesId}`;
+    fetch(url)
+              .then(response => response.json())
+              .then(data => {
+                  const select = document.getElementById("seat_field");
+                  select.size = document.getElementById("numberSeat_field").value;
+                  data.forEach(result => {
+                      const option = document.createElement("option");
+                      option.textContent  = result.seat;
+                      option.value=result.seat;
+                      select.add(option);
+                  });
+              })
+              .catch(error => {
+                  console.error(error);
+              });
+}
+    var count;
+    function starmark(item)
+    {
+        count=item.id[0];
+        sessionStorage.starRating = count;
+        var subid= item.id.substring(1);
+        for(var i=0;i<5;i++)
+        {
+            if(i<count){
+            document.getElementById((i+1)+subid).style.color="orange";
+            }
+            else{
+            document.getElementById((i+1)+subid).style.color="grey";
+            }
+        }
+        document.getElementById("rating-star").setAttribute("value", count);
+
+    }
+
+
+
+function result()
+{
+
+}
+
+

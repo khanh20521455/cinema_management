@@ -23,11 +23,29 @@ public class Movie {
     private  Date start;
     private Date end;
     private String poster;
+    private int tickets;
+    private long revenue;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
+    public int getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(int tickets) {
+        this.tickets = tickets;
+    }
+
+    public long getRevenue() {
+        return revenue;
+    }
+
+    public void setRevenue(long revenue) {
+        this.revenue = revenue;
+    }
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY, mappedBy = "movie")
     private List<Comment> commentList;
     @JsonBackReference
-    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER,mappedBy = "movie")
+    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY,mappedBy = "movie")
     private List<Showtimes> showtimesList;
 
     public Movie() {

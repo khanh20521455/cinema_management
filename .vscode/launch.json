@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-CinemaManagementApplication<cinema_management>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "cinema_management.CinemaManagementApplication",
+            "projectName": "cinema_management",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

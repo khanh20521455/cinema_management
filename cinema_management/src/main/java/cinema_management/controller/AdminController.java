@@ -1,9 +1,11 @@
 package cinema_management.controller;
 
 import java.security.Principal;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
 import cinema_management.entities.*;
 import cinema_management.repository.*;
+import cinema_management.service.BookingService;
 import cinema_management.service.MovieService;
 import cinema_management.service.RoomService;
 import cinema_management.service.ShowtimesService;
@@ -28,6 +30,8 @@ public class AdminController {
     private MovieService movieService;
     @Autowired
     private ShowtimesService showtimesService;
+    @Autowired
+    private BookingService bookingService;
     @Autowired
     private UserRepository userRepository;
 
@@ -105,34 +109,49 @@ public class AdminController {
                                      Model model, HttpSession session){
         return movieService.movieUpdateProcess(id, movie,file,model,session);
     }
-    @GetMapping("delete_movie/{id}")
+    @GetMapping("/delete_movie/{id}")
     public String deleteMovie(@PathVariable("id") Integer id){
         return movieService.deleteMovie(id);
     }
+
     //Showtimes management
-    @GetMapping("showtimes_management/{page}")
+    @GetMapping("/showtimes_management/{page}")
     public String showtimesManagement(@PathVariable("page") Integer page, Model model){
         return showtimesService.showtimesManagement(page,model);
     }
-    @GetMapping("add_showtimes")
+    @GetMapping("/add_showtimes")
     public String addShowtimes(Model model){
         return showtimesService.addShowtimes(model);
     }
-    @PostMapping("add_showtimes_process")
+    @PostMapping("/add_showtimes_process")
     public String addShowtimesProcess(@ModelAttribute Showtimes showtimes, HttpSession session){
         return showtimesService.addShowtimesProcess(showtimes,session);
     }
-    @GetMapping("update_showtimes/{id}")
+    @GetMapping("/update_showtimes/{id}")
     public String updateShowtimes(@PathVariable("id") Integer id, Model model){
         return showtimesService.updateShowtimes(id, model);
     }
-    @PostMapping("update_showtimes_process/{id}")
+    @PostMapping("/update_showtimes_process/{id}")
     public String updateShowtimesProcess(@PathVariable("id") Integer id,@ModelAttribute Showtimes showtimes, Model model,HttpSession session){
         return showtimesService.showtimesUpdateProcess(id, showtimes,model,session);
     }
-    @GetMapping("delete_showtimes/{id}")
+    @GetMapping("/delete_showtimes/{id}")
     public String deleteShowtimes(@PathVariable("id") Integer id){
         return showtimesService.deleteShowtimes(id);
+    }
+
+    //Booking management
+    @GetMapping("/booking_management/{page}")
+    public String getBookingWaitConfirm(@PathVariable("page") Integer page,Model model){
+        return bookingService.getBookingWaitConfirm(page,model);
+    }
+    @GetMapping("/confirm_booking/{id}")
+    public String confirmBooking(@PathVariable("id") Integer id){
+        return this.bookingService.confirmBooking(id);
+    }
+    @GetMapping("/cancel_booking/{id}")
+    public String cancelBooking(@PathVariable("id") Integer id){
+        return  this.bookingService.cancelBooking(id);
     }
 }
 

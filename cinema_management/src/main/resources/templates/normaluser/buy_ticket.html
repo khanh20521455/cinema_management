@@ -1,17 +1,15 @@
-
 <!DOCTYPE html>
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="adminuser/base::layout(~{::section})">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normaluser/base::layout(~{::section})">
 
 <head>
     <meta charset = "UTF-8" />
-    <title> Buy movie ticket </title>
 </head>
 <body>
 <section>
     <div class="card me-3 ms-3">
         <div class="card-body">
-            <h1 class="text-center"> Buy ticket</h1>
+            <h1 class="text-center"> Mua vé</h1>
             <div class="container-fluid m1-1">
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
@@ -21,35 +19,67 @@
                               method="POST"
                               th:action="@{'/user/buy_ticket_process/'+${movie.id}}"
                         >
-                            <!--Showtimes-->
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="fa fa-plus"></i> </span>
-                                <select class="form-control"
-                                        name="showtimes"
-                                        id="showtimes_field"
+                            <!--Choose date-->
+                            <span id="movie-id-data"  th:value="${movie.id}" th:text="${movie.id}" style="display:none"></span>
+                            <div class="form-group">
+                                <label  for="date_showtimes_field" class="form-label">Chọn ngày:</label><br>
+                                <input
+                                        oninput="onSelectDate()"
+                                        type="date"
+                                        class="form-control"
+                                        id="date_showtimes_field"
+                                        placeholder="Chọn ngày chiếu"
+                                        required
+                                />
+                            </div>
+                            <!--typeScreen-->
+                            <div class="form-group">
+                                <label  for="typeScreen_showtimes_field" class="form-label">Chọn rạp:</label><br>
+
+                                <select onchange="onSelectTypeScreen()"
+                                        class="form-control"
+                                        id="typeScreen_showtimes_field"
                                         required>
-                                    <option>--select schedual--</option>
-                                    <option
-                                            th:each="showtimes : ${showtimesList}"
-                                            th:value="${showtimes.id}"
-                                            th:text="${showtimes.time}+'-'+${showtimes.date}+'-'+${showtimes.room.typeScreen}"></option>
+                                    <option>---Chọn loại màn hình---</option>
                                 </select>
                             </div>
-                            <!--Movie Time-->
-                            <div class="input-group mb-3">
-                                <span class="input-group-text"> <i class="far fa-clock"></i> </span>
-                                <input
-                                        name="numberOfSeat"
-                                        type="number"
-                                        class="form-control"
-                                        id="number_seat_field"
-                                        placeholder="Enter number of seat"
-                                        required
-                                >
+                            <!--time-->
+                            <div class="form-group">
+                                <label  for="typeScreen_showtimes_field" class="form-label">Chọn giờ chiếu:</label><br>
+                                <select class="form-control"
+                                        id="time_showtimes_field"
+                                        name="showtimes"
+                                        required>
+                                    <option>---Chọn giờ chiếu---</option>
+                                </select>
                             </div>
+                            <!--Number of seat-->
+                            <div class="form-group">
+                                <label  for="numberSeat_field" class="form-label">Chọn số chỗ:</label><br>
+                                <input
+                                        oninput="onSelectNumberSeat()"
+                                        type="number"
+                                        name="numberOfSeat"
+                                        class="form-control"
+                                        id="numberSeat_field"
+                                        placeholder="Chọn số chỗ"
+                                        required
+                                />
+                            </div>
+                            <!--Choose seat-->
+                            <div class="form-group">
+                                <label  for="seat_field" class="form-label">Chọn ghế:</label><br>
 
+                                <select class="form-control"
+                                        id="seat_field"
+                                        name="seatList"
+                                        multiple
+                                        required>
+                                </select>
+                            </div>
+                            <!--Button-->
                             <div class="container text-center mb-3">
-                                <button class="btn btn-outline-primary"> Book </button>
+                                <button type="submit" name="submit" class="btn btn-outline-primary"> Mua vé </button>
                             </div>
                         </form>
                     </div>

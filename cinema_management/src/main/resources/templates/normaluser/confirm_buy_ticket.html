@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normaluser/base::layout(~{::section})">
+
+<head>
+    <meta charset = "UTF-8" />
+</head>
+<body>
+<section>
+    <div class="card me-3 ms-3">
+        <div class="card-body">
+            <h1 class="text-center"> Xác nhận</h1>
+            <div class="container-fluid m1-1">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        <form action="#"
+                              th:object="${booking}"
+                              enctype="multipart/form-data"
+                              method="POST"
+                              th:action="@{'/user/confirm_booking/'+${booking.id}}"
+                        >
+                            <div>
+                                <h3 class="mt-3"> <pre>Phim:             <span th:text= "${movie.name}"> </span> </pre></h3>
+                                <h3 class="mt-3"> <pre>Ngày chiếu:       <span th:text= "${booking.showtimes.date}"> </span> </pre> </h3>
+                                <h3 class="mt-3"> <pre>Giờ chiếu:        <span th:text= "${booking.showtimes.time}"> </span> </pre> </h3>
+                                <h3 class="mt-3"> <pre>Phòng chiếu:      <span th:text= "${booking.showtimes.room.name}+'-'+${booking.showtimes.room.typeScreen}"> </span></pre> </h3>
+                                <h3 class="mt-3"> <pre>Ghế ngồi:         <span th:each="seat: ${booking.seatList}"
+                                                                               th:value="${seat}"
+                                                                               th:text="${seat}+' '"> </span></pre> </h3>
+                                <h3 class="mt-3"> <pre>Tổng tiền:        <span th:text= "${total}"> </span> VND</pre> </h3>
+
+                            </div>
+                            <!--Button-->
+                            <div class="container text-center mb-3">
+                                <button type="submit" name="submit" class="btn btn-outline-primary"> Xác nhận </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
