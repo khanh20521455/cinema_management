@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normaluser/base::layout(~{::section})">
+
+<head>
+    <meta charset = "UTF-8" />
+</head>
+<body>
+<section>
+    <div class="card ms-3 me-3">
+
+        <div class="card-body">
+
+            <h1 class="text-center"> Phim đã xem </h1>
+            <table class="table mt-3">
+                <thead>
+                <tr>
+                    <th scope="col">Poster</th>
+                    <th scope="col">Phim</th>
+                    <th scope="col">Thời gian chiếu</th>
+                    <th scope="col">Bình luận</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="booking : ${bookingList} ">
+                    <td>
+                        <img scr="" class="my_movie_poster" th:src="@{'/img/'+${booking.showtimes.movie.poster}}" alt="movie poster" />
+                    </td>
+                    <td th:text="${booking.showtimes.movie.name}"></td>
+                    <td th:text="${booking.showtimes.time}+' ngày '+${booking.showtimes.date}"></td>
+                    <td>
+                        <div th:if="${booking.statusComment == 0}">
+                        <a th:href = "@{'/user/add_comment/'+${booking.showtimes.movie.id}}" class="btn btn-primary btn-sm"> Bình luận </a>
+                        </div>
+                        <div th:if="${booking.statusComment == 1}">
+                            <a th:href = "@{'/user/update_comment/'+${booking.showtimes.movie.id}}" class="btn btn-primary btn-sm"> Sửa bình luận </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul th:if="${totalPages != 0}" class="pagination">
+                    <li th:if="${currentPage != 0}" class="page-item">
+                        <a th:href="@{'/user/movie_watched/'+${currentPage-1}}"  class="page-link" href="#">Previous</a></li>
+                    <li th:classappend="${currentPage==iter-1?'active':''}"
+                        th:each="iter : ${#numbers.sequence(1,totalPages)}"
+                        class="page-item">
+                        <a th:href="@{'/user/movie_watched/'+${iter-1}}" class="page-link" href="#">
+                            <span th:text="${iter}"> </span>
+                        </a></li>
+                    <li th:if="${currentPage+1 != totalPages}" class="page-item">
+                        <a th:href="@{'/user/movie_watched/'+${currentPage+1}}" class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+</body>
+</html>

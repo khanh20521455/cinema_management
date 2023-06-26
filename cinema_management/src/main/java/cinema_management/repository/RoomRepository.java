@@ -13,4 +13,6 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
     public Page<Room> findAllOrderByRoomNameAsc(Pageable pageable);
     @Query("FROM Room as r ORDER  BY r.name")
     public List<Room> roomList();
+    @Query("FROM Room as r WHERE r.status='Đang hoạt động'")
+    public List<Room> roomActive();
 }

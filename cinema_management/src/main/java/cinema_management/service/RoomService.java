@@ -70,8 +70,8 @@ public class RoomService {
     }
 
     public String roomUpdateProcess(
-            @PathVariable("id") Integer id,
-            @ModelAttribute Room room,
+            Integer id,
+            Room room,
             Model m, HttpSession session) {
 
 

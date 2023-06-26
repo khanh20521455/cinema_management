@@ -1,5 +1,7 @@
 package cinema_management.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class Room {
 
     public Room() {
     }
-
+    @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
     private List<Showtimes> showtimesList;
 

@@ -26,5 +26,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     public List<Movie> moviePlaying(@Param("now") Date now);
     public List<Movie> findByNameContainingAndEndAfter (String name, @Param("now")Date now);
     public List<Movie> findByNameContaining(String name);
+    @Query("FROM Movie as m where m.end >= :now")
+    public List<Movie> movieUpcomingAndPlaying(@Param("now")Date now);
 
 }

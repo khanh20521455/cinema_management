@@ -4,81 +4,73 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 <body>
 <section>
     <div class="card ms-3 me-3">
-
         <div class="card-body">
-
-        <h1 class="text-center"> Movie List </h1>
-        <!--search-->
-
-        <div class="search-container my-4">
-
-            <input
-                    onkeyup="searchByMovieNameUser()"
-                    id="searchInput"
-                    type="text"
-                    class="form-control"
-                    placeholder="Search Movie"
-            />
-
-            <div class="search-result">
-
-                <h1> 	This is Result </h1>
-                <br>
-                <br>
-                <br>
-
-            </div>
-
-        <!--search end-->
-            <h2>Upcoming movie</h2>
-    <div class="container"  style="display: grid; grid-template-columns: auto auto auto; grid-gap: 30px">
-        <div class="d-flex justify-content-between flex-wrap"
-             th:each="movie: ${movieUpcomingList}">
-            <div class="card movie-item" style=" width:300px">
-                <img class="card-img-top img-movie"
-                     th:src="@{'/img/'+${movie.poster}}"
-                     alt=" " style="width:100%">
-                <div class="card-body">
-                    <h4 class="card-title" th:text="${movie.name}"></h4>
-                    <a href="#" th:href="@{'/user/movie_detail/'+${movie.id}}"
-                       style="margin-right:40px">
-                        <button class="btn btn-outline-warning"> View detail </button>
-                    </a>
-                    <a href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}">
-                        <button class="btn btn-outline-danger"> Buy Ticket </button>
-                    </a>
+            <div class="search-container my-4">
+                <input
+                        onkeyup="searchByMovieNameUser()"
+                        id="searchInput"
+                        type="text"
+                        class="form-control"
+                        placeholder="Tìm phim"
+                />
+                <div class="search-result">
+                    <h1> 	This is Result </h1>
                 </div>
             </div>
-        </div>
-    </div>
-    <h2>Playing</h2>
-    <div class="container"  style="display: grid; grid-template-columns: auto auto auto; grid-gap: 30px">
-        <div class="d-flex justify-content-between flex-wrap"
-             th:each="movie: ${moviePlayingList}">
-            <div class="card movie-item" style=" width:300px">
-                <img class="card-img-top img-movie"
-                     th:src="@{'/img/'+${movie.poster}}"
-                     alt=" " style="width:100%">
-                <div class="card-body">
-                    <h4 class="card-title" th:text="${movie.name}"></h4>
-                    <a href="#" th:href="@{'/user/movie_detail/'+${movie.id}}"
-                       style="margin-right:40px">
-                        <button class="btn btn-outline-warning"> View detail </button>
-                    </a>
-                    <a href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}">
-                        <button class="btn btn-outline-danger"> Buy Ticket </button>
-                    </a>
+        <h3>Phim sắp chiếu</h3>
+            <br>
+            <div class="container"  style="display: grid; grid-template-columns: auto auto auto; grid-gap: 30px">
+                <div class="d-flex justify-content-between flex-wrap"
+                     th:each="movie: ${movieUpcomingList}">
+                    <div class="card movie-item" style=" width:300px">
+                        <img class="card-img-top img-movie"
+                             th:src="@{'/img/'+${movie.poster}}"
+                             alt=" " style="width:100%">
+                        <div class="card-body">
+                            <h4 class="card-title" th:text="${movie.name}"></h4>
+                            <a href="#" th:href="@{'/user/movie_detail/'+${movie.id}}"
+                               style="margin-right:40px">
+                                <button class="btn btn-outline-warning"> View detail </button>
+                            </a>
+                            <a href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}">
+                                <button class="btn btn-outline-danger"> Buy Ticket </button>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <br>
+            <br>
+            <br>
+            <h3>Phim đang chiếu</h3>
+                <br>
+                <div class="container"  style="display: grid; grid-template-columns: auto auto auto; grid-gap: 30px">
+                    <div class="d-flex justify-content-between flex-wrap"
+                         th:each="movie: ${moviePlayingList}">
+                        <div class="card movie-item" style=" width:300px">
+                            <img class="card-img-top img-movie"
+                                 th:src="@{'/img/'+${movie.poster}}"
+                                 alt=" " style="width:100%">
+                            <div class="card-body">
+                                <h4 class="card-title" th:text="${movie.name}"></h4>
+                                <a href="#" th:href="@{'/user/movie_detail/'+${movie.id}}"
+                                   style="margin-right:40px">
+                                    <button class="btn btn-outline-warning"> View detail </button>
+                                </a>
+                                <a href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}">
+                                    <button class="btn btn-outline-danger"> Buy Ticket </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
-    </div>
     </div>
 </section>
 </body>

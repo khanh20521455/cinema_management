@@ -15,9 +15,11 @@ public class Showtimes {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="movieId")
     private Movie movie;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="roomId")
     private Room room;

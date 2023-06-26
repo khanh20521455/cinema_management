@@ -6,28 +6,35 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cinema_management.entities.*;
 import cinema_management.repository.*;
+import cinema_management.service.BookingService;
+import cinema_management.service.CommentService;
+import cinema_management.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import cinema_management.helper.Message;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
+    @Autowired
+    private MovieService movieService;
+    @Autowired
+    private BookingService bookingService;
+    @Autowired
+    private CommentService commentService;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -36,9 +43,10 @@ public class UserController {
     private MovieRepository movieRepository;
     @Autowired
     private ShowtimesRepository showtimesRepository;
+    @Autowired
+    private SeatRepository seatRepository;
 
     // adding common data
-
     @ModelAttribute
     public void addCommonData(Model model, Principal principal) {
         String userName = principal.getName();
@@ -47,64 +55,63 @@ public class UserController {
     }
 
     // user dashboard
-
     @RequestMapping("/dashboard")
     public String userDashboard(Model model, Principal principal) {
 
         model.addAttribute("title", "User Dashboard");
         return "normaluser/user_dashboard";
     }
+
     @GetMapping("/home")
     public String homeScreen(Model model){
-        Date now= new Date(System.currentTimeMillis());
-        List<Movie> movieUpcomingList= movieRepository.movieUpcoming(now);
-        model.addAttribute("movieUpcomingList", movieUpcomingList);
-        List<Movie> moviePlayingList= movieRepository.moviePlaying(now);
-        model.addAttribute("moviePlayingList", moviePlayingList);
-        return "normaluser/home";
+        return movieService.homeScreen(model);
     }
-    @GetMapping("movie_detail/{id}")
+    @GetMapping("/movie_detail/{id}")
     public String movieDetail(@PathVariable("id") Integer id, Model model){
-        Optional<Movie> movieOptional = this.movieRepository.findById(id);
-        Movie movie = movieOptional.get();
-        model.addAttribute("movie", movie);
-        return "normaluser/movie_detail";
+       return movieService.movieDetail(id,model);
     }
-    @RequestMapping("buy_ticket/{id}")
+    @GetMapping("/buy_ticket/{id}")
     public String buyTicket(@PathVariable("id") Integer id, Model model){
-        Booking booking=new Booking();
-        model.addAttribute("booking", booking);
-        Movie movie= this.movieRepository.getById(id);
-        model.addAttribute("movie", movie);
-        List<Showtimes> showtimesList= this.showtimesRepository.findByMovieId(id);
-        model.addAttribute("showtimesList", showtimesList);
-        return "normaluser/buy_ticket";
+        return bookingService.buyTicket(id,model);
     }
-    @PostMapping("/buy_ticket_process/{id}")
-    public String buyTicketProcess(@ModelAttribute Booking booking, @PathVariable("id") Integer id,
+    @PostMapping("/buy_ticket_process/{movieId}")
+    public String buyTicketProcess(@ModelAttribute Booking booking, @PathVariable("movieId") Integer movieId,
                                    Principal principal, Model model, HttpSession session) {
-
-        Movie movie=this.movieRepository.getById(id);
-        model.addAttribute("movie", movie);
-
-        try {
-            String userName = principal.getName();
-            User user = this.userRepository.getUserByUserName(userName);
-            booking.setUser(user);
-            booking.setStatus(0);
-            user.getBookingList().add(booking);
-            bookingRepository.save(booking);
-            session.setAttribute("message", new Message("New Movie has been successfully uploaded", "success"));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            session.setAttribute("message", new Message("Something went wrong. " + e.getMessage(), "danger"));
-
-        }
-        return "normaluser/buy_ticket";
+        return bookingService.buyTicketProcess(booking,movieId,principal,model,session);
+    }
+    @PostMapping("/confirm_booking/{id}")
+    public String confirmBooking(@PathVariable("id") Integer id,@ModelAttribute Booking booking, Model model, HttpSession session){
+        return this.bookingService.confirmTicket(id,booking,model,session);
+    }
+    @GetMapping("/movie_watched/{page}")
+    public String movieWatched(Principal principal, Model model,@PathVariable("page") Integer page){
+        return this.bookingService.getMovieWatched(principal,model,page);
     }
 
-
-
+    //Comment
+    @GetMapping("/add_comment/{movieId}")
+    public String addComment(@PathVariable("movieId") Integer movieId, Principal principal, Model model){
+        return commentService.addComment(movieId,principal,model);
+    }
+    @PostMapping("/add_comment_process/{id}")
+    public String addCommentProcess(@PathVariable("id") Integer id,@ModelAttribute("comment") Comment comment, @RequestParam("rating") int rating){
+        return this.commentService.addCommentProcess(id,comment,rating);
+    }
+    @GetMapping("/update_comment/{movieId}")
+    public String updateComment(@PathVariable("movieId") Integer movieId, Principal principal, Model model){
+        return commentService.updateComment(movieId,principal,model);
+    }
+    @PostMapping("/update_comment_process/{id}")
+    public String updateCommentProcess(@PathVariable("id") Integer id,@ModelAttribute("comment") Comment comment, @RequestParam("rating") int rating){
+        return this.commentService.updateCommentProcess(id,comment,rating);
+    }
+    @GetMapping("/history_transaction/{page}")
+    public String getHistoryTransaction(@PathVariable("page") Integer page, Principal principal,Model model){
+        return this.bookingService.getHistoryTransaction(page,principal,model);
+    }
+    @GetMapping("/cancel_booking/{id}")
+    public String cancelBooking(@PathVariable("id") Integer id){
+        return this.bookingService.cancelBookingUser(id);
+    }
 }
 

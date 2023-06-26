@@ -1,5 +1,7 @@
 package cinema_management.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
@@ -10,18 +12,29 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
     private User user;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinColumn(name="showtimesId")
     private Showtimes showtimes;
     private int numberOfSeat;
-    private Integer[] seatList;
+    private int[] seatList;
+    //1: Đặt vé, 2: xác nhận, 3: hủy
     private int status;
+    private int statusComment;
+
+    public int getStatusComment() {
+        return statusComment;
+    }
+
+    public void setStatusComment(int statusComment) {
+        this.statusComment = statusComment;
+    }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -52,11 +65,11 @@ public class Booking {
         this.numberOfSeat = numberOfSeat;
     }
 
-    public Integer[] getSeatList() {
+    public int[] getSeatList() {
         return seatList;
     }
 
-    public void setSeatList(Integer[] seatList) {
+    public void setSeatList(int[] seatList) {
         this.seatList = seatList;
     }
 
