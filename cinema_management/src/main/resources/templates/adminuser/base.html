@@ -17,46 +17,46 @@
 
 <nav class=" fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-  
+
    <!--change -->
     <a class="navbar-brand brandtext" href="#">Cinezo</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    	
+
 <!--      change position-->
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-uppercase">
-        
+
         <li class="nav-item">
           <a class="nav-link active" th:href="@{/}" aria-current="page" href="#">Home</a>
         </li>
-	
-  
+
+
       	<li class="nav-item">
           <a class="nav-link"  href="#" tabindex="-1" aria-disabled="true">
           	<span th:text="${user.UserName}"> </span>
-          
+
           </a>
         </li>
-	
+
 	     <li class="nav-item">
           <a class="nav-link" th:href="@{/logout}" href="#" tabindex="-1" aria-disabled="true">Logout</a>
         </li>
-      	
-      	<!--      change link name-->
-        
-  
-      	
-      </ul>
-      
 
-    
+      	<!--      change link name-->
+
+
+
+      </ul>
+
+
+
     </div>
   </div>
 </nav>
-  		
+
 	<!--end of navbar-->
 
 
@@ -68,8 +68,8 @@
       <a href="#" th:href="@{/admin/movie_management/0}" class="item"><i class="fas fa-film"></i> Phim</a>
       <a href="#" th:href="@{/admin/showtimes_management/0}" class="item"> <i class="fas fa-play-circle"></i> Lịch chiếu </a>
       <a href="#" th:href="@{/admin/booking_management/0}" class="item"><i class="fas fa-money-check-alt"></i> Đặt vé</a>
-      <a href="#" th:href="@{/admin/update_payment}" class="item"><i class="fas fa-users-cog"></i> Nhân viên</a>
-      <a href="#" th:href="@{/admin/statistic}" class="item"><i class="fas fa-chart-line"></i> Thống kê</a>
+      <a href="#" th:href="@{/admin/statistic_chart}" class="item"><i class="fas fa-users-cog"></i> Thống kê theo năm</a>
+      <a href="#" th:href="@{/admin/statistic_movie}" class="item"><i class="fas fa-chart-line"></i> Thống kê theo phim</a>
       <a href="#" th:href="@{/logout}" class="item"> <i class="fas fa-sign-out-alt"></i> Logout </a>
       <div class="divider"> </div>
     </div>
@@ -78,37 +78,25 @@
 
     <!-- start content area -->
 
+
     <div class="content mt-5">
-
     	<i onclick="toggleSidebar()" class="fas fa-bars m-3"> </i>
-
     	<!--message box-->
-
         <div th:if="${session.message}" class="container">
 	    	<div th:classappend="${'alert-'+session.message.type}" class="alert text-center" role="alert">
   					<span th:text="${session.message.content}"></span>
 			</div>
 			<th:block th:text="${#session.removeAttribute('message')}"></th:block>
         </div>
-
 	    <div th:replace="${content}">
 
     </div>
-
     <!-- end content area -->
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-    -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script	th:src = "@{/js/script.js}" > </script>
+
     </div>
   </body>
 </html>

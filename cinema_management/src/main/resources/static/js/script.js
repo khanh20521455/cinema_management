@@ -49,33 +49,39 @@ const searchByMovieNameAdmin = () => {
 
 
 const searchByMovieNameUser = () => {
-    //console.log("Searching...")
     let query = $("#searchInput").val();
-  
-    if(query == ""){
+    $(".playing-movie-list").show();
+    $(".upcoming-movie-list").show();
+    if (query == "") {
         $(".search-result").hide();
-    }else{
-
-        // search
-        console.log(query);
+    } else {
         let url = `http://localhost:8082/search/${query}`;
 
         fetch(url)
-            .then( (response) => {
+            .then((response) => {
                 return response.json();
             })
-            .then( (data) => {
+            .then((data) => {
+                let searchResults = [];
 
-                let text=`<div class='list-group'>`;
-
-                data.forEach( (movie) => {
-
-                    text+=`<a href='/user/movie_detail/${movie.id}' class='list-group-item list-group-action'> ${movie.name} </a>`
+                data.forEach((movie) => {
+                    let movieItem = `<div class="card movie-item" style="width:300px">
+                                        <img class="card-img-top img-movie" src="/img/${movie.poster}" alt="" style="width:100%">
+                                        <div class="card-body">
+                                            <h4 class="card-title">${movie.name}</h4>
+                                            <a href="/user/movie_detail/${movie.id}" style="margin-right:40px">
+                                                <button class="btn btn-outline-warning">View detail</button>
+                                            </a>
+                                            <a href="/user/buy_ticket/${movie.id}">
+                                                <button class="btn btn-outline-danger">Buy Ticket</button>
+                                            </a>
+                                        </div>
+                                    </div>`;
+                    searchResults.push(movieItem);
                 });
-
-                text+=`</div>`;
-
-                $(".search-result").html(text);
+                $(".playing-movie-list").hide();
+                $(".upcoming-movie-list").hide();
+                $(".search-result").html(searchResults.join(""));
                 $(".search-result").show();
             });
     }
@@ -138,30 +144,122 @@ function onSelectNumberSeat(){
                   console.error(error);
               });
 }
-    var count;
-    function starmark(item)
-    {
-        count=item.id[0];
-        sessionStorage.starRating = count;
-        var subid= item.id.substring(1);
-        for(var i=0;i<5;i++)
-        {
-            if(i<count){
-            document.getElementById((i+1)+subid).style.color="orange";
-            }
-            else{
-            document.getElementById((i+1)+subid).style.color="grey";
-            }
-        }
-        document.getElementById("rating-star").setAttribute("value", count);
-
-    }
-
-
-
-function result()
+var count;
+function starmark(item)
 {
+    count=item.id[0];
+    var subid= item.id.substring(1);
+    for(var i=0;i<5;i++)
+    {
+        if(i<count){
+        document.getElementById((i+1)+subid).style.color="orange";
+        }
+        else{
+        document.getElementById((i+1)+subid).style.color="grey";
+        }
+    }
+    document.getElementById("rating-star").setAttribute("value", count);
 
+}
+
+function result(){
+}
+$(".table-statistic").hide();
+function statistic_movie() {
+
+    let start = document.getElementById("movie_start_field").value;
+    let end = document.getElementById("movie_end_field").value;
+    let url = `http://localhost:8082/bookingForStatistic_ticket_desc/?start=${start}&end=${end}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let resultList = [];
+            data.forEach(result => {
+                let resultItem = `<tr>
+                                     <td>${result[0]}</td>
+                                     <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
+                                     <td>${result[2]}</td>
+                                     <td>${result[3]}</td>
+                                     <td>${result[4]}</td>
+                                 </tr>`;
+                resultList.push(resultItem);
+            });
+
+            $(".table-statistic").show();
+            $(".statistic_movie_result").html(resultList.join(""));
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+function statistic_ticket_onclick(){
+    let start = document.getElementById("movie_start_field").value;
+    let end = document.getElementById("movie_end_field").value;
+    let button= document.getElementById("button_statistic_ticket").innerText;
+    if(button === "Lượt vé tăng dần"){
+        document.getElementById("button_statistic_ticket").innerText="Lượt vé giảm dần";
+         var url = `http://localhost:8082/bookingForStatistic_ticket_asc/?start=${start}&end=${end}`;
+    }
+    else{
+        document.getElementById("button_statistic_ticket").innerText="Lượt vé tăng dần";
+        var url = `http://localhost:8082/bookingForStatistic_ticket_desc/?start=${start}&end=${end}`;
+    }
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let resultList = [];
+            data.forEach(result => {
+                let resultItem = `<tr>
+                                     <td>${result[0]}</td>
+                                     <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
+                                     <td>${result[2]}</td>
+                                     <td>${result[3]}</td>
+                                     <td>${result[4]}</td>
+                                 </tr>`;
+                resultList.push(resultItem);
+            });
+
+            $(".table-statistic").show();
+            $(".statistic_movie_result").html(resultList.join(""));
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+function statistic_revenue_onclick(){
+    let start = document.getElementById("movie_start_field").value;
+    let end = document.getElementById("movie_end_field").value;
+    let button= document.getElementById("button_statistic_revenue").innerText;
+    if(button === "Doanh thu tăng dần"){
+        document.getElementById("button_statistic_revenue").innerText="Doanh thu giảm dần";
+        var url = `http://localhost:8082/bookingForStatistic_revenue_asc/?start=${start}&end=${end}`;
+    }
+    else{
+        document.getElementById("button_statistic_revenue").innerText="Doanh thu tăng dần";
+        var url = `http://localhost:8082/bookingForStatistic_revenue_desc/?start=${start}&end=${end}`;
+    }
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let resultList = [];
+            data.forEach(result => {
+                let resultItem = `<tr>
+                                     <td>${result[0]}</td>
+                                     <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
+                                     <td>${result[2]}</td>
+                                     <td>${result[3]}</td>
+                                     <td>${result[4]}</td>
+                                 </tr>`;
+                resultList.push(resultItem);
+            });
+
+            $(".table-statistic").show();
+            $(".statistic_movie_result").html(resultList.join(""));
+        })
+        .catch(error => {
+            console.error(error);
+        });
 }
 
 

@@ -30,7 +30,7 @@ public class CommentService {
         comment.setUser(this.userRepository.getUserByUserName(principal.getName()));
         commentRepository.save(comment);
         model.addAttribute("comment", comment);
-        return "normaluser/comment";
+        return "normaluser/comment/comment";
     }
     public String addCommentProcess(Integer id, Comment comment, int rating){
         Optional<Comment> optional= this.commentRepository.findById(id);
@@ -54,7 +54,7 @@ public class CommentService {
         Movie movie= movieRepository.getById(id);
         Comment comment= this.commentRepository.commentExist(principal.getName(),id);
         model.addAttribute("comment", comment);
-        return "normaluser/update_comment";
+        return "normaluser/comment/update_comment";
     }
     public String updateCommentProcess(Integer id, Comment comment, int rating){
         Optional<Comment> optional= this.commentRepository.findById(id);

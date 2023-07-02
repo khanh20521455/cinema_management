@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -24,6 +25,24 @@ public class Booking {
     //1: Đặt vé, 2: xác nhận, 3: hủy
     private int status;
     private int statusComment;
+    private Date completedAt;
+    private int total;
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public Date getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(Date completedAt) {
+        this.completedAt = completedAt;
+    }
 
     public int getStatusComment() {
         return statusComment;

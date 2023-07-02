@@ -37,14 +37,6 @@ public class UserController {
     private CommentService commentService;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private BookingRepository bookingRepository;
-    @Autowired
-    private MovieRepository movieRepository;
-    @Autowired
-    private ShowtimesRepository showtimesRepository;
-    @Autowired
-    private SeatRepository seatRepository;
 
     // adding common data
     @ModelAttribute
@@ -53,19 +45,18 @@ public class UserController {
         User user = userRepository.getUserByUserName(userName);
         model.addAttribute("user", user);
     }
-
-    // user dashboard
-    @RequestMapping("/dashboard")
-    public String userDashboard(Model model, Principal principal) {
-
-        model.addAttribute("title", "User Dashboard");
-        return "normaluser/user_dashboard";
+    // user profile
+    @GetMapping("/user-profile")
+    public String userProfile(Model model) {
+        return "normaluser/profile/user_profile";
     }
 
     @GetMapping("/home")
     public String homeScreen(Model model){
         return movieService.homeScreen(model);
     }
+
+    //Booking process
     @GetMapping("/movie_detail/{id}")
     public String movieDetail(@PathVariable("id") Integer id, Model model){
        return movieService.movieDetail(id,model);

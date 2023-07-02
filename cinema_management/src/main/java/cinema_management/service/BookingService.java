@@ -45,7 +45,7 @@ public class BookingService {
         model.addAttribute("movie", movie);
         List<Showtimes> showtimesList= this.showtimesRepository.findByMovieId(id);
         model.addAttribute("showtimesList", showtimesList);
-        return "normaluser/buy_ticket";
+        return "normaluser/booking/buy_ticket";
     }
     public String buyTicketProcess(Booking booking, Integer movieId,
                                    Principal principal, Model model, HttpSession session) {
@@ -56,6 +56,7 @@ public class BookingService {
             User user = this.userRepository.getUserByUserName(principal.getName());
             booking.setUser(user);
             booking.setStatus(0);
+            booking.setTotal(booking.getNumberOfSeat()*booking.getShowtimes().getPrice());
             this.bookingRepository.save(booking);
 
         } catch (Exception e) {
@@ -65,7 +66,7 @@ public class BookingService {
         int total= booking.getNumberOfSeat()*booking.getShowtimes().getPrice();
         model.addAttribute("total",total);
         model.addAttribute("booking",booking);
-        return "normaluser/confirm_buy_ticket";
+        return "normaluser/booking/confirm_buy_ticket";
     }
 
 
@@ -100,6 +101,7 @@ public class BookingService {
     public String confirmBooking(Integer id){
         Booking booking= this.bookingRepository.getById(id);
         booking.setStatus(2);
+        booking.setCompletedAt(new Date(System.currentTimeMillis()));
         bookingRepository.save(booking);
         return "redirect:/admin/booking_management/0";
     }
@@ -118,7 +120,7 @@ public class BookingService {
     }
     public String getMovieWatched(Principal principal, Model model, Integer page){
         Pageable pageable = PageRequest.of(page, 10);
-        Page<Booking> bookingList= bookingRepository.bookingComment(new Date(System.currentTimeMillis()),principal.getName(),pageable);
+        Page<Booking> bookingList= bookingRepository.findFirstByStatusAndShowtimesDateLessThanEqualAndUserEmail(new Date(System.currentTimeMillis()),principal.getName(),pageable);
         model.addAttribute("bookingList", bookingList);
         for(Booking booking: bookingList){
             if(this.commentRepository.commentExist(booking.getUser().getEmail(),booking.getShowtimes().getMovie().getId())!=null){

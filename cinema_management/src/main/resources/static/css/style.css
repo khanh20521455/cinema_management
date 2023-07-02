@@ -175,13 +175,9 @@ body{
 }
 
 .search-result{
-	position: absolute;
-	background: white;
-	width: 100%;
-	padding: 10px;
-	border: 1px solid gray;
-	display: none;
-	z-index: 999;
+ display: grid;
+ grid-template-columns: auto auto auto;
+ grid-gap: 30px
 }
 .text-register {
 	color: #e4a8a8
@@ -193,23 +189,7 @@ body{
 .unchecked{
     color: grey
 }
-.post li{
-     display:flex;
-     gap: 30px;
-     margin-bottom:30px;
-}
 
-.post li thumbnail{
-    position: relative;
-    width: 100px;
-    height:100px;
-    flex-shrink: 0;
-}
-.post li thumbnail img{
-     object-fit: cover;
-     height:100%;
-     width:100%;
-}
 .user_avatar_comment{
     object-fit: cover;
     width: 70px;

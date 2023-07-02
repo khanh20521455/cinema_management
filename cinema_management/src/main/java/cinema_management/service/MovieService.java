@@ -172,7 +172,7 @@ public class MovieService {
         double roundedX = Math.round(avg * 10.0) / 10.0;
         model.addAttribute("avg",roundedX);
         model.addAttribute("movie", movie);
-        return "normaluser/movie_detail";
+        return "normaluser/booking/movie_detail";
     }
     public String homeScreen(Model model){
         Date now= new Date(System.currentTimeMillis());

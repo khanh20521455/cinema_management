@@ -46,12 +46,6 @@ public class AdminController {
         model.addAttribute("user", user);
     }
 
-    // showing dashboard
-    @RequestMapping("/dashboard")
-    public String userDashboard(Model model, Principal principal) {
-        model.addAttribute("title", "Admin Dashboard");
-        return "adminuser/admin_dashboard";
-    }
     //Room management
     @GetMapping("/room_management/{page}")
     public String getRoom(@PathVariable("page") Integer page, Model model){
@@ -153,6 +147,16 @@ public class AdminController {
     public String cancelBooking(@PathVariable("id") Integer id){
         return  this.bookingService.cancelBooking(id);
     }
+    //Statistic
+    @GetMapping("/statistic_movie")
+    public String statisticMovie(){
+        return "adminuser/statistic/statistic";
+    }
+    @GetMapping("/statistic_chart")
+    public String statisticYear(){
+        return "adminuser/statistic/statistic_chart";
+    }
+
 }
 
 
