@@ -18,7 +18,7 @@ const toggleSidebar = () => {
 const searchByMovieNameAdmin = () => {
     //console.log("Searching...")
     let query = $("#searchInput").val();
-  
+
     if(query == ""){
         $(".search-result").hide();
     }else{
@@ -105,6 +105,11 @@ function onSelectDate() {
            console.error(error);
        });
 }
+
+$(document).ready(function() {
+    // Reset form khi quay lại
+    $("form")[0].reset();
+});
 function onSelectTypeScreen(){
    let date = document.getElementById("date_showtimes_field").value;
    let movieId = document.getElementById("movie-id-data").innerText;
@@ -131,19 +136,43 @@ function onSelectNumberSeat(){
     fetch(url)
               .then(response => response.json())
               .then(data => {
-                  const select = document.getElementById("seat_field");
-                  select.size = document.getElementById("numberSeat_field").value;
                   data.forEach(result => {
-                      const option = document.createElement("option");
-                      option.textContent  = result.seat;
-                      option.value=result.seat;
-                      select.add(option);
+                      let element = document.getElementById(result.seat);
+                      if (element) {
+                        element.classList.add("seatUnavailable");
+                      }
                   });
               })
               .catch(error => {
                   console.error(error);
               });
 }
+var selectedSeats = [];
+$(".seatNumber").click(
+        function () {
+            if (!$(this).hasClass("seatUnavailable")){
+                if ($(this).hasClass("seatSelected")) {
+                    $(this).removeClass("seatSelected");
+                    var seatId = $(this).attr('id');
+                    var index = selectedSeats.indexOf(seatId);
+                    if (index > -1) {
+                        selectedSeats.splice(index, 1);
+                    }
+                }
+                else {
+                    if (selectedSeats.length < document.getElementById("numberSeat_field").value){
+                    $(this).addClass("seatSelected");
+                    var seatId = $(this).attr('id');
+                    selectedSeats.push(seatId);
+                    }
+
+                }
+            }
+        });
+$("form").submit(function() {
+    var selectedSeatIds = selectedSeats.map(Number);
+    $("#seatList_field").val(selectedSeatIds);
+});
 var count;
 function starmark(item)
 {
