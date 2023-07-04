@@ -7,49 +7,46 @@
 	<title> This is Login  page </title>
 </head>
 <body>
-	<section>
+	<section class="banner">
 		<div id="login">
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
                         <form id="login-form" class="form" th:action="@{/login}" action="#" method="post">
-                        	
-                        	<h1 class="text-center">Login</h1>
-                           
-                        	
-                        	<div th:if="${param.error}" class="alert alert-danger">
-                        		 Invalid Username or Password.
+                        	<h1 class="text-center">Đăng nhập</h1>
+                        	<div th:if="${param.error}" class="alert alert-danger fixed-bottom alert-dismissible fade show" style="width: 350px">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        		 Tài khoản hoặc mật khẩu không hợp lệ.
                         	</div>
-                        	
-                        	<div th:if="${param.logout}" class="alert alert-success">
-                        		 You have been logout.
+                        	<div th:if="${param.logout}" class="alert alert-success fixed-bottom alert-dismissible fade show" style="width: 200px">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        		 Bạn đã đăng xuất.
                         	</div>
-
-                        	
                             <div class="form-group">
-                                <label for="username" class="form-label">Username:</label><br>
+                                <label for="username" class="form-label">Email của bạn:</label><br>
                                 <input type="text" name="username" id="username" class="form-control">
                             </div>
                         
                             <div class="form-group">
-                                <label for="password" class="form-label">Password:</label><br>
+                                <label for="password" class="form-label">Mật khẩu của bạn:</label><br>
                                 <input type="password" name="password" id="password" class="form-control">
                             </div>
                         
-                            <div class="form-group"  style="margin-top: 15px">
-                                <label for="remember-me" class="form-label" ><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
+                            <div class="form-group">
+                                <label for="asking" class="form-label" style="color: gray"><span>Bạn đã tham gia Cinezoo?</label><br>
                             </div>
                             <div id="register-link" class="text-end" style="margin-top: -34px">
-                                <a href="/signup/" class="text-register">Register here</a>
+                                <a href="/signup/" class="text-register" style="color: white">Đăng ký ngay</a>
                             </div>
                             <div class="container text-center"  style="margin-top: 15px">
-                                <input type="submit" name="submit" class="btn bg-primary text-white" value="Submit">
+                                <input type="submit" name="submit" class="btn bg-primary text-white" value="Đăng nhập">    
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 	</section>
