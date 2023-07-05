@@ -7,29 +7,24 @@
 	<title> This is signup page </title>
 </head>
 <body>
-	<section style="margin-top: 1cm;">
-		<div class = "container mt-4">	
-			<div class="row">
+	<section class="banner">
+		<div class = "container">
+			<div class="row" style="padding-top: 80px">
 				<div class = "col-md-8 offset-md-2">
-					<div class="my-card mt-4">
-					 
+					<div class="my-card">
 					 	<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert " role="alert">
   							<p class = "text-center" th:text = "${session.message.content}"> </p>
   							<th:blcok th:text = "${#session.removeAttribute('message')}"> </th:blcok>
 						</div>
-					
-					   
-						<h1 class = "text-center"> Register here</h1>
-						
+						<h1 class = "text-center">Đăng ký</h1>
 						<form  action="" 
 							   th:action="@{/do_register}" 
 							   method="post" 
 							   th:object="${user}"
 					  	>
-						 
                           <!-- name field-->
-							<div class="mb-3">   								
-   								<label for="userName_field" class="form-label">Your Name</label>
+							<div class="mb-3">
+   								<label for="userName_field" class="form-label">Tên của bạn:</label>
     						 	<input
     						 	    name = "userName" 
     						 		type="text" 
@@ -43,7 +38,7 @@
   							 						
                           <!-- Phone field-->
 							<div class="mb-3">   								
-   								<label for="phone_field" class="form-label">Your Phone Number</label>    						 	
+   								<label for="phone_field" class="form-label">Số điện thoại:</label>    						 	
     						 	<input 
     						 	    name = "phone" 
     						 		type="tel" 
@@ -58,7 +53,7 @@
                           <!-- email field-->
 							
 							<div class="mb-3">   								
-   								<label for="email_field" class="form-label">Your Email</label>
+   								<label for="email_field" class="form-label">Email của bạn:</label>
     						 	<input 
     						 		name = "email" 
     						 		type="email" 
@@ -73,7 +68,7 @@
   						
                           <!-- password field-->							
 							<div class="mb-3"> 								
-   								<label for="password_field" class="form-label">Your password</label>
+   								<label for="password_field" class="form-label">Mật khẩu của bạn:</label>
     						 	
     						 	<input 
     						 		name = "password"
@@ -89,42 +84,35 @@
   						
   						<!-- about field-->
   							<div class="mb-3">
-							  <label for="exampleFormControlTextarea1" class="form-label">About</label>
-  							  <textarea name = "about"  th:text="${user.about}"  placeholder = "Enter something yourself" class="form-control"  rows="3"></textarea>
+							  <label for="exampleFormControlTextarea1" class="form-label">Thông tin về bạn:</label>
+  							  <textarea name = "about"  th:text="${user.about}"  placeholder = "Giới thiệu về mình nào." class="form-control"  rows="3"></textarea>
 							</div>
 
-  						<!-- terms and condition-->						
-	  						<div class="mb-3 form-check">
-    						 	<input 
-									type="checkbox" 
+  						<!-- terms and condition-->
+	  						<div class="mb-3 form-check checkbox-lg">
+    						 	<input
+									type="checkbox"
     						 		name = "agreement"
-    						 		class="form-check-input" 
-    						 		id="agreement" 
+    						 		class="form-check-input"
+    						 		id="agreement"
     						 	/>
-    							<label for="agreement" class="form-label">Accept terms and conditions</label>
+    							<label for="agreement" class="form-check-label" style="color: white">Tôi đồng ý các điều khoản.</label>
   							</div>
-  							
   							
   						  <!-- close terms and condition-->
-
   							<div class="container text-center">
-  								
-  								<button type = "submit" class="btn bg-primary text-white">
-  									Submit
+  								<button type = "submit" class="btn bg-primary text-white" style="width: 100px">
+  									Đăng ký
   								</button>
-  								
-  								<button type = "reset" class="btn bg-primary text-white ">
-  									Clear
+  								<button type = "reset" class="btn bg-primary text-white" style="width: 100px">
+  									Xóa
   								</button>
-  								
   							</div>
-  							
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-		
 	</section>
 </body>
 </html>
