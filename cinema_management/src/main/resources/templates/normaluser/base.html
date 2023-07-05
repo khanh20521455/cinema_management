@@ -22,7 +22,7 @@
     <div class="container-fluid">
   
    <!--change -->
-    <a class="navbar-brand brandtext" href="#">Cinezo</a>
+    <a class="navbar-brand brandtext" th:href="@{/}" aria-current="page" href="#">Cinezo</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -30,45 +30,37 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
     	
       <!--      change position-->
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-uppercase">
-        
-          <li class="nav-item">
-            <a class="nav-link active" th:href="@{/}" aria-current="page" href="#">Home</a>
-          </li>
+      <ul class="navbar-nav mr-auto whiteText">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/user/home}" href="#" tabindex="-1" aria-disabled="true">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/user/movie_watched/0}" href="#" tabindex="-1" aria-disabled="true">Đã xem</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/user/history_transaction/0}" href="#" tabindex="-1" aria-disabled="true">Vé</a>
+        </li>
+      </ul>
 
-        
-      	  <li class="nav-item">
-            <a class="nav-link"  href="#" tabindex="-1" aria-disabled="true">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-uppercase whiteText">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/user/user-profile}" href="#" tabindex="-1" aria-disabled="true">
           	  <span th:text="${user.userName}"> </span>
-          
             </a>
           </li>
-	
 	      <li class="nav-item">
-          <a class="nav-link" th:href="@{/logout}" href="#" tabindex="-1" aria-disabled="true">Logout</a>
-        </li>     	
-        </ul>   
+          <a class="nav-link" th:href="@{/logout}" href="#" tabindex="-1" aria-disabled="true"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+            <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+          </svg></a>
+        </li>
+        </ul>
       </div>
    </div>
   </nav>
-    
-    <!-- start of sidebar-->
-    <div class="sidebar mt-3">
-    		<span onclick="toggleSidebar()" class="crossBtn"> &times; </span>
 
-    		<a href="#" th:href="@{/user/home}" class="item"> <i class="fas fa-home"></i>  Trang chủ </a>
-    		<a href="#" th:href="@{/user/movie_watched/0}" class="item"> <i class="fas fa-clipboard-list"></i> Phim đã xem </a>
-    		<a href="#" th:href="@{/user/history_transaction/0}" class="item"> <i class="fas fa-file-invoice-dollar"></i> Lịch sử đặt vé</a>
-    		<a href="#" th:href="@{/user/user-profile}"class="item"> <i class="fas fa-user-circle"></i> Thông tin cá nhân</a>
-    		<a href="#" th:href="@{/logout}" class="item"> <i class="fas fa-sign-out-alt"></i> Đăng xuất </a>
-    		<div class="divider"> </div>
-    </div>    
-    
-    <!-- start content area -->
-    
-    <div class="content mt-3">
-    	<i onclick="toggleSidebar()" class="fas fa-bars m-3"> </i>       
-	    <div th:replace="${content}">   
+    <div class="content">
+      <div th:replace="${content}">
     </div>
     
     <!-- end content area -->

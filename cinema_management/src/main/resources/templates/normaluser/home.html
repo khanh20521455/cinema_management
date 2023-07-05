@@ -4,79 +4,79 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
 </head>
 <body>
-<section>
-    <div class="card ms-3 me-3">
-        <div class="card-body">
-            <div class="search-container my-4">
-                <input
+<section class="banner">
+    <div class="container mt-3" style="margin-left: 20px">
+        <div class="row">
+            <div class="col-7 whiteText">
+                <h1>Hàng loạt phim bom tấn dưới này đây</h1>
+            </div>
+            <div class="col-5 d-flex justify-content-end">
+                <div class="search-container my-1" style="width: 300px">
+                    <input
                         onkeyup="searchByMovieNameUser()"
                         id="searchInput"
                         type="text"
                         class="form-control"
-                        placeholder="Tìm phim"
-                />
-
+                        placeholder="Nhập tên phim"
+                        />
+                </div>
+        </div>
+    </div>
+    <div class="search-result">
+        <br>
+    </div>
+    <div class="upcoming-movie-list">
+    <h3 class="whiteText">Phim sắp chiếu</h3>
+        <br>
+        <div class="container" style="display: grid; grid-template-columns: auto auto auto auto; grid-gap: 30px">
+            <div class="d-flex justify-content-between flex-wrap"
+                 th:each="movie: ${movieUpcomingList}">
+                <div class="card movie-item" style=" width:300px">
+                    <img class="card-img-top img-movie"
+                            th:src="@{'/img/'+${movie.poster}}"
+                            alt=" " style="width:100%">
+                    <div class="card-body align-self-center">
+                        <h4 class="card-title boldText" th:text="${movie.name}"></h4>
+                        <a class="text-decoration-none" href="#" th:href="@{'/user/movie_detail/'+${movie.id}}"
+                            style="margin-right:40px">
+                            <button class="btn btn-outline-warning boldText" style="width: 100px">Thông tin</button>
+                        </a>
+                        <a class="text-decoration-none" href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}">
+                            <button class="btn btn-outline-danger boldText" style="width: 100px">Đặt vé</button>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="search-result">
+    </div>
+        <br>
+        <br>
+        <br>
+    <div class="playing-movie-list">
+        <h3 class="whiteText">Phim đang chiếu</h3>
             <br>
-        </div>
-        <div class="upcoming-movie-list">
-        <h3>Phim sắp chiếu</h3>
-            <br>
-            <div class="container"  style="display: grid; grid-template-columns: auto auto auto; grid-gap: 30px">
+            <div class="container" style="display: grid; grid-template-columns: auto auto auto auto; grid-gap: 30px">
                 <div class="d-flex justify-content-between flex-wrap"
-                     th:each="movie: ${movieUpcomingList}">
+                     th:each="movie: ${moviePlayingList}">
                     <div class="card movie-item" style=" width:300px">
                         <img class="card-img-top img-movie"
                              th:src="@{'/img/'+${movie.poster}}"
                              alt=" " style="width:100%">
-                        <div class="card-body">
-                            <h4 class="card-title" th:text="${movie.name}"></h4>
-                            <a href="#" th:href="@{'/user/movie_detail/'+${movie.id}}"
-                               style="margin-right:40px">
-                                <button class="btn btn-outline-warning"> View detail </button>
+                        <div class="card-body align-self-center">
+                            <h4 class="card-title boldText" th:text="${movie.name}"></h4>
+                            <a class="text-decoration-none" href="#" th:href="@{'/user/movie_detail/'+${movie.id}}">
+                                <button class="btn btn-outline-warning boldText" style="width: 100px">Thông tin</button>
                             </a>
-                            <a href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}">
-                                <button class="btn btn-outline-danger"> Buy Ticket </button>
+                            <a class="text-decoration-none" href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}">
+                                <button class="btn btn-outline-danger boldText" style="width: 100px">Đặt vé</button>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-            <br>
-            <br>
-            <br>
-        <div class="playing-movie-list">
-            <h3>Phim đang chiếu</h3>
-                <br>
-                <div class="container"  style="display: grid; grid-template-columns: auto auto auto; grid-gap: 30px">
-                    <div class="d-flex justify-content-between flex-wrap"
-                         th:each="movie: ${moviePlayingList}">
-                        <div class="card movie-item" style=" width:300px">
-                            <img class="card-img-top img-movie"
-                                 th:src="@{'/img/'+${movie.poster}}"
-                                 alt=" " style="width:100%">
-                            <div class="card-body">
-                                <h4 class="card-title" th:text="${movie.name}"></h4>
-                                <a href="#" th:href="@{'/user/movie_detail/'+${movie.id}}"
-                                   style="margin-right:40px">
-                                    <button class="btn btn-outline-warning"> View detail </button>
-                                </a>
-                                <a href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}">
-                                    <button class="btn btn-outline-danger"> Buy Ticket </button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div>
     </div>
 </section>
 </body>
