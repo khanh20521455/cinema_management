@@ -11,7 +11,7 @@
 
         <div class="card-body">
 
-            <h1 class="text-center"> Quản lý đặt vé </h1>
+            <h1 class="text-center"> Lịch sử đặt vé </h1>
             <table class="table mt-3">
                 <thead>
                 <tr>
@@ -37,7 +37,7 @@
                     <div th:if="${booking.status == 1}">
                         <td>Đang chờ xác nhận
                             <br>
-                            <a th:href = "@{'/user/cancel_booking/'+${booking.id}}" class="btn btn-primary btn-sm"> Huỷ đặt </a>
+                            <a th:href = "@{'/user/cancel_booking/'+${booking.id}}" class="btn bg-primary text-white btn-sm"> Huỷ đặt </a>
                         </td>
                     </div>
                     <div th:if="${booking.status == 2}">
