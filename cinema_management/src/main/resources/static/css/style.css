@@ -1,5 +1,5 @@
 body{
-	background : white!important;
+	background : black!important;
 }
 
 .bg-primary{
@@ -18,6 +18,17 @@ body{
 	background-blend-mode: darken;
 	background-repeat: no-repeat;
 	background-position: center bottom;
+}
+
+.whiteText{
+	color: white;
+	font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+	font-weight: bold;
+}
+
+.boldText{
+	font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+	font-weight: bold;
 }
 
 .bannertext{
@@ -43,11 +54,24 @@ body{
 	padding-left: 10px;
 }
 
-.my-card{
-	
-	padding: 20px;
-	background: white;
+.my-card {
+	padding: 25px;
+	background: rgba(0, 0, 0, 0.715);
+	color: white;
+	border-radius: 15px;
+	height: 700px;
+	font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+	font-size: 16px;
 }
+.checkbox-lg .form-check-input{
+	top: .8rem;
+	scale: 1.4;
+	margin-right: 0.7rem;
+	}
+.checkbox-lg .form-check-label {
+	padding-top: -10px;
+	font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+	}
 
 #bannerimage {
 	width: 100%;
@@ -72,6 +96,7 @@ body{
 }
 .form-label{
 	margin-top: 5px;
+	font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
 }
 .form-control, .form-select {
 	border-width: 3px;
@@ -124,7 +149,6 @@ body{
 }
 
 .content{
-	margin-left: 20%;
 }
 
 .sidebar .crossBtn{
@@ -143,9 +167,7 @@ body{
 }
 
 .my_movie_poster_single{
-	width: 350px;
-	height: 350px;
-	object-fit:cover;
+	object-fit:scale-down;
 }
 
 .my_user_profile{
@@ -166,7 +188,7 @@ body{
 }
 
 .my_div_left{
-	width:33.33%;
+
 }
 
 .my_div_middle{
