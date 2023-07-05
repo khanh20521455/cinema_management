@@ -1,51 +1,51 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
-  <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-	<link rel="stylesheet" th:href = "@{/css/style.css}" />
-    <title th:text="${title}">Base Html</title> 
-  </head>
+    <link rel="stylesheet" th:href = "@{/css/style.css}" />
+    <title th:text="${title}">Base Html</title>
+</head>
 <body>
-  	<!--navbar-->
-    <nav class="fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container-fluid">
+<!--navbar-->
+<nav class="fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
 
-       <!--change -->
+        <!--change -->
         <a class="navbar-brand brandtext" href="#">Cinezo</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-        <!--change position-->
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-uppercase">
+            <!--change position-->
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-uppercase">
                 <li class="nav-item">
-                  <a class="nav-link active" th:href="@{/}" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" th:href="@{/}" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" th:href="@{/user/home}" href="#" tabindex="-1" aria-disabled="true">User</a>
+                    <a class="nav-link" th:href="@{/user/home}" href="#" tabindex="-1" aria-disabled="true">User</a>
                 </li>
                 <!--change link name-->
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/admin/room_management/0}" href="#" tabindex="-1" aria-disabled="true">ADMIN</a>
                 </li>
-          </ul>
+            </ul>
         </div>
-      </div>
-    </nav>
-	<!--end of navbar-->
-    <div th:replace="${content}">
     </div>
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript" src="jquery.seat-charts.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-    <script	th:src = "@{/js/script.js}" > </script>
-  </body>
+</nav>
+<!--end of navbar-->
+<div th:replace="${content}">
+</div>
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery.seat-charts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+<script	th:src = "@{/js/script.js}" > </script>
+</body>
 </html>

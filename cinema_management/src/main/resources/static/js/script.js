@@ -202,7 +202,7 @@ function starmark(item)
 
 function result(){
 }
-$(".container-fluid").hide();
+$(".table-statistic").hide();
 function statistic_movie() {
 
     let start = document.getElementById("movie_start_field").value;
@@ -223,7 +223,7 @@ function statistic_movie() {
                 resultList.push(resultItem);
             });
 
-            $(".container-fluid").show();
+            $(".table-statistic").show();
             $(".statistic_movie_result").html(resultList.join(""));
         })
         .catch(error => {
