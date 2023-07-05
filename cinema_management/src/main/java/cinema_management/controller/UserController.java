@@ -47,8 +47,10 @@ public class UserController {
     }
     // user profile
     @GetMapping("/user-profile")
-    public String userProfile(Model model) {
-        return "normaluser/profile/user_profile";
+    public String userProfile(Model model, Principal principal) {
+        User user= this.userRepository.getUserByUserName(principal.getName());
+        model.addAttribute("user", user);
+        return "normaluser/user_profile";
     }
 
     @GetMapping("/home")

@@ -6,15 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import cinema_management.repository.UserRepository;
 import cinema_management.entities.User;
 import cinema_management.helper.Message;
+import java.security.Principal;
 
 @Controller
 public class HomeController {
@@ -70,6 +67,34 @@ public class HomeController {
         model.addAttribute("title", "Login");
         return "login";
 
+    }
+    @GetMapping("/change_password")
+    private String getChangePassword(){
+        return "change_password";
+    }
+    @PostMapping("/change_password")
+    public String processChangePassword(@RequestParam("currentPassword") String currentPassword,
+                                        @RequestParam("newPassword") String newPassword,
+                                        @RequestParam("confirmPassword") String confirmPassword,
+                                        Principal principal, Model model, HttpSession httpSession) {
+        User currentUser =  this.userRepository.getUserByUserName(principal.getName());
+        boolean isPasswordMatch = passwordEncoder.matches(currentPassword, currentUser.getPassword());
+        if (!isPasswordMatch) {
+            model.addAttribute("error", true);
+            httpSession.setAttribute("message", new Message("Mật khẩu cũ sai ! ", "danger"));
+            return "change_password";
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            model.addAttribute("error_confirm", true);
+            httpSession.setAttribute("message", new Message("Mật khẩu nhập lại sai! ", "danger"));
+            return "change_password";
+        }
+        currentUser.setPassword(passwordEncoder.encode(newPassword));
+        this.userRepository.save(currentUser);
+        httpSession.setAttribute("message", new Message("Đổi mật khẩu thành công", "success"));
+        model.addAttribute("success", true);
+        return"/login";
     }
 }
 

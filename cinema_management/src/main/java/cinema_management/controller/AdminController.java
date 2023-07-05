@@ -45,6 +45,12 @@ public class AdminController {
         User user = userRepository.getUserByUserName(userName);
         model.addAttribute("user", user);
     }
+    @GetMapping("/admin_profile")
+    public String userProfile(Model model, Principal principal) {
+        User user= this.userRepository.getUserByUserName(principal.getName());
+        model.addAttribute("user", user);
+        return "adminuser/admin_profile";
+    }
 
     //Room management
     @GetMapping("/room_management/{page}")
