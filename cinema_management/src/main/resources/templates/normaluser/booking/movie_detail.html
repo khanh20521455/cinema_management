@@ -5,39 +5,40 @@
     <title> This is movie detail page. </title>
 </head>
 <body>
-<section>
-
-    <div class="card ms-3 me-3">
-        <div class="card-body">
+<section class="banner">
+    <div class="card bg-dark mx-auto" style="inline-size: 870px">
+        <div class="card-body" style="padding-inline-start: 50px;">
             <div class="container-fluid m1-1">
                 <div class="row">
-                    <div class="my_div_left">
-                        <img scr=""  class="my_movie_poster_single" th:src="@{'/img/'+${movie.poster}}" alt="movie poster" />
+                    <div class="d-flex justify-content-center" style="padding-inline-end: 50px">
+                        <img scr="" class="my_movie_poster_single border border-white" th:src="@{'/img/'+${movie.poster}}" alt="movie poster" />
                     </div>
-                    <div>
+                    <div class="d-flex justify-content-center" style="padding-inline-end: 50px">
                     <a href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}">
-                        <button class="btn btn-lg btn-outline-primary bg-primary text-white "> Buy Ticket </button>
+                        <button class="btn btn-lg bg-primary whiteText" style="margin-top: 20px;">Đặt vé ngay</button>
                     </a>
                     </div>
                     <div>
-                        <h3 class="mt-3"> <pre>Movie Name      <span th:text= "${movie.name}"> </span> </pre></h3>
-                        <h3 class="mt-3"> <pre>Time            <span th:text= "${movie.time}"> </span> </pre> </h3>
-                        <h3 class="mt-3"> <pre>Genre           <span th:text="${#strings.listJoin(movie.genre, ',')}"> </span> </pre> </h3>
-                        <h3 class="mt-3"> <pre>Director        <span th:text= "${movie.director}"> </span></pre> </h3>
-                        <h3 class="mt-3"> <pre>Actors          <span th:text= "${movie.actor}"> </span></pre> </h3>
-                        <h3 class="mt-3"> <pre>Start           <span th:text= "${movie.start}"> </span> VND</pre> </h3>
-                        <h3 class="mt-3"> <pre>Rating          <span th:text="${avg}+' '"></span><i class="fas fa-star" style="color: orange"></i></span></pre></h3>
+                        <h3 class="mt-3 whiteText"> <pre>Tên phim        <span th:text= "${movie.name}"> </span> </pre></h3>
+                        <h3 class="mt-3 whiteText"> <pre>Thời lượng      <span th:text= "${movie.time}"> </span> </pre> </h3>
+                        <h3 class="mt-3 whiteText"> <pre>Thể loại        <span th:text="${#strings.listJoin(movie.genre, ',')}"> </span> </pre> </h3>
+                        <h3 class="mt-3 whiteText"> <pre>Đạo diễn        <span th:text= "${movie.director}"> </span></pre> </h3>
+                        <h3 class="mt-3 whiteText"> <pre>Các diễn viên   <span th:text= "${movie.actor}"> </span></pre> </h3>
+                        <h3 class="mt-3 whiteText"> <pre>Ngày công chiếu <span th:text= "${movie.start}"> </span></pre> </h3>
+                        <h3 class="mt-3 whiteText"> <pre>Đánh giá        <span th:text="${avg}+' '"></span><i class="fas fa-star" style="color: orange"></i></span></pre></h3>
                     </div>
                 </div>
                 </div>
-            <h1>Comment</h1>
+                <br>
+                <br>
+            <h1 class= "whiteText">Bình luận</h1>
             <div class="post">
                 <ul>
                     <li th:each=" comment: ${commentList} ">
                         <div class="thumbnail">
                             <img scr="" class="user_avatar_comment" th:src="@{'/img/'+${comment.user.imgUrl}}" alt="" />
                         </div>
-                        <div clas="meta">
+                        <div class="meta">
                             <h3 th:value="${comment.user.userName}" th:text="${comment.user.userName}"></h3>
                             <span th:each="i : ${#numbers.sequence(1,5)}"
                                   onclick="starmark(this)"
