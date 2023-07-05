@@ -18,6 +18,10 @@ public interface SeatRepository extends JpaRepository<Seat, Integer> {
     @Modifying
     @Query("DELETE FROM Seat as s WHERE s.showtimes.id=:id")
     public void deleteSeatBaseShowtimes(@PathVariable("id") Integer id);
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Seat as s WHERE s.showtimes.id=:id")
+    public void deleteSeatBaseShowtimesMovie(@Param("id") Integer id);
     @Query("FROM Seat as s WHERE s.showtimes.id=:id")
     public List<Seat> seatBaseShowtimes(@Param("id") Integer id);
     @Query("FROM Seat as s WHERE s.showtimes.id=:id AND s.status=1")

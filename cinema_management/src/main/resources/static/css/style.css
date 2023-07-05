@@ -1,5 +1,5 @@
 body{
-	
+	font-family: 'Segoe UI', sans-serif;
 	background : white!important;
 }
 
@@ -92,7 +92,7 @@ body{
 
 .sidebar{
 	width: 18%;
-	background:white;
+	background:#fff;
 	height: 100%;
 	position: fixed;
 	padding-top: 45px;
@@ -208,7 +208,7 @@ body{
 .seatNumber {
     display: inline-block;
 	padding: 10px;
-	background-color: #5c86eb;
+	background-color: rgba(219, 27, 27, 0.5);
 	color: #FFF;
 	border-radius: 5px;
 	cursor: default;
@@ -233,7 +233,7 @@ body{
 .seatRow {padding: 10px;}
 
 .seatSelected {
-	background-color: lightgreen;
+	background-color: #fcb103;
 	color: black;
  }
 
@@ -247,3 +247,37 @@ body{
 .hidden {display: none;}
 
 .seatsAmount {max-width: 2em;}
+.post li{
+    display:flex;
+    gap:15px;
+    margin-bottom: 15px;
+}
+.post li thumbnail{
+    position:relative;
+    width:100px;
+    height:100px;
+    flex-shrink:0;
+}
+.post li thumbnail img{
+    object-fit:cover;
+    width:100%;
+    height:100%
+}
+.post li .meta h2{
+    font-size:20px;
+    margin-bottom:10px;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: rgba(219, 27, 27, 0.5);;
+    border-color: rgba(219, 27, 27, 0.5);;
+}
+.page-item .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: rgba(219, 27, 27, 0.5);;
+    border-color: rgba(219, 27, 27, 0.5);;
+}
+
+

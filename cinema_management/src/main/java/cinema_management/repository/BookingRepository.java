@@ -24,7 +24,10 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     @Modifying
     @Query("DELETE FROM Booking as s WHERE s.showtimes.id=:id")
     public void deleteBookingBaseShowtimes(@PathVariable("id") Integer id);
-
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Booking as s WHERE s.showtimes.id=:id")
+    public void deleteBookingBaseShowtimesMovie(@Param("id") Integer id);
     @Query("FROM Booking as b WHERE b.status=1 ORDER BY b.showtimes.date DESC, b.showtimes.time ASC")
     public Page<Booking> bookingWaitConfirm(Pageable pageable);
     @Query("SELECT MIN(b) FROM Booking b WHERE b.status = 2 AND b.showtimes.date <= :now AND b.user.email = :username GROUP BY b.showtimes.movie.id")

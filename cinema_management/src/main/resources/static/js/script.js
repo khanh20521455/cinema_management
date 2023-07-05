@@ -76,12 +76,13 @@ const searchByMovieNameUser = () => {
                     let movieItem = `<div class="card movie-item" style="width:300px">
                                         <img class="card-img-top img-movie" src="/img/${movie.poster}" alt="" style="width:100%">
                                         <div class="card-body">
-                                            <h4 class="card-title">${movie.name}</h4>
-                                            <a href="/user/movie_detail/${movie.id}" style="margin-right:40px">
-                                                <button class="btn btn-outline-warning">View detail</button>
+                                            <h4 class="card-title boldText" th:text="${movie.name}"></h4>
+                                            <a class="text-decoration-none" href="#" th:href="@{'/user/movie_detail/'+${movie.id}}"
+                                               style="margin-right:40px">
+                                                <button class="btn btn-outline-warning boldText" style="width: 100px">Chi tiết</button>
                                             </a>
-                                            <a href="/user/buy_ticket/${movie.id}">
-                                                <button class="btn btn-outline-danger">Buy Ticket</button>
+                                            <a class="text-decoration-none" href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}">
+                                                <button class="btn btn-outline-danger boldText" style="width: 100px">Đặt vé</button>
                                             </a>
                                         </div>
                                     </div>`;

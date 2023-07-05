@@ -141,16 +141,19 @@ public class MovieService {
     public String deleteMovie(Integer id){
         List<Showtimes> showtimesList= this.showtimesRepository.ShowtimesBaseOnMovie(id);
         for(Showtimes showtimes:showtimesList){
+            this.bookingRepository.deleteBookingBaseShowtimesMovie(showtimes.getId());
             List<Booking> bookingList=this.bookingRepository.bookingBaseShowtimes(showtimes.getId());
             for (Booking booking: bookingList){
                 this.bookingRepository.deleteById(booking.getId());
             }
+            this.seatRepository.deleteSeatBaseShowtimesMovie(showtimes.getId());
             List<Seat> seatList=this.seatRepository.seatBaseShowtimes(showtimes.getId());
             for (Seat seat: seatList){
                 this.seatRepository.deleteById(seat.getId());
             }
             this.showtimesRepository.deleteById(showtimes.getId());
         }
+        this.commentRepository.deleteCommontMovie(id);
         movieRepository.deleteById(id);
         return "redirect:/admin/movie_management/0";
     }

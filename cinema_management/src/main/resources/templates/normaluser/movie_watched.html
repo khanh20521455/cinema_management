@@ -30,10 +30,10 @@
                     <td th:text="${booking.showtimes.time}+' ngày '+${booking.showtimes.date}"></td>
                     <td>
                         <div th:if="${booking.statusComment == 0}">
-                        <a th:href = "@{'/user/add_comment/'+${booking.showtimes.movie.id}}" class="btn btn-primary btn-sm"> Bình luận </a>
+                        <a th:href = "@{'/user/add_comment/'+${booking.showtimes.movie.id}}" class="btn bg-primary text-white-sm"> Bình luận </a>
                         </div>
                         <div th:if="${booking.statusComment == 1}">
-                            <a th:href = "@{'/user/update_comment/'+${booking.showtimes.movie.id}}" class="btn btn-primary btn-sm"> Sửa bình luận </a>
+                            <a th:href = "@{'/user/update_comment/'+${booking.showtimes.movie.id}}" class="btn bg-primary text-white-sm"> Sửa bình luận </a>
                         </div>
                     </td>
                 </tr>
