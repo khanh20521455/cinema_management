@@ -28,7 +28,7 @@ const searchByMovieNameAdmin = () => {
     let query = $("#searchInput").val();
 
     if(query == ""){
-        $(".search-result").hide();
+        $(".search-result-movie").hide();
     }else{
 
         // search
@@ -49,8 +49,8 @@ const searchByMovieNameAdmin = () => {
 
                 text+=`</div>`;
 
-                $(".search-result").html(text);
-                $(".search-result").show();
+                $(".search-result-movie").html(text);
+                $(".search-result-movie").show();
             });
     }
 };
@@ -202,7 +202,7 @@ function starmark(item)
 
 function result(){
 }
-$(".table-statistic").hide();
+$(".container-fluid").hide();
 function statistic_movie() {
 
     let start = document.getElementById("movie_start_field").value;
@@ -223,7 +223,7 @@ function statistic_movie() {
                 resultList.push(resultItem);
             });
 
-            $(".table-statistic").show();
+            $(".container-fluid").show();
             $(".statistic_movie_result").html(resultList.join(""));
         })
         .catch(error => {

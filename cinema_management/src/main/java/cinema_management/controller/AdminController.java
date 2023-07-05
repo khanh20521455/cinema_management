@@ -154,13 +154,9 @@ public class AdminController {
         return  this.bookingService.cancelBooking(id);
     }
     //Statistic
-    @GetMapping("/statistic_movie")
-    public String statisticMovie(){
-        return "adminuser/statistic/statistic";
-    }
     @GetMapping("/statistic_chart")
     public String statisticYear(){
-        return "adminuser/statistic/statistic_chart";
+        return "adminuser/statistic_chart";
     }
 
 }

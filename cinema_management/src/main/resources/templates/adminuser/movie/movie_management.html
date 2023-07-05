@@ -9,9 +9,9 @@
 <section>
     <div class="card ms-3 me-3">
         <div class="card-body">
-            <h1 class="text-center"> Movie List </h1>
+            <h1 class="text-center"> Quản lý phim </h1>
             <a href="#" th:href="@{/admin/add_movie}">
-                <button class="btn btn-light-sm"> Thêm phim </button>
+                <button class="btn bg-primary text-white"> Thêm phim mới </button>
             </a>
             <!--search-->
             <div class="search-container my-4">
@@ -22,10 +22,7 @@
                         class="form-control"
                         placeholder="Tìm phim"
                 />
-                <div class="search-result">
-                    <h1> 	This is Result </h1>
-                </div>
-
+                <div class="search-result-movie"></div>
             </div>
 
             <table class="table mt-3">
@@ -33,11 +30,6 @@
                 <tr>
                     <th scope="col">Poster</th>
                     <th scope="col">Tên phim</th>
-                    <th scope="col">Thời lượng</th>
-                    <th scope="col">Thể loại</th>
-                    <th scope="col">Đạo diễn</th>
-                    <th scope="col">Diễn viên</th>
-                    <th scope="col">Năm sản xuất</th>
                     <th scope="col">Khởi chiếu</th>
                     <th scope="col">Kết thúc</th>
                     <th scope="col">Hành động</th>
@@ -49,16 +41,11 @@
                         <img scr="" class="my_movie_poster" th:src="@{'/img/'+${movie.poster}}" alt="movie poster" />
                     </td>
                     <td th:text="${movie.name}"></td>
-                    <td th:text="${movie.time}"></td>
-                    <td th:text="${#strings.listJoin(movie.genre, ',')}"></td>
-                    <td th:text="${movie.director}"></td>
-                    <td th:text="${movie.actor}"></td>
-                    <td th:text="${movie.year}"></td>
                     <td th:text="${movie.start}"></td>
                     <td th:text="${movie.end}"></td>
                     <td>
-                        <a th:href = "@{'/admin/update_movie/'+${movie.id}}" class="btn btn-primary btn-sm"> Cập nhật </a>
-                        <a th:href = "@{'/admin/delete_movie/'+${movie.id}}" class="btn btn-primary btn-sm"> Xóa </a>
+                        <a th:href = "@{'/admin/update_movie/'+${movie.id}}" class="btn bg-primary text-white btn-sm"> Cập nhật </a>
+                        <a th:href = "@{'/admin/delete_movie/'+${movie.id}}" class="btn bg-primary text-white btn-sm"> Xóa </a>
                     </td>
                 </tr>
                 </tbody>

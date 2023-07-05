@@ -56,7 +56,7 @@ public class ShowtimesService {
             e.printStackTrace();
             session.setAttribute("message", new Message("Something went wrong, try again ! ", "danger"));
         }
-        for (int i=0; i<40;i++){
+        for (int i=0; i<35;i++){
             Seat seat=new Seat();
             seat.setSeat(i+1);
             seat.setStatus(0);

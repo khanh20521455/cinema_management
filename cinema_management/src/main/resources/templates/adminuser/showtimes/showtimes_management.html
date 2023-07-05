@@ -14,7 +14,7 @@
 
             <h1 class="text-center"> Quản lý lịch chiếu </h1>
             <a href="#" th:href="@{/admin/add_showtimes}">
-                <button class="btn btn-light-sm"> Thêm lịch chiếu </button>
+                <button class="btn bg-primary text-white"> Thêm lịch chiếu </button>
             </a>
             <table class="table mt-3">
                 <thead>
@@ -39,8 +39,8 @@
                     <td th:text="${showtimes.date}"></td>
                     <td th:text="${showtimes.price}"></td>
                     <td>
-                        <a th:href = "@{'/admin/update_showtimes/'+${showtimes.id}}" class="btn btn-primary btn-sm"> Cập nhật </a>
-                        <a th:href = "@{'/admin/delete_showtimes/'+${showtimes.id}}" class="btn btn-primary btn-sm"> Xóa </a>
+                        <a th:href = "@{'/admin/update_showtimes/'+${showtimes.id}}" class="btn bg-primary text-white btn-sm"> Cập nhật </a>
+                        <a th:href = "@{'/admin/delete_showtimes/'+${showtimes.id}}" class="btn bg-primary text-white btn-sm"> Xóa </a>
                     </td>
                 </tr>
                 </tbody>

@@ -173,7 +173,10 @@ body{
 .search-container{
 	position: relative;
 }
-
+.search-result-movie{
+     display: grid;
+     grid-gap: 30px
+}
 .search-result{
  display: grid;
  grid-template-columns: auto auto auto;
