@@ -12,7 +12,7 @@
                 <i class="fa fa-chart-line fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
                 <div class="ms-3">
                     <p class="mb-2"> Tổng lượt vé</p>
-                    <h6 class="mb-0">27</h6>
+                    <h6 class="mb-0" id="ticketOfYear"></h6>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
                 <i class="fa fa-chart-pie fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
                 <div class="ms-3">
                     <p class="mb-2">Tổng doanh thu</p>
-                    <h6 class="mb-0">1790000 VNĐ</h6>
+                    <h6 class="mb-0" id="revenueOfYear">VNĐ</h6>
                 </div>
             </div>
         </div>
@@ -86,6 +86,24 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        let url3=`http://localhost:8082/ticketOfYear`;
+        let url4=`http://localhost:8082/revenueOfYear`;
+        fetch(url3)
+        .then(response => response.json())
+        .then(result => {
+            document.getElementById("ticketOfYear").innerHTML=result;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        fetch(url4)
+        .then(response => response.json())
+        .then(result => {
+            document.getElementById("revenueOfYear").innerHTML=result;
+        })
+        .catch(error => {
+            console.error(error);
+        });
         var ctx1 = document.getElementById('chart1').getContext('2d');
         var ctx2 = document.getElementById('chart2').getContext('2d');
         var data1 =  new Array(12);

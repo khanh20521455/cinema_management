@@ -21,5 +21,5 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     @Transactional
     @Modifying
     @Query("DELETE FROM Comment as s WHERE s.movie.id=:id")
-    public void deleteCommontMovie(@Param("id") Integer id);
+    public void deleteCommentMovie(@Param("id") Integer id);
 }

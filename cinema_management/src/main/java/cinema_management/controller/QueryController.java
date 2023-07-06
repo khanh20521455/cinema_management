@@ -95,4 +95,15 @@ public class QueryController {
         }
         return result;
     }
+    @GetMapping("/ticketOfYear")
+    public int getTicketYear(){
+        Date current=new Date(System.currentTimeMillis());
+        int year = current.toLocalDate().getYear();
+        return this.bookingRepository.ticketOfYear(year);
+    }
+    @GetMapping("/revenueOfYear")
+    public long getRevenueOfYear(){
+        Date current=new Date(System.currentTimeMillis());
+        return this.bookingRepository.revenueOfYear(current.toLocalDate().getYear());
+    }
 }
