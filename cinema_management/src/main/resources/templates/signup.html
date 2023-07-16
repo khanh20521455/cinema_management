@@ -8,123 +8,105 @@
 </head>
 <body>
 	<section style="margin-top: 1cm;">
-		<div class = "container mt-4">	
-			<div class="row">
+		<div class = "container">
+			<div class="row" style="padding-top: 80px">
 				<div class = "col-md-8 offset-md-2">
 					<div class="my-card mt-4">
-					 
-					 	<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert " role="alert">
-  							<p class = "text-center" th:text = "${session.message.content}"> </p>
-  							<th:blcok th:text = "${#session.removeAttribute('message')}"> </th:blcok>
+						<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert " role="alert">
+							<p class = "text-center" th:text = "${session.message.content}"> </p>
+							<th:blcok th:text = "${#session.removeAttribute('message')}"> </th:blcok>
 						</div>
-					
-					   
-						<h1 class = "text-center"> Register here</h1>
-						
-						<form  action="" 
-							   th:action="@{/do_register}" 
-							   method="post" 
-							   th:object="${user}"
-					  	>
-						 
-                          <!-- name field-->
-							<div class="mb-3">   								
-   								<label for="userName_field" class="form-label">Your Name</label>
-    						 	<input
-    						 	    name = "userName" 
-    						 		type="text" 
-    						 		class="form-control" 
-    						 		id="userName_field" 
-    						 		placeholder="Enter Here"
-    						 		required
-    						 		th:value="${user.userName}" 
-    						 	/>   							
-  							</div>
-  							 						
-                          <!-- Phone field-->
-							<div class="mb-3">   								
-   								<label for="phone_field" class="form-label">Your Phone Number</label>    						 	
-    						 	<input 
-    						 	    name = "phone" 
-    						 		type="tel" 
-    						 		class="form-control" 
-    						 		id="phone_field" 
-    						 		placeholder="Enter Here"
-    						 		required
-    						 		th:value="${user.phone}"
-    						 	/>   							
-  							</div>
+						<h1 class = "text-center">Đăng ký</h1>
+						<form  action=""
+						th:action="@{/do_register}"
+						method="post"
+						th:object="${user}"
+						>
 
-                          <!-- email field-->
-							
-							<div class="mb-3">   								
-   								<label for="email_field" class="form-label">Your Email</label>
-    						 	<input 
-    						 		name = "email" 
-    						 		type="email" 
-    						 		class="form-control" 
-    						 		id="email_field" 
-    						 		aria-describedby="emailHelp"
-    						 		placeholder="Enter Here"
-    						 		required
-    						 		th:value="${user.email}"
-    						 	/> 							
-  							</div>
-  						
-                          <!-- password field-->							
-							<div class="mb-3"> 								
-   								<label for="password_field" class="form-label">Your password</label>
-    						 	
-    						 	<input 
-    						 		name = "password"
-    						 		type="password" 
-    						 		class="form-control" 
-    						 		id="password_field" 
-    						 		aria-describedby="passwordHelpInline"
-    						 		placeholder="Enter Here"
-    						 		required
-    						 	/>  							
-  							</div>
-  							  						
-  						
-  						<!-- about field-->
-  							<div class="mb-3">
-							  <label for="exampleFormControlTextarea1" class="form-label">About</label>
-  							  <textarea name = "about"  th:text="${user.about}"  placeholder = "Enter something yourself" class="form-control"  rows="3"></textarea>
+						<!-- name field-->
+							<div class="mb-3">
+								<label for="userName_field" class="form-label">Tên của bạn</label>
+								<input
+								name = "userName"
+								type="text"
+								class="form-control"
+								id="userName_field"
+								placeholder="Nhập Họ và Tên"
+								required
+								th:value="${user.userName}"
+								/>
 							</div>
 
-  						<!-- terms and condition-->						
-	  						<div class="mb-3 form-check">
-    						 	<input 
-									type="checkbox" 
-    						 		name = "agreement"
-    						 		class="form-check-input" 
-    						 		id="agreement" 
-    						 	/>
-    							<label for="agreement" class="form-label">Accept terms and conditions</label>
-  							</div>
-  							
-  							
-  						  <!-- close terms and condition-->
-
-  							<div class="container text-center">
-  								
-  								<button type = "submit" class="btn bg-primary text-white">
-  									Submit
-  								</button>
-  								
-  								<button type = "reset" class="btn bg-primary text-white ">
-  									Clear
-  								</button>
-  								
-  							</div>
-  							
+							<!-- Phone field-->
+							<div class="mb-3">
+								<label for="phone_field" class="form-label">Số điện thoại</label>
+								<input
+								name = "phone"
+								type="tel"
+								class="form-control"
+								id="phone_field"
+								placeholder="Nhập số điện thoại"
+								required
+								th:value="${user.phone}"
+								/>
+							</div>
+							
+							<!-- email field-->
+							<div class="mb-3">
+								<label for="email_field" class="form-label">Email của bạn</label>
+								<input
+								name = "email"
+								type="email"
+								class="form-control"
+								id="email_field"
+								aria-describedby="emailHelp"
+								placeholder="Nhập Email"
+								required
+								th:value="${user.email}"
+								/>
+							</div>
+							
+							<!-- password field-->
+							<div class="mb-3">
+								<label for="password_field" class="form-label">Mật khẩu</label>
+								<input
+								name = "password"
+								type="password"
+								class="form-control"
+								id="password_field"
+								aria-describedby="passwordHelpInline"
+								placeholder="Nhập mật khẩu"
+								required
+								/>
+							</div>
+							
+							<!-- about field-->
+							<div class="mb-3">
+								<label for="exampleFormControlTextarea1" class="form-label">Thông tin về bạn</label>
+								<textarea name = "about"  th:text="${user.about}"  placeholder = "Hãy giới thiệu về mình nào" class="form-control"  rows="3"></textarea>
+							</div>
+							
+							<!-- terms and condition-->
+							<div class="mb-3 form-check">
+								<input
+								type="checkbox"
+								name="agreement"
+								class="form-check-input"
+								id="agreement"
+								/>
+								<label for="agreement" class="form-label boldText">Tôi đồng ý với các điều khoản</label>
+							</div>
+							
+							<!-- close terms and condition-->
+							<div class="container text-center">
+								<button type = "submit" class="btn bg-primary text-white boldText" style="width: 100px">Đăng ký</button>
+								<button type = "reset" class="btn bg-primary text-white boldText" style="width: 100px">Xóa</button>
+							</div>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-		
 	</section>
 </body>
 </html>
