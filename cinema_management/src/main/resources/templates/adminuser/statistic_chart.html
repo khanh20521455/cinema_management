@@ -11,7 +11,7 @@
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <i class="fa fa-chart-line fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
                 <div class="ms-3">
-                    <p class="mb-2"> Tổng lượt vé</p>
+                    <p class="mb-2" style="font-size: 20px;"> Tổng lượt vé </p>
                     <h6 class="mb-0" id="ticketOfYear"></h6>
                 </div>
             </div>
@@ -21,8 +21,8 @@
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <i class="fa fa-chart-pie fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
                 <div class="ms-3">
-                    <p class="mb-2">Tổng doanh thu</p>
-                    <h6 class="mb-0" id="revenueOfYear">VNĐ</h6>
+                    <p class="mb-2" style="font-size: 20px;"> Tổng doanh thu </p>
+                    <h6 class="mb-0" id="revenueOfYear"> VNĐ </h6>
                 </div>
             </div>
         </div>
@@ -31,13 +31,13 @@
     <div class="row g-4">
         <div class="col-sm-12 col-xl-6">
             <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">Biểu đồ lượt vé</h6>
+                <h6 class="mb-4" style="font-size: 20px;"> Biểu đồ lượt vé </h6>
                 <canvas id="chart1"></canvas>
             </div>
         </div>
         <div class="col-sm-12 col-xl-6">
             <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">Biểu đồ doanh thu</h6>
+                <h6 class="mb-4" style="font-size: 20px;"> Biểu đồ doanh thu </h6>
                 <canvas id="chart2"></canvas>
             </div>
         </div>
@@ -45,7 +45,7 @@
     <br>
     <div class="row g-4">
         <div class="bg-light rounded h-100 p-4">
-            <h6 class="mb-4">Nhập thời gian cần thống kê</h6>
+            <h6 class="mb-4" style="font-size: 20px;">Nhập thời gian cần thống kê</h6>
             <div class="mb-3">
                 <label for="movie_start_field" class="form-label">Từ ngày:</label>
                 <input type="date" class="form-control" id="movie_start_field" oninput="statistic_movie()">
@@ -61,16 +61,18 @@
             <div class="bg-light text-center rounded p-4">
                 <div class="table-statistic">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <button class="btn bg-primary text-white btn-sm"
+                        <button class="btn bg-primary text-white btn-sm boldText"
                                 onclick="statistic_ticket_onclick()"
+                                style="width: 150px;"
                                 id="button_statistic_ticket">Lượt vé tăng dần</button>
-                        <button class="btn bg-primary text-white btn-sm"
+                        <button class="btn bg-primary text-white btn-sm boldText"
                                 onclick="statistic_revenue_onclick()"
+                                style="width: 150px;"
                                 id="button_statistic_revenue">Doanh thu tăng dần</button>
                     </div>
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
-                        <tr class="text-dark">
+                        <tr class="text-dark" style="font-size: 18px;">
                             <th scope="col">Id</th>
                             <th scope="col">Phim</th>
                             <th scope="col">Tên</th>

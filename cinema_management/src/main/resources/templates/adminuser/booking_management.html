@@ -11,10 +11,10 @@
 
         <div class="card-body">
 
-            <h1 class="text-center"> Quản lý đặt vé </h1>
+            <h1 class="text-center"> QUẢN LÝ ĐẶT VÉ </h1>
             <table class="table mt-3">
                 <thead>
-                <tr>
+                <tr style="font-size: 20px;">
                     <th scope="col">Phim</th>
                     <th scope="col">Thời gian chiếu</th>
                     <th scope="col">Ghế ngồi</th>
@@ -29,17 +29,17 @@
                     <td th:text="${#strings.listJoin(booking.seatList, ' ')}"></td>
                     <td th:text="${booking.user.email}"></td>
                     <td>
-                        <a th:href = "@{'/admin/confirm_booking/'+${booking.id}}" class="btn bg-primary text-white btn-sm"> Xác nhận </a>
-                        <a th:href = "@{'/admin/cancel_booking/'+${booking.id}}" class="btn bg-primary text-white btn-sm"> Hủy đặt </a>
+                        <a th:href = "@{'/admin/confirm_booking/'+${booking.id}}" class="btn text-white btn-sm boldText" style="background-color: green; width: 80px;"> Xác nhận </a>
+                        <a th:href = "@{'/admin/cancel_booking/'+${booking.id}}" class="btn text-white btn-sm boldText" style="background-color: red; width: 80px;"> Hủy đặt </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
 
             <nav aria-label="Page navigation example">
-                <ul th:if="${totalPages != 0}" class="pagination">
+                <ul th:if="${totalPages != 0}" class="pagination boldText">
                     <li th:if="${currentPage != 0}" class="page-item">
-                        <a th:href="@{'/admin/booking_management/'+${currentPage-1}}"  class="page-link" href="#">Previous</a></li>
+                        <a th:href="@{'/admin/booking_management/'+${currentPage-1}}"  class="page-link" href="#"> Trang trước </a></li>
                     <li th:classappend="${currentPage==iter-1?'active':''}"
                         th:each="iter : ${#numbers.sequence(1,totalPages)}"
                         class="page-item">
@@ -47,7 +47,7 @@
                             <span th:text="${iter}"> </span>
                         </a></li>
                     <li th:if="${currentPage+1 != totalPages}" class="page-item">
-                        <a th:href="@{'/admin/booking_management/'+${currentPage+1}}" class="page-link" href="#">Next</a></li>
+                        <a th:href="@{'/admin/booking_management/'+${currentPage+1}}" class="page-link" href="#"> Trang Sau </a></li>
                 </ul>
             </nav>
         </div>
