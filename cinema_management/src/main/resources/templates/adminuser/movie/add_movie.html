@@ -9,123 +9,145 @@
 <section>
     <div class="card me-3 ms-3">
         <div class="card-body">
-            <h1 class="text-center"> Thêm phim</h1>
+            <h1 class="text-center"> THÊM PHIM MỚI </h1>
             <div class="container-fluid m1-1">
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
                         <form action="#"
-                              th:object="${movie}"
-                              enctype="multipart/form-data"
-                              method="POST"
-                              th:action="@{/admin/add_movie_process}"
+                        th:object="${movie}"
+                        enctype="multipart/form-data"
+                        method="POST"
+                        th:action="@{/admin/add_movie_process}"
                         >
-                            <!--Movie Name-->
-                            <div class="form-group">
-                                <label  for="movie_name_field" class="form-label">Tên phim:</label><br>
-                                <input
-                                        name="name"
-                                        type="text"
-                                        class="form-control"
-                                        id="movie_name_field"
-                                        placeholder="Nhập tên phim"
-                                        required
-                                />
-                            </div>
-                            <!--Movie Time-->
-                            <div class="form-group">
-                                <label  for="movie_time_field" class="form-label">Thời lượng:</label><br>
-                                <input
-                                        name="time"
-                                        type="text"
-                                        class="form-control"
-                                        id="movie_time_field"
-                                        placeholder="Nhập thời lượng phim"
-                                >
-                            </div>
-                            <!--Movie Genre-->
-                            <div class="form-group">
-                                <label  for="movie_genre_field" class="form-label">Thể loại:</label><br>
-                                <select
-                                        class="form-control"
-                                        id="movie_genre_field"
-                                        th:field="*{genre}"
-                                        multiple
-                                        required>
-                                    <option th:each="genre: ${genreList}"
+                        
+                        <!--Movie Name-->
+                        <div class="form-group">
+                            <label  for="movie_name_field" class="form-label">Tên phim:</label><br>
+                            <input
+                            name="name"
+                            type="text"
+                            class="form-control"
+                            id="movie_name_field"
+                            placeholder="Nhập tên phim"
+                            required/>
+                        </div>
+                        
+                        <!--Movie Time-->
+                        <div class="form-group">
+                            <label  for="movie_time_field" class="form-label">Thời lượng:</label><br>
+                            <input
+                            name="time"
+                            type="text"
+                            class="form-control"
+                            id="movie_time_field"
+                            placeholder="Nhập thời lượng phim"
+                            >
+                        </div>
+                        
+                        <!--Movie Genre-->
+                        <div class="form-group">
+                            <label  for="movie_genre_field" class="form-label">Thể loại:</label><br>
+                            <select
+                                class="form-control"
+                                id="movie_genre_field"
+                                th:field="*{genre}"
+                                multiple
+                                required>
+                                <option th:each="genre: ${genreList}"
                                     th:value="${genre}"
-                                    th:text="${genre}"
-                                    >
-                                    </option>
-
-                                </select>
-                            </div>
-                            <!--Movie Director-->
-                            <div class="form-group">
-                                <label  for="movie_director_field" class="form-label">Đạo diễn:</label><br>
-                                <input
-                                        name="director"
-                                        type="text"
-                                        class="form-control"
-                                        id="movie_director_field"
-                                        placeholder="Nhập tên đạo diễn"
-                                />
-                            </div>
-                            <!--Movie Actor-->
-                            <div class="form-group">
-                                <label  for="movie_actor_field" class="form-label">Diễn viên:</label><br>
-                                <input
-                                        name="actor"
-                                        type="text"
-                                        class="form-control"
-                                        id="movie_actor_field"
-                                        placeholder="Nhập tên diễn viên"
-                                />
-                            </div>
-                            <!--Movie Year-->
-                            <div class="form-group">
-                                <label  for="movie_year_field" class="form-label">Năm sản xuất:</label><br>
-                                <input
-                                        name="year"
-                                        type="number"
-                                        class="form-control"
-                                        id="movie_year_field"
-                                        placeholder="Nhập năm sản xuất"
-                                        required
-                                />
-                            </div>
-                            <!--Start -->
-                            <div class="form-group">
+                                    th:text="${genre}">
+                                </option>
+                            </select>
+                        </div>
+                        <!--Movie Director-->
+                        <div class="form-group">
+                            <label  for="movie_director_field" class="form-label">Đạo diễn:</label><br>
+                            <input
+                            name="director"
+                            type="text"
+                            class="form-control"
+                            id="movie_director_field"
+                            placeholder="Nhập tên đạo diễn"
+                            />
+                        </div>
+                        
+                        <!--Movie Actor-->
+                        <div class="form-group">
+                            <label  for="movie_actor_field" class="form-label">Diễn viên:</label><br>
+                            <input
+                            name="actor"
+                            type="text"
+                            class="form-control"
+                            id="movie_actor_field"
+                            placeholder="Nhập tên diễn viên"
+                            />
+                        </div>
+                        
+                        <!--Movie Year-->
+                        <div class="form-group">
+                            <label  for="movie_year_field" class="form-label">Năm sản xuất:</label><br>
+                            <input
+                            name="year"
+                            type="number"
+                            class="form-control"
+                            id="movie_year_field"
+                            placeholder="Nhập năm sản xuất"
+                            required
+                            />
+                        </div>
+                        
+                        <!--Start -->
+                        <div class="form-group">
                             <label  for="movie_start_field" class="form-label">Khởi chiếu:</label><br>
-                                <input
-                                        name="start"
-                                        type="date"
-                                        class="form-control"
-                                        id="movie_start_field"
-                                        placeholder="Chọn ngày khởi chiếu"
-                                >
-                            </div>
-                            <!--End-->
-                            <div class="form-group">
-                                <label  for="movie_end_field" class="form-label">Kết thúc:</label><br>
-                                <input
-                                        name="end"
-                                        type="date"
-                                        class="form-control"
-                                        id="movie_end_field"
-                                        placeholder="Chọn ngày rút khỏi rạp"
-                                >
-                            </div>
-                            <div class="custom-file">
-                                <input
-                                        type="file"
-                                        name="movieImageUrl"
-                                />
-                            </div>
-                            <br>
-                            <br>
-                            <div class="container text-center mb-3">
-                                <button class="btn bg-primary text-white"> Thêm phim </button>
-                            </div>
+                            <input
+                            name="start"
+                            type="date"
+                            class="form-control"
+                            id="movie_start_field"
+                            placeholder="Chọn ngày khởi chiếu"
+                            >
+                        </div>
+                        
+                        <!--End-->
+                        <div class="form-group">
+                            <label for="movie_end_field" class="form-label">Kết thúc:</label><br>
+                            <input
+                            name="end"
+                            type="date"
+                            class="form-control"
+                            id="movie_end_field"
+                            placeholder="Chọn ngày rút khỏi rạp"
+                            >
+                        </div>
+                        
+                        <!--Choose Poster-->
+                        <div class="custom-file mt-3">
+                            <input
+                            type="file"
+                            name="movieImageUrl"
+                            class="form-control"
+                            id="formFile"
+                            onchange="preview()"
+                            />
+                            <img id="frame" src="" class="rounded mx-auto d-block mt-3" />
+                        </div>
+
+                        <script>
+                            function preview() {
+                                frame.src = URL.createObjectURL(event.target.files[0]);
+                            }
+                            function clearImage() {
+                                document.getElementById('formFile').value = null;
+                                frame.src = "";
+                            }
+                        </script>
+                        <br>
+                        <br>
+
+                        <!--Button Confirm-->
+                        <div class="container text-center mb-3">
+                            <button class="btn bg-primary text-white boldText"> Thêm phim </button>
+                        </div>
                         </form>
                     </div>
                 </div>

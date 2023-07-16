@@ -11,19 +11,15 @@
     <div class="card me-3 ms-3">
         <div class="card-body">
 
-            <h1 class="text-center"> Cập nhật lịch chiếu</h1>
-
+            <h1 class="text-center"> CẬP NHẬT LỊCH CHIẾU </h1>
             <div class="container-fluid m1-1">
-
                 <div class="row">
-
                     <div class="col-md-10 offset-md-1">
-
                         <form action="#"
-                              th:object="${showtimes}"
-                              enctype="multipart/form-data"
-                              method="POST"
-                              th:action="@{'/admin/update_showtimes_process/'+${showtimes.id}}"
+                        th:object="${showtimes}"
+                        enctype="multipart/form-data"
+                        method="POST"
+                        th:action="@{'/admin/update_showtimes_process/'+${showtimes.id}}"
                         >
                             <div class="form-group">
                                 <label  for="movie_field" class="form-label">Phim:</label><br>
@@ -91,14 +87,12 @@
                             <br>
                             <br>
                             <div class="container text-center mb-3">
-                                <button class="btn bg-primary text-white"> Cập nhật </button>
+                                <button class="btn bg-primary text-white boldText"> Cập nhật </button>
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
 </section>

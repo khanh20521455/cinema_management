@@ -9,137 +9,130 @@
 <section>
     <div class="card me-3 ms-3">
         <div class="card-body">
-
-            <h1 class="text-center"> Cập nhật phim</h1>
-
+            <h1 class="text-center"> CẬP NHẬT PHIM </h1>
             <div class="container-fluid m1-1">
-
                 <div class="row">
-
                     <div class="col-md-10 offset-md-1">
-
                         <form action="#"
-                              th:object="${movie}"
-                              enctype="multipart/form-data"
-                              method="POST"
-                              th:action="@{'/admin/update_movie_process/'+${movie.id}}"
+                        th:object="${movie}"
+                        enctype="multipart/form-data"
+                        method="POST"
+                        th:action="@{'/admin/update_movie_process/'+${movie.id}}"
                         >
-
-                            <div class="form-group">
-                                <label  for="movie_name_field" class="form-label">Tên phim:</label><br>
-                                <input
-                                        th:value="${movie.name}"
-                                        name="name"
-                                        type="text"
-                                        class="form-control"
-                                        id="movie_name_field"
-                                        placeholder="Cập nhật tên phim"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label  for="movie_time_field" class="form-label">Thời lượng:</label><br>
-                                <input
-                                        th:value="${movie.time}"
-                                        name="time"
-                                        type="text"
-                                        class="form-control"
-                                        id="movie_time_field"
-                                        placeholder="Cập nhật thời lượng"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label  for="movie_genre_field" class="form-label">Thể loại:</label><br>
-                                <select
-                                        class="form-control"
-                                        id="movie_genre_field"
-                                        th:field="*{genre}"
-                                        multiple>
-                                    <option th:text="${#strings.listJoin(movie.genre, ',')}"
-                                            th:value="${#strings.listJoin(movie.genre, ',')}"></option>
-                                    <option th:each="genre: ${genreList}"
-                                            th:value="${genre}"
-                                            th:text="${genre}"
-                                    >
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label  for="movie_director_field" class="form-label">Đạo diễn:</label><br>
-                                <input
-                                        th:value="${movie.director}"
-                                        name="director"
-                                        type="text"
-                                        class="form-control"
-                                        id="movie_director_field"
-                                        placeholder="Cập nhật tên đạo diễn"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label  for="movie_actor_field" class="form-label">Diễn viên:</label><br>
-                                <input
-                                        th:value="${movie.actor}"
-                                        name="actor"
-                                        type="text"
-                                        class="form-control"
-                                        id="movie_actor_field"
-                                        placeholder="Cập nhật diễn viên"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label  for="movie_year_field" class="form-label">Năm sản xuất:</label><br>
-                                    <input
-                                            th:value="${movie.year}"
-                                            name="year"
-                                            type="number"
-                                            class="form-control"
-                                            id="movie_year_field"
-                                            placeholder="Cập nhật năm sản xuất"
-                                    />
-                                </div>
-                            <div class="form-group">
-                                <label  for="movie_start_field" class="form-label">Khởi chiếu:</label><br>
-                                    <input
-                                            th:value="${movie.start}"
-                                            name="start"
-                                            type="date"
-                                            class="form-control"
-                                            id="movie_start_field"
-                                            placeholder="Cập nhật ngày khởi chiếu"
-                                    />
-                                </div>
-                            <div class="form-group">
-                                <label  for="movie_end_field" class="form-label">Kết thúc:</label><br>
-                                    <input
-                                            th:value="${movie.end}"
-                                            name="end"
-                                            type="date"
-                                            class="form-control"
-                                            id="movie_end_field"
-                                            placeholder="Cập nhật ngày rút khỏi rạp"
-                                    />
-                                </div>
-                            <div class="container">
-                                <img style="width: 150px; height: 150px;" class="img-fluid .my_user_profile2" src="" th:src="@{'/img/'+${movie.poster}}" alt="" />
-                            </div>
-
-                            <div class="custom-file">
-                                <input
-                                        type="file"
-                                        name="movieImageUrl"
-                                />
-                            </div>
-                            <br>
-                            <br>
-                            <div class="container text-center mb-3">
-                                <button class="btn bg-primary text-white"> Cập nhật  </button>
-                                <a th:href = "@{'/admin/delete_movie/'+${movie.id}}"  class="btn bg-primary text-white"> Xóa phim </a>
-                            </div>
+                        <div class="form-group">
+                            <label  for="movie_name_field" class="form-label">Tên phim:</label><br>
+                            <input
+                            h:value="${movie.name}"
+                            name="name"
+                            type="text"
+                            class="form-control"
+                            id="movie_name_field"
+                            placeholder="Cập nhật tên phim"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label  for="movie_time_field" class="form-label">Thời lượng:</label><br>
+                            <input
+                            th:value="${movie.time}"
+                            name="time"
+                            type="text"
+                            class="form-control"
+                            id="movie_time_field"
+                            placeholder="Cập nhật thời lượng"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label  for="movie_genre_field" class="form-label">Thể loại:</label><br>
+                            <select
+                                class="form-control"
+                                id="movie_genre_field"
+                                th:field="*{genre}"
+                                multiple>
+                                <option th:text="${#strings.listJoin(movie.genre, ',')}"
+                                    th:value="${#strings.listJoin(movie.genre, ',')}"></option>
+                                <option th:each="genre: ${genreList}"
+                                    th:value="${genre}"
+                                    th:text="${genre}"
+                                >
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label  for="movie_director_field" class="form-label">Đạo diễn:</label><br>
+                            <input
+                            th:value="${movie.director}"
+                            name="director"
+                            type="text"
+                            class="form-control"
+                            id="movie_director_field"
+                            placeholder="Cập nhật tên đạo diễn"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label  for="movie_actor_field" class="form-label">Diễn viên:</label><br>
+                            <input
+                            th:value="${movie.actor}"
+                            name="actor"
+                            type="text"
+                            class="form-control"
+                            id="movie_actor_field"
+                            placeholder="Cập nhật diễn viên"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label  for="movie_year_field" class="form-label">Năm sản xuất:</label><br>
+                            <input
+                            th:value="${movie.year}"
+                            name="year"
+                            type="number"
+                            class="form-control"
+                            id="movie_year_field"
+                            placeholder="Cập nhật năm sản xuất"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label  for="movie_start_field" class="form-label">Khởi chiếu:</label><br>
+                            <input
+                            th:value="${movie.start}"
+                            name="start"
+                            type="date"
+                            class="form-control"
+                            id="movie_start_field"
+                            placeholder="Cập nhật ngày khởi chiếu"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label  for="movie_end_field" class="form-label">Kết thúc:</label><br>
+                            <input
+                            th:value="${movie.end}"
+                            name="end"
+                            type="date"
+                            class="form-control"
+                            id="movie_end_field"
+                            placeholder="Cập nhật ngày rút khỏi rạp"
+                            />
+                        </div>
+                        <div class="container mt-3">
+                            <img class="rounded mx-auto d-block .my_user_profile2" src="" th:src="@{'/img/'+${movie.poster}}" alt="" />
+                        </div>
+                        <div class="custom-file mt-3">
+                            <input
+                            type="file"
+                            name="movieImageUrl"
+                            class="form-control"
+                            id="formFile"
+                            />
+                        </div>
+                        <br>
+                        <br>
+                        <div class="container text-center mb-3">
+                            <button class="btn bg-primary text-white boldText"> Cập nhật </button>
+                            <a th:href = "@{'/admin/delete_movie/'+${movie.id}}"  class="btn bg-primary text-white boldText"> Xóa phim </a>
+                        </div>
                         </form>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
 </section>

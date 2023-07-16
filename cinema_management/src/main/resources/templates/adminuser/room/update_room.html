@@ -9,46 +9,46 @@
 <section>
     <div class="card me-3 ms-3">
         <div class="card-body">
-            <h1 class="text-center"> Cập nhật phòng chiếu</h1>
+            <h1 class="text-center"> PHÒNG CHIẾU <span th:text="${room.name}"></span> </h1>
             <div class="container-fluid m1-1">
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
                         <form action="#"
-                              th:object="${room}"
-                              enctype="multipart/form-data"
-                              method="POST"
-                              th:action="@{'/admin/update_room_process/'+${room.id}}"
+                        th:object="${room}"
+                        enctype="multipart/form-data"
+                        method="POST"
+                        th:action="@{'/admin/update_room_process/'+${room.id}}"
                         >
-                            <!--Room Name-->
-                            <div class="form-group">
-                                    <label  for="room_name_field" class="form-label">Tên phòng:</label><br>
-                                <input
-                                        th:value="${room.name}"
-                                        name="name"
-                                        type="text"
-                                        class="form-control"
-                                        id="room_name_field"
-                                        placeholder="Cập nhật tên phòng"
-                                />
-                            </div>
-
-                            <!--Type Screen-->
-                            <div class="form-group">
-                                <label  for="typeScreen_field" class="form-label">Màn hình:</label><br>
-                                <select
-                                        class="form-control"
-                                        name="typeScreen"
-                                        id="typeScreen_field"
-                                        >
-                                    <option th:value="${room.typeScreen}" th:text="${room.typeScreen}"></option>
-                                    <option>Màn hình thẳng</option>
-                                    <option>Màn hình cong</option>
-                                    <option>Màn hình IMAX</option>
-                                    <option>Màn hình 3D</option>
-                                    <option>Màn hình LED</option>
-                                </select>
-                                </h5>
-                            </div>
+                        
+                        <!--Room Name-->
+                        <div class="form-group">
+                            <label  for="room_name_field" class="form-label">Tên phòng:</label><br>
+                            <input
+                            th:value="${room.name}"
+                            name="name"
+                            type="text"
+                            class="form-control"
+                            id="room_name_field"
+                            placeholder="Cập nhật tên phòng"
+                            />
+                        </div>
+                        
+                        <!--Type Screen-->
+                        <div class="form-group">
+                            <label  for="typeScreen_field" class="form-label">Màn hình:</label><br>
+                            <select
+                                class="form-control"
+                                name="typeScreen"
+                                id="typeScreen_field"
+                                >
+                                <option th:value="${room.typeScreen}" th:text="${room.typeScreen}"></option>
+                                <option>Màn hình thẳng</option>
+                                <option>Màn hình cong</option>
+                                <option>Màn hình IMAX</option>
+                                <option>Màn hình 3D</option>
+                                <option>Màn hình LED</option>
+                            </select>
+                        </h5></div>
 
                             <!--Room status-->
                             <div class="form-group">
@@ -66,14 +66,12 @@
                             <br>
                             <br>
                             <div class="container text-center mb-3">
-                                <button class="btn bg-primary text-white"> Cập nhật </button>
+                                <button class="btn bg-primary text-white boldText"> Cập nhật </button>
                             </div>
                         </form>
                     </div>
-
                     </div>
                 </div>
-
             </div>
         </div>
 </section>
