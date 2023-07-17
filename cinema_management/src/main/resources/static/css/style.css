@@ -7,6 +7,7 @@ body{
 	background-color: rgba(219, 27, 27, 0.5)!important;
 }
 
+/* banner */
 .banner{
 	background-image: linear-gradient(to bottom, black, transparent), url(../img/banner.jpg);
 	background-size:cover;
@@ -44,16 +45,30 @@ body{
 	background: #FFFFFF;
 }
 
-#bannerimage {
+#bannerimage{
 	inline-size: 100%;
 	background-image: url(../img/dashboard_banner.jpg);
 	block-size: 305px;
 	background-position: center;
 }
 
+/* text */
 .boldText{
 	font-weight: bold;
 }
+
+/* custom button */
+.btn-cus{
+	background-color: #FF7171;
+	color: #fff;
+}
+.btn-cus:hover{
+	color: #FF7171;
+	background-color: #fff;
+	border-width: 1px;
+	border-color: #FF7171;
+}
+
 
 #login .container #login-row #login-column #login-box {
 	margin-block-start: 230px;
