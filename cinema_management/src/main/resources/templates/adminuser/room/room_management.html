@@ -30,8 +30,8 @@
                     <td th:text="${room.typeScreen}"></td>
                     <td th:text="${room.status}"></td>
                     <td>
-                        <a th:href = "@{'/admin/update_room/'+${room.id}}" class="btn text-white btn-sm boldText" style="background-color: green; width: 80px;"> Cập nhật </a>
-                        <a th:href = "@{'/admin/delete_room/'+${room.id}}" class="btn text-white btn-sm boldText" style="background-color: red; width: 80px;"> Xóa </a>
+                        <a th:href = "@{'/admin/update_room/'+${room.id}}" class="btn btn-outline-secondary btn-sm boldText" style="width: 80px;"> Cập nhật </a>
+                        <a th:href = "@{'/admin/delete_room/'+${room.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Xóa </a>
                     </td>
                 </tr>
                 </tbody>

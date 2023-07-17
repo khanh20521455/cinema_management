@@ -29,8 +29,8 @@
                     <td th:text="${#strings.listJoin(booking.seatList, ' ')}"></td>
                     <td th:text="${booking.user.email}"></td>
                     <td>
-                        <a th:href = "@{'/admin/confirm_booking/'+${booking.id}}" class="btn text-white btn-sm boldText" style="background-color: green; width: 80px;"> Xác nhận </a>
-                        <a th:href = "@{'/admin/cancel_booking/'+${booking.id}}" class="btn text-white btn-sm boldText" style="background-color: red; width: 80px;"> Hủy đặt </a>
+                        <a th:href = "@{'/admin/confirm_booking/'+${booking.id}}" class="btn btn-outline-secondary btn-sm boldText" style="width: 80px;"> Xác nhận </a>
+                        <a th:href = "@{'/admin/cancel_booking/'+${booking.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Hủy đặt </a>
                     </td>
                 </tr>
                 </tbody>
