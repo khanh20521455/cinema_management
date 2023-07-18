@@ -6,23 +6,41 @@
 </head>
 <body>
 <section>
+    <div class="card ms-3 me-3">
     <div class="row g-4">
         <div class="col-sm-6 col-xl-3">
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <i class="fa fa-chart-line fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
                 <div class="ms-3">
-                    <p class="mb-2"> Tổng lượt vé</p>
+                    <p class="mb-2" style="font-size: 18px;"> Lượt vé hôm nay </p>
+                    <h6 class="mb-0" id="ticketOfToday"></h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-area fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
+                <div class="ms-3">
+                    <p class="mb-2" style="font-size: 18px;"> Doanh thu hôm nay </p>
+                    <h6 class="mb-0" id="revenueOfToday"></h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-bar fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
+                <div class="ms-3">
+                    <p class="mb-2" style="font-size: 18px;"> Tổng lượt vé </p>
                     <h6 class="mb-0" id="ticketOfYear"></h6>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-xl-3"></div>
         <div class="col-sm-6 col-xl-3">
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <i class="fa fa-chart-pie fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
                 <div class="ms-3">
-                    <p class="mb-2">Tổng doanh thu</p>
-                    <h6 class="mb-0" id="revenueOfYear">VNĐ</h6>
+                    <p class="mb-2" style="font-size: 18px;"> Tổng doanh thu </p>
+                    <h6 class="mb-0" id="revenueOfYear"> VNĐ </h6>
                 </div>
             </div>
         </div>
@@ -31,46 +49,52 @@
     <div class="row g-4">
         <div class="col-sm-12 col-xl-6">
             <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">Biểu đồ lượt vé</h6>
+                <h6 class="mb-4" style="font-size: 20px;"> Biểu đồ lượt vé </h6>
                 <canvas id="chart1"></canvas>
             </div>
         </div>
         <div class="col-sm-12 col-xl-6">
             <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">Biểu đồ doanh thu</h6>
+                <h6 class="mb-4" style="font-size: 20px;"> Biểu đồ doanh thu </h6>
                 <canvas id="chart2"></canvas>
             </div>
         </div>
     </div>
     <br>
     <div class="row g-4">
-        <div class="bg-light rounded h-100 p-4">
-            <h6 class="mb-4">Nhập thời gian cần thống kê</h6>
-            <div class="mb-3">
-                <label for="movie_start_field" class="form-label">Từ ngày:</label>
-                <input type="date" class="form-control" id="movie_start_field" oninput="statistic_movie()">
-            </div>
-            <div class="mb-3">
-                <label for="movie_end_field"class="form-label">Đến ngày:</label>
-                <input type="date" class="form-control" id="movie_end_field" oninput="statistic_movie()">
+        <div class="container-fluid pt-4 ">
+            <div class="bg-light rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-4" style="font-size: 20px;">Nhập thời gian cần thống kê</h6>
+                </div>
+                <div class="mb-3">
+                    <label for="movie_start_field" class="form-label">Từ ngày:</label>
+                    <input type="date" class="form-control" id="movie_start_field" oninput="statistic_movie()">
+                </div>
+                <div class="mb-3">
+                    <label for="movie_end_field" class="form-label">Đến ngày:</label>
+                    <input type="date" class="form-control" id="movie_end_field" oninput="statistic_movie()">
+                </div>
             </div>
         </div>
     </div>
     <div class="row g-4">
-        <div class="container-fluid pt-4 px-4">
+        <div class="container-fluid pt-4">
             <div class="bg-light text-center rounded p-4">
                 <div class="table-statistic">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <button class="btn bg-primary text-white btn-sm"
+                        <button class="btn bg-primary text-white btn-sm boldText"
                                 onclick="statistic_ticket_onclick()"
+                                style="width: 170px;"
                                 id="button_statistic_ticket">Lượt vé tăng dần</button>
-                        <button class="btn bg-primary text-white btn-sm"
+                        <button class="btn bg-primary text-white btn-sm boldText"
                                 onclick="statistic_revenue_onclick()"
+                                style="width: 170px;"
                                 id="button_statistic_revenue">Doanh thu tăng dần</button>
                     </div>
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
-                        <tr class="text-dark">
+                        <tr class="text-dark" style="font-size: 18px;">
                             <th scope="col">Id</th>
                             <th scope="col">Phim</th>
                             <th scope="col">Tên</th>
@@ -84,10 +108,13 @@
             </div>
         </div>
     </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         let url3=`http://localhost:8082/ticketOfYear`;
         let url4=`http://localhost:8082/revenueOfYear`;
+        let url5=`http://localhost:8082/ticketOfToday`;
+        let url6=`http://localhost:8082/revenueOfToday`;
         fetch(url3)
         .then(response => response.json())
         .then(result => {
@@ -100,6 +127,22 @@
         .then(response => response.json())
         .then(result => {
             document.getElementById("revenueOfYear").innerHTML=result;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        fetch(url5)
+        .then(response => response.json())
+        .then(result => {
+            document.getElementById("ticketOfToday").innerHTML=result;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        fetch(url6)
+        .then(response => response.json())
+        .then(result => {
+            document.getElementById("revenueOfToday").innerHTML=result;
         })
         .catch(error => {
             console.error(error);
@@ -174,6 +217,7 @@
             console.error(error);
           });
     </script>
+
 </section>
 </body>
 </html>

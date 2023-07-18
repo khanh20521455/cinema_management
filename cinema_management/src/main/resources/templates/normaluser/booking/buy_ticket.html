@@ -9,69 +9,73 @@
 <section>
     <div class="card me-3 ms-3">
         <div class="card-body">
-            <h1 class="text-center"> Mua vé</h1>
+            <h1 class="text-center boldText"> ĐẶT VÉ </h1>
             <div class="container-fluid m1-1">
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
                         <form action="#"
-                              th:object="${booking}"
-                              enctype="multipart/form-data"
-                              method="POST"
-                              th:action="@{'/user/buy_ticket_process/'+${movie.id}}"
+                        th:object="${booking}"
+                        enctype="multipart/form-data"
+                        method="POST"
+                        th:action="@{'/user/buy_ticket_process/'+${movie.id}}"
                         >
+
                             <!--Choose date-->
                             <span id="movie-id-data"  th:value="${movie.id}" th:text="${movie.id}" style="display:none"></span>
                             <div class="form-group">
                                 <label  for="date_showtimes_field" class="form-label">Chọn ngày:</label><br>
                                 <input
-                                        oninput="onSelectDate()"
-                                        type="date"
-                                        class="form-control"
-                                        id="date_showtimes_field"
-                                        placeholder="Chọn ngày chiếu"
-                                        required
+                                oninput="onSelectDate()"
+                                type="date"
+                                class="form-control"
+                                id="date_showtimes_field"
+                                placeholder="Chọn ngày chiếu"
+                                required
                                 />
                             </div>
+
                             <!--typeScreen-->
                             <div class="form-group">
                                 <label  for="typeScreen_showtimes_field" class="form-label">Chọn rạp:</label><br>
-
                                 <select onchange="onSelectTypeScreen()"
-                                        class="form-control"
-                                        id="typeScreen_showtimes_field"
-                                        required>
-                                    <option>---Chọn loại màn hình---</option>
+                                class="form-control"
+                                id="typeScreen_showtimes_field"
+                                required>
+                                <option>---Chọn loại màn hình---</option>
                                 </select>
                             </div>
+
                             <!--time-->
                             <div class="form-group">
                                 <label  for="typeScreen_showtimes_field" class="form-label">Chọn giờ chiếu:</label><br>
                                 <select class="form-control"
-                                        id="time_showtimes_field"
-                                        name="showtimes"
-                                        onchange="onSelectNumberSeat()"
-                                        required>
-                                    <option>---Chọn giờ chiếu---</option>
+                                id="time_showtimes_field"
+                                name="showtimes"
+                                onchange="onSelectNumberSeat()"
+                                required>
+                                <option>---Chọn giờ chiếu---</option>
                                 </select>
                             </div>
+
                             <!--Number of seat-->
                             <div class="form-group">
                                 <label  for="numberSeat_field" class="form-label">Chọn số chỗ:</label><br>
                                 <input
-                                        type="number"
-                                        name="numberOfSeat"
-                                        class="form-control"
-                                        id="numberSeat_field"
-                                        placeholder="Chọn số chỗ"
-                                        required
+                                type="number"
+                                name="numberOfSeat"
+                                class="form-control"
+                                id="numberSeat_field"
+                                placeholder="Chọn số chỗ"
+                                required
                                 />
                             </div>
+
                             <!--Choose seat-->
                             <input
-                                    name="seatList"
-                                    class="form-control"
-                                    id="seatList_field"
-                                    style="display:none"
+                            name="seatList"
+                            class="form-control"
+                            id="seatList_field"
+                            style="display:none"
                             />
                             <div class="form-group">
                                 <label class="form-label">Chọn ghế:</label><br>
@@ -134,11 +138,11 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
+
                             <!--Button-->
-                            <div class="container text-center mb-3">
-                                <button type="submit" name="submit"  class="btn bg-primary text-white"> Mua vé </button>
+                            <div class="container text-center mb-4 ps-4">
+                                <button type="submit" name="submit"  class="btn btn-outline-danger boldText"> Đặt vé </button>
                             </div>
                         </form>
                     </div>

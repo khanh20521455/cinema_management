@@ -16,31 +16,30 @@
     <div class="container-fluid">
 
         <!--change -->
-        <a class="navbar-brand brandtext" href="#">Cinezo</a>
+        <a class="navbar-brand brandtext" th:href="@{/}" aria-current="page" href="#">Cinezo</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
             <!--change position-->
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-uppercase">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-uppercase boldText">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/}" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/user/home}" href="#" tabindex="-1" aria-disabled="true">User</a>
+                    <a class="nav-link active" th:href="@{/user/home}" href="#" tabindex="-1" aria-disabled="true">Khách</a>
                 </li>
                 <!--change link name-->
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/admin/room_management/0}" href="#" tabindex="-1" aria-disabled="true">ADMIN</a>
+                    <a class="nav-link active" th:href="@{/admin/room_management/0}" href="#" tabindex="-1" aria-disabled="true">Admin</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
 <!--end of navbar-->
 <div th:replace="${content}">
 </div>
+
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="jquery.js"></script>

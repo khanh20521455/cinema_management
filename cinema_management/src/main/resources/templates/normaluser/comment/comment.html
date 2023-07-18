@@ -9,15 +9,15 @@
 <section>
     <div class="card me-3 ms-3">
         <div class="card-body">
-            <h1 class="text-center"> Bình luận</h1>
+            <h1 class="text-center boldText"> BÌNH LUẬN </h1>
             <div class="container-fluid m1-1">
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
                         <form action="#"
-                              th:object="${comment}"
-                              enctype="multipart/form-data"
-                              method="POST"
-                              th:action="@{'/user/add_comment_process/'+${comment.id}}">
+                        th:object="${comment}"
+                        enctype="multipart/form-data"
+                        method="POST"
+                        th:action="@{'/user/add_comment_process/'+${comment.id}}">
 
                             <!--Rating-->
                             <label class="form-label" >Đánh giá:</label>
@@ -31,6 +31,7 @@
                                 <br/>
                             </div>
                             <br>
+
                             <!--comment string-->
                             <div class="form-group">
                                 <label  for="comment_movie" class="form-label">Viết bình luận:</label><br>
@@ -38,9 +39,10 @@
                             </div>
                             <br>
                             <br>
+                            
                             <!--button-->
                             <div class="container text-center mb-3">
-                                <button  class="btn bg-primary text-white"> Thêm bình luận </button>
+                                <button  class="btn bg-primary text-white boldText"> Thêm bình luận </button>
                             </div>
                         </form>
                     </div>

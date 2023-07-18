@@ -9,16 +9,17 @@
 <section>
     <div class="card me-3 ms-3">
         <div class="card-body">
-            <h1 class="text-center"> Thêm lịch chiếu</h1>
+            <h1 class="text-center"> THÊM LỊCH CHIẾU </h1>
             <div class="container-fluid m1-1">
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
                         <form action="#"
-                              th:object="${showtimes}"
-                              enctype="multipart/form-data"
-                              method="POST"
-                              th:action="@{/admin/add_showtimes_process}"
+                        th:object="${showtimes}"
+                        enctype="multipart/form-data"
+                        method="POST"
+                        th:action="@{/admin/add_showtimes_process}"
                         >
+
                             <!--Movie-->
                             <div class="form-group">
                                 <label  for="movie_field" class="form-label">Phim:</label><br>
@@ -36,7 +37,7 @@
 
                             <!--Room-->
                             <div class="form-group">
-                                <label  for="room_field" class="form-label">Pòng chiếu:</label><br>
+                                <label  for="room_field" class="form-label">Phòng chiếu:</label><br>
                                 <select class="form-control"
                                         name="room"
                                         id="room_field"
@@ -84,7 +85,7 @@
                             <br>
                             <br>
                             <div class="container text-center mb-3">
-                                <button class="btn bg-primary text-white"> Thêm lịch chiếu</button>
+                                <button class="btn bg-primary text-white textBold"> Thêm lịch chiếu </button>
                             </div>
                         </form>
                     </div>

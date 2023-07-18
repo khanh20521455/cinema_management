@@ -9,10 +9,13 @@
 <section>
     <div class="card ms-3 me-3">
         <div class="card-body">
-            <h1 class="text-center"> Quản lý phim </h1>
-            <a href="#" th:href="@{/admin/add_movie}">
-                <button class="btn bg-primary text-white"> Thêm phim mới </button>
-            </a>
+            <h1 class="text-center"> QUẢN LÝ PHIM </h1>
+            <div class="col border-end d-flex justify-content-center align-items-center">
+                <a href="#" th:href="@{/admin/add_movie}">
+                    <button class="btn bg-primary text-white boldText"> Thêm phim mới </button>
+                </a>
+            </div>
+
             <!--search-->
             <div class="search-container my-4">
                 <input
@@ -24,10 +27,9 @@
                 />
                 <div class="search-result-movie"></div>
             </div>
-
             <table class="table mt-3">
                 <thead>
-                <tr>
+                <tr style="font-size: 20px;">
                     <th scope="col">Poster</th>
                     <th scope="col">Tên phim</th>
                     <th scope="col">Khởi chiếu</th>
@@ -44,17 +46,16 @@
                     <td th:text="${movie.start}"></td>
                     <td th:text="${movie.end}"></td>
                     <td>
-                        <a th:href = "@{'/admin/update_movie/'+${movie.id}}" class="btn bg-primary text-white btn-sm"> Cập nhật </a>
-                        <a th:href = "@{'/admin/delete_movie/'+${movie.id}}" class="btn bg-primary text-white btn-sm"> Xóa </a>
+                        <a th:href = "@{'/admin/update_movie/'+${movie.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Cập nhật </a>
+                        <a th:href = "@{'/admin/delete_movie/'+${movie.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Xóa </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
-
             <nav aria-label="Page navigation example">
-                <ul th:if="${totalPages != 0}" class="pagination">
+                <ul th:if="${totalPages != 0}" class="pagination boldText">
                     <li th:if="${currentPage != 0}" class="page-item">
-                        <a th:href="@{'/admin/movie_management/'+${currentPage-1}}"  class="page-link" href="#">Trước</a></li>
+                        <a th:href="@{'/admin/movie_management/'+${currentPage-1}}"  class="page-link" href="#"> Trang Trước </a></li>
                     <li th:classappend="${currentPage==iter-1?'active':''}"
                         th:each="iter : ${#numbers.sequence(1,totalPages)}"
                         class="page-item">
@@ -62,7 +63,7 @@
                             <span th:text="${iter}"> </span>
                         </a></li>
                     <li th:if="${currentPage+1 != totalPages}" class="page-item">
-                        <a th:href="@{'/admin/movie_management/'+${currentPage+1}}" class="page-link" href="#">Sau</a></li>
+                        <a th:href="@{'/admin/movie_management/'+${currentPage+1}}" class="page-link" href="#"> Trang Sau </a></li>
                 </ul>
             </nav>
         </div>

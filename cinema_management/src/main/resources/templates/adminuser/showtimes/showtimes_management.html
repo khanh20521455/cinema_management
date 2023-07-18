@@ -12,13 +12,15 @@
 
         <div class="card-body">
 
-            <h1 class="text-center"> Quản lý lịch chiếu </h1>
-            <a href="#" th:href="@{/admin/add_showtimes}">
-                <button class="btn bg-primary text-white"> Thêm lịch chiếu </button>
-            </a>
+            <h1 class="text-center"> QUẢN LÝ LỊCH CHIẾU </h1>
+            <div class="col border-end d-flex justify-content-center align-items-center">
+                <a href="#" th:href="@{/admin/add_showtimes}">
+                    <button class="btn bg-primary text-white boldText"> Thêm lịch chiếu </button>
+                </a>
+            </div>
             <table class="table mt-3">
                 <thead>
-                <tr>
+                <tr style="font-size: 20px;">
                     <th scope="col">Phim</th>
                     <th scope="col">Tên phim</th>
                     <th scope="col">Phòng chiếu</th>
@@ -39,17 +41,16 @@
                     <td th:text="${showtimes.date}"></td>
                     <td th:text="${showtimes.price}"></td>
                     <td>
-                        <a th:href = "@{'/admin/update_showtimes/'+${showtimes.id}}" class="btn bg-primary text-white btn-sm"> Cập nhật </a>
-                        <a th:href = "@{'/admin/delete_showtimes/'+${showtimes.id}}" class="btn bg-primary text-white btn-sm"> Xóa </a>
+                        <a th:href = "@{'/admin/update_showtimes/'+${showtimes.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Cập nhật </a>
+                        <a th:href = "@{'/admin/delete_showtimes/'+${showtimes.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Xóa </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
-
             <nav aria-label="Page navigation example">
-                <ul th:if="${totalPages != 0}" class="pagination">
+                <ul th:if="${totalPages != 0}" class="pagination boldText">
                     <li th:if="${currentPage != 0}" class="page-item">
-                        <a th:href="@{'/admin/showtimes_management/'+${currentPage-1}}"  class="page-link" href="#">Previous</a></li>
+                        <a th:href="@{'/admin/showtimes_management/'+${currentPage-1}}"  class="page-link" href="#"> Trang Trước </a></li>
                     <li th:classappend="${currentPage==iter-1?'active':''}"
                         th:each="iter : ${#numbers.sequence(1,totalPages)}"
                         class="page-item">
@@ -57,7 +58,7 @@
                             <span th:text="${iter}"> </span>
                         </a></li>
                     <li th:if="${currentPage+1 != totalPages}" class="page-item">
-                        <a th:href="@{'/admin/showtimes_management/'+${currentPage+1}}" class="page-link" href="#">Next</a></li>
+                        <a th:href="@{'/admin/showtimes_management/'+${currentPage+1}}" class="page-link" href="#"> Trang Sau </a></li>
                 </ul>
             </nav>
         </div>

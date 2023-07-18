@@ -4,18 +4,18 @@ body{
 }
 
 .bg-primary{
-	
 	background-color: rgba(219, 27, 27, 0.5)!important;
 }
 
+/* banner */
 .banner{
 	background-image: linear-gradient(to bottom, black, transparent), url(../img/banner.jpg);
 	background-size:cover;
 	position: relative;
-	width: 100%;
-	height: 100vh;
-	top: 0;
-	left: 0;
+	inline-size: 100%;
+	block-size: 100vh;
+	inset-block-start: 0;
+	inset-inline-start: 0;
 	background-blend-mode: darken;
 	background-repeat: no-repeat;
 	background-position: center bottom;
@@ -26,81 +26,91 @@ body{
 
 .bannertext{
 	position: absolute;
-	top: 50%;
-	left: 50%;
+	inset-block-start: 50%;
+	inset-inline-start: 50%;
 	transform: translate(-50%, -50%);
 	color: #FFFFFF;
 	font-weight: bold;
 	text-align: center;
 }
 
-.bannertext1{
-	font-size: 55px;
-}
-
-.bannertext2{
-	font-size: 30px;
-}
-
 .brandtext{
-	font-size: 30px;
+	font-size: 35px;
 	font-weight: bold;
-	padding-left: 10px;
+	padding-inline-start: 10px;
 }
 
 .my-card{
-	
 	padding: 20px;
 	background: #FFFFFF;
 }
 
-#bannerimage {
-	width: 100%;
+#bannerimage{
+	inline-size: 100%;
 	background-image: url(../img/dashboard_banner.jpg);
-	height: 305px;
+	block-size: 305px;
 	background-position: center;
+}
+
+/* text */
+.boldText{
+	font-weight: bold;
+}
+
+/* custom button */
+.btn-cus{
+	color: #FF7171;
+    background-color: #fff;
+    border-width: 1px;
+    border-color: #FF7171;
+}
+.btn-cus:hover{
+    background-color: #FF7171;
+	color: black;
+
 }
 
 
 #login .container #login-row #login-column #login-box {
-	margin-top: 120px;
-	max-width: 600px;
-	height: 420px;
+	margin-block-start: 230px;
+	max-inline-size: 600px;
+	block-size: 340px;
+	font-size: 16px;
 }
 #login .container #login-row #login-column #login-box #login-form {
 	padding: 20px;
 }
 #login .container #login-row #login-column #login-box #login-form #register-link {
-	margin-top: -85px;
+	margin-block-start: -85px;
 }
 
 /* side bar */
 
-@media only screen and (max-width: 600 px){
+@media only screen and (max-inline-size: 600px){
 	.sidebar{
 		display: none;
-		width: 80%!important;
+		inline-size: 80%!important;
 		background:white;
-		height: 100vh;
+		block-size: 100vh;
 		position: fixed;
-		padding-top: 45px;
+		padding-block-start: 45px;
 	}
 	.content{
-		margin-left: 0%!important;
+		margin-inline-start: 0%!important;
 	}
 }
 
 .sidebar{
-	width: 18%;
+	inline-size: 18%;
 	background:#fff;
-	height: 100%;
+	block-size: 100%;
 	position: fixed;
-	padding-top: 45px;
+	padding-block-start: 45px;
 }
 
 .sidebar a{
 	display:block;
-	width: 100%;
+	inline-size: 100%;
 	padding: 10px 25px;
 	text-decoration: none;
 	color:gray;
@@ -111,76 +121,82 @@ body{
 }
 
 .sidebar .divider{
-	height: 0.5px;
-	width: 100%;
+	block-size: 0.5px;
+	inline-size: 100%;
 	background: #e2e2e2;
-	margin-top: 10px;
+	margin-block-start: 10px;
 }
 
 .content{
-	margin-left: 20%;
+	margin-inline-start: 20%;
 }
 
 .sidebar .crossBtn{
 	position: absolute;
-	top: 0;
-	right: 35px;
+	inset-block-start: 0;
+	inset-inline-end: 35px;
 	font-size: 36px;
 	cursor: pointer;
 }
 
 .my_movie_poster{
-	width: 200px;
-	height: 200px;
+	inline-size: 200px;
+	block-size: 200px;
 	object-fit:cover;
 	border:3px solid black;
 }
 
 .my_movie_poster_single{
-	width: 350px;
-	height: 350px;
+	inline-size: 350px;
+	block-size: 350px;
 	object-fit:cover;
 }
 
 .my_user_profile{
-	width: 350px;
-	height: 350px;
+	inline-size: 350px;
+	block-size: 350px;
 	object-fit:cover;
 }
 
 .my_user_profile2{
-	width: 250px;
-	height: 250px;
+	inline-size: 250px;
+	block-size: 250px;
 	object-fit:cover;
 }
 
 .my_div_right{
-	text-align: right;
-	width:85.33%;
+	text-align: end;
+	inline-size:85.33%;
 }
 
 .my_div_left{
-	width:33.33%;
+	inline-size:33.33%;
 }
 
 .my_div_middle{
-	width:60.33%;
+	inline-size:60.33%;
 	margin : 0 auto;
 }
 
 /*search css*/
-
+.list-group-item:hover{
+    color:#e4a8a8
+}
+.list-group-action:hover
+{
+    color:#e4a8a8
+}
 .search-container{
 	position: relative;
 }
 .search-result-movie{
-     display: grid;
-     grid-gap: 30px
+    display: grid;
+    grid-gap: 30px
 }
 .search-result{
- display: grid;
- grid-template-columns: auto auto auto;
- grid-gap: 30px
+	display: grid;
+	grid-template-columns: auto auto auto;
+	grid-gap: 30px;
 }
 .text-register {
 	color: #e4a8a8
@@ -195,16 +211,17 @@ body{
 
 .user_avatar_comment{
     object-fit: cover;
-    width: 70px;
-    height:70px;
+    inline-size: 70px;
+    block-size:70px;
 }
 .seatSelection {
-  text-align: center;
-  padding: 5px;
-  margin: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;}
+	text-align: center;
+	padding: 5px;
+	margin: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
 .seatsReceipt {text-align: center;}
 
@@ -215,60 +232,60 @@ body{
 	color: #FFF;
 	border-radius: 5px;
 	cursor: default;
-	height: 40px;
-	width: 40px;
+	block-size: 40px;
+	inline-size: 40px;
 	line-height: 25px;
 	text-align: center;
- }
- .seatSpace {
- 	display: inline;
- 	padding: 10px;
- 	background-color: #fff;
- 	color: #FFF;
- 	border-radius: 5px;
- 	cursor: default;
- 	height: 25px;
- 	width: 25px;
- 	line-height: 25px;
- 	text-align: center;
-  }
+}
+.seatSpace {
+	display: inline;
+	padding: 10px;
+	background-color: #fff;
+	color: #FFF;
+	border-radius: 5px;
+	cursor: default;
+	block-size: 25px;
+	inline-size: 25px;
+	line-height: 25px;
+	text-align: center;
+}
 
 .seatRow {padding: 10px;}
 
 .seatSelected {
 	background-color: #fcb103;
 	color: black;
- }
+}
 
 .seatUnavailable {background-color: gray;}
 
 .seatRowNumber {
 	clear: none;
 	display: inline;
- }
+}
 
 .hidden {display: none;}
 
-.seatsAmount {max-width: 2em;}
+.seatsAmount {max-inline-size: 2em;}
 .post li{
     display:flex;
     gap:15px;
-    margin-bottom: 15px;
+    margin-block-end: 15px;
 }
 .post li thumbnail{
     position:relative;
-    width:100px;
-    height:100px;
+    inline-size:100px;
+    block-size:100px;
     flex-shrink:0;
 }
 .post li thumbnail img{
     object-fit:cover;
-    width:100%;
-    height:100%
+    inline-size:100%;
+    block-size:100%
 }
 .post li .meta h2{
     font-size:20px;
-    margin-bottom:10px;
+    margin-block-end:10px;
 }
 .page-item.active .page-link {
     z-index: 3;
