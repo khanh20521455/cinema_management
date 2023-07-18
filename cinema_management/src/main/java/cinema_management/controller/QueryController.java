@@ -106,4 +106,14 @@ public class QueryController {
         Date current=new Date(System.currentTimeMillis());
         return this.bookingRepository.revenueOfYear(current.toLocalDate().getYear());
     }
+    @GetMapping("/ticketOfToday")
+    public int getTicketToday(){
+        Date current=new Date(System.currentTimeMillis());
+        return this.bookingRepository.ticketOfToday(current);
+    }
+    @GetMapping("/revenueOfToday")
+    public long getRevenueOfToday(){
+        Date current=new Date(System.currentTimeMillis());
+        return this.bookingRepository.revenueOfToday(current);
+    }
 }

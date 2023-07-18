@@ -51,6 +51,9 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     public int ticketOfYear(@Param("year") int year);
     @Query("SELECT SUM(b.total) FROM Booking as b WHERE b.status=2 AND YEAR(b.completedAt)=:year")
     public long revenueOfYear(@Param("year") int year);
-
+    @Query("SELECT SUM(b.numberOfSeat) FROM Booking as b WHERE b.status=2 AND b.completedAt=:now")
+    public int ticketOfToday(@Param("now") Date now);
+    @Query("SELECT SUM(b.total) FROM Booking as b WHERE b.status=2 AND b.completedAt=:now")
+    public long revenueOfToday(@Param("now") Date now);
 
 }

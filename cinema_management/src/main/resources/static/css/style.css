@@ -59,14 +59,15 @@ body{
 
 /* custom button */
 .btn-cus{
-	background-color: #FF7171;
-	color: #fff;
+	color: #FF7171;
+    background-color: #fff;
+    border-width: 1px;
+    border-color: #FF7171;
 }
 .btn-cus:hover{
-	color: #FF7171;
-	background-color: #fff;
-	border-width: 1px;
-	border-color: #FF7171;
+    background-color: #FF7171;
+	color: black;
+
 }
 
 
@@ -178,7 +179,13 @@ body{
 }
 
 /*search css*/
-
+.list-group-item:hover{
+    color:#e4a8a8
+}
+.list-group-action:hover
+{
+    color:#e4a8a8
+}
 .search-container{
 	position: relative;
 }

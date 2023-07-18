@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label  for="movie_name_field" class="form-label">Tên phim:</label><br>
                             <input
-                            h:value="${movie.name}"
+                            th:value="${movie.name}"
                             name="name"
                             type="text"
                             class="form-control"
@@ -44,12 +44,10 @@
                         <div class="form-group">
                             <label  for="movie_genre_field" class="form-label">Thể loại:</label><br>
                             <select
-                                class="form-control"
+                                class="form-select"
                                 id="movie_genre_field"
                                 th:field="*{genre}"
                                 multiple>
-                                <option th:text="${#strings.listJoin(movie.genre, ',')}"
-                                    th:value="${#strings.listJoin(movie.genre, ',')}"></option>
                                 <option th:each="genre: ${genreList}"
                                     th:value="${genre}"
                                     th:text="${genre}"

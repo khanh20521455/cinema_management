@@ -76,7 +76,7 @@ const searchByMovieNameUser = () => {
                     let movieItem = `<div class="card movie-item" style="width:300px">
                                         <img class="card-img-top img-movie" src="/img/${movie.poster}" alt="" style="width:100%">
                                         <div class="card-body">
-                                            <h4 class="card-title boldText" th:text="${movie.name}"></h4>
+                                            <h4 class="card-title boldText">${movie.name}</h4>
                                             <a class="text-decoration-none" href="#" th:href="@{'/user/movie_detail/'+${movie.id}}"
                                                style="margin-right:40px">
                                                 <button class="btn btn-outline-warning boldText" style="width: 100px">Chi tiết</button>
@@ -299,5 +299,6 @@ function statistic_revenue_onclick(){
             console.error(error);
         });
 }
+
 
 

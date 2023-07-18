@@ -34,7 +34,7 @@ public class ShowtimesService {
     private BookingRepository bookingRepository;
     public String showtimesManagement(Integer page, Model model){
         Pageable pageable = PageRequest.of(page, 10);
-        Page<Showtimes> showtimesList = showtimesRepository.findAllOrderByDateAsc(pageable);
+        Page<Showtimes> showtimesList = showtimesRepository.findAllOrderByDateDesc(pageable);
         model.addAttribute("showtimesList",showtimesList);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", showtimesList.getTotalPages());

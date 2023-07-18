@@ -46,7 +46,7 @@
                     <td th:text="${movie.start}"></td>
                     <td th:text="${movie.end}"></td>
                     <td>
-                        <a th:href = "@{'/admin/update_movie/'+${movie.id}}" class="btn btn-outline-secondary btn-sm boldText" style="width: 80px;"> Cập nhật </a>
+                        <a th:href = "@{'/admin/update_movie/'+${movie.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Cập nhật </a>
                         <a th:href = "@{'/admin/delete_movie/'+${movie.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Xóa </a>
                     </td>
                 </tr>
