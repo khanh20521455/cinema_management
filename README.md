@@ -4,14 +4,8 @@
 - Create, Login account.
 - View dashboard.
 - Ad: Manage theaters, movies, showtimes.
-- Cus: Book tickets
+- Cus: Book tickets.
 - ...
-
-## Tech Stack
-
-**Client:** 
-
-**Server:** MySQL
 
 ## Installation
 
@@ -20,9 +14,11 @@
     - [VSCode](https://code.visualstudio.com/) or [IntelliJ](https://code.visualstudio.com/)
     - [Spring Boot]()
 - Step:
-    - Clone PJ
-    - .....
-    - .....
+    - Clone PJ.
+    - Run Apache and MySQL with XAMPP.
+    - Run PJ with Spring Boot.
+    - Open database: http://localhost/phpmyadmin/
+    - Run localhost with the port is 8082 to load to website
 
 ## Authors
 
