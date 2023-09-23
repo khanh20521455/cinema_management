@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.sql.Date;
 import java.util.List;
-
+@Repository
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
     @Query("FROM Movie as m ORDER  BY m.name")
     public Page<Movie> findAllOrderByMovieDateAsc(Pageable pageable);

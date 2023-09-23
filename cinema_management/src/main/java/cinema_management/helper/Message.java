@@ -1,4 +1,5 @@
 package cinema_management.helper;
+
 public class Message {
 
     private String content;

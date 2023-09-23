@@ -29,6 +29,9 @@
                     <a href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}" >
                         <button class="btn bg-primary text-white boldText"> Mua vé </button>
                     </a>
+                    <a href="#" th:href="@{'/user/movie_favorite/'+${movie.id}}" >
+                        <button class="btn bg-primary text-white boldText"> + Yêu thích </button>
+                    </a>
                 </div>
             </td>
         </tr>

@@ -18,6 +18,7 @@ public class CustomUserDetails implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        //quy định quyền truy cập của người dùng
         SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(user.getRole());
         return List.of(simpleGrantedAuthority);
     }

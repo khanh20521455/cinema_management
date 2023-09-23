@@ -5,19 +5,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
 import cinema_management.entities.*;
 import cinema_management.repository.*;
-import cinema_management.service.BookingService;
-import cinema_management.service.MovieService;
-import cinema_management.service.RoomService;
-import cinema_management.service.ShowtimesService;
+import cinema_management.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -37,6 +29,9 @@ public class AdminController {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private CommentService commentService;
 
     // adding common data
     @ModelAttribute
@@ -158,7 +153,19 @@ public class AdminController {
     public String statisticYear(){
         return "adminuser/statistic_chart";
     }
-
+    @GetMapping("/comment_management/{page}")
+    public String commentManagement(@PathVariable("page") Integer page, Model model){
+        return this.commentService.getCommentWaitConfirm(page,model);
+    }
+    @GetMapping("/confirm_comment/{id}")
+    public String confirm_comment(@PathVariable("id") Integer id)
+    {
+        return this.commentService.confirmComment(id);
+    }
+    @GetMapping("/cancel_comment/{id}")
+    public String cancel_comment(@PathVariable("id") Integer id){
+        return  this.commentService.cancelComment(id);
+    }
 }
 
 

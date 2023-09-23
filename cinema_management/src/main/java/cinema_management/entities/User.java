@@ -2,6 +2,7 @@ package cinema_management.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -35,6 +36,16 @@ public class User {
 
     private String imgUrl;
     private int refundAmount;
+    private ArrayList<Movie> moviesFavorite;
+
+    public ArrayList<Movie> getMoviesFavorite() {
+        return moviesFavorite;
+    }
+
+    public void setMoviesFavorite(ArrayList<Movie> moviesFavorite) {
+        this.moviesFavorite = moviesFavorite;
+    }
+
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "user")
     private List<Booking> bookingList;

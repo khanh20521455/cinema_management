@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="adminuser/base::layout(~{::section})">
+
+<head>
+  <meta charset = "UTF-8" />
+</head>
+<body>
+<section>
+  <div class="card ms-3 me-3">
+
+    <div class="card-body">
+
+      <h1 class="text-center"> QUẢN LÝ BÌNH LUẬN </h1>
+      <table class="table mt-3">
+        <thead>
+        <tr style="font-size: 20px;">
+          <th scope="col">ID</th>
+          <th scope="col">USER</th>
+          <th scope="col">MOVIE</th>
+          <th scope="col">RATING</th>
+          <th scope="col">COMMENT</th>
+          <th scope="col">HÀNH ĐỘNG</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comment : ${commentList} ">
+          <td th:text="${comment.id}"></td>
+          <td th:text="${comment.user.userName}"></td>
+          <td th:text="${comment.movie.name}"></td>
+          <td th:text="${comment.rating}"></td>
+          <td th:text="${comment.commentString}"></td>
+          <td>
+            <a th:href = "@{'/admin/confirm_comment/'+${comment.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Xác nhận </a>
+            <a th:href = "@{'/admin/cancel_comment/'+${comment.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Hủy bình luận </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <nav aria-label="Page navigation example">
+        <ul th:if="${totalPages != 0}" class="pagination boldText">
+          <li th:if="${currentPage != 0}" class="page-item">
+            <a th:href="@{'/admin/comment_management/'+${currentPage-1}}"  class="page-link" href="#"> Trang trước </a></li>
+          <li th:classappend="${currentPage==iter-1?'active':''}"
+              th:each="iter : ${#numbers.sequence(1,totalPages)}"
+              class="page-item">
+            <a th:href="@{'/admin/comment_management/'+${iter-1}}" class="page-link" href="#">
+              <span th:text="${iter}"> </span>
+            </a></li>
+          <li th:if="${currentPage+1 != totalPages}" class="page-item">
+            <a th:href="@{'/admin/comment_management/'+${currentPage+1}}" class="page-link" href="#"> Trang Sau </a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</section>
+</body>
+</html>

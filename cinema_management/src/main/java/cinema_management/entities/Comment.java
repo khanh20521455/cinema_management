@@ -20,6 +20,16 @@ public class Comment {
     private Movie movie;
     private int rating;
     private String commentString;
+    //0: user comment, 1: admin accept comment, 2: admin not accept
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public Comment() {
         super();
