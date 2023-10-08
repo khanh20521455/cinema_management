@@ -14,10 +14,10 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @JsonBackReference
-    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
-    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name="showtimesId")
     private Showtimes showtimes;
     private int numberOfSeat;

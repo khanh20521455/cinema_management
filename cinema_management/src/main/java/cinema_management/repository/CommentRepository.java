@@ -20,8 +20,10 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
     @Query("FROM Comment as c WHERE c.movie.id=:movieId AND c.status = 1")
     public List<Comment> commentMovie(@Param("movieId") Integer id);
+
     @Query("FROM Comment as c WHERE c.status = 0")
     public Page<Comment> commentWaitConfirm(Pageable pageable);
+
     @Transactional
     @Modifying
     @Query("DELETE FROM Comment as s WHERE s.movie.id=:id")

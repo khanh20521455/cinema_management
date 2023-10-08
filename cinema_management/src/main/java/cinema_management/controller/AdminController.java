@@ -26,7 +26,8 @@ public class AdminController {
     private BookingService bookingService;
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private TheaterService theaterService;
     @Autowired
     private MovieRepository movieRepository;
 
@@ -87,7 +88,7 @@ public class AdminController {
         return movieService.addMovie(model);
     }
     @PostMapping("/add_movie_process")
-    public 	String processMovie(
+    public String processMovie(
             @ModelAttribute Movie movie,
             @RequestParam("movieImageUrl") MultipartFile file,
             HttpSession session) {
@@ -166,6 +167,23 @@ public class AdminController {
     public String cancel_comment(@PathVariable("id") Integer id){
         return  this.commentService.cancelComment(id);
     }
+    @GetMapping("/add_theater")
+    public String addTheater(Model model){
+        return theaterService.addTheater(model);
+    }
+    @PostMapping("/add_theater_process")
+    public String addTheaterProcess(@ModelAttribute Theater theater, HttpSession httpSession){
+        return theaterService.addTheaterProcess(theater, httpSession);
+    }
+    @GetMapping("/update_theater/{id}")
+    public String updateTheater(@PathVariable("id") Integer id,Model model){
+        return theaterService.updateTheater(id, model);
+    }
+    @PostMapping("/update_theater_process/{id}")
+    public String updateTheaterProcess(@PathVariable("id") Integer id, @ModelAttribute Theater theater, HttpSession httpSession){
+        return theaterService.updateTheaterProcess(id, theater,httpSession);
+    }
+
 }
 
 

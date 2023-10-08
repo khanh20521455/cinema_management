@@ -26,9 +26,6 @@ public class Showtimes {
     private String time;
     private Date date;
     private int price;
-    @JsonBackReference
-    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER, mappedBy = "showtimes")
-    private List<Booking> bookingList;
 
     public Showtimes() {
     }
@@ -79,15 +76,5 @@ public class Showtimes {
     public void setPrice(int price) {
         this.price = price;
     }
-
-    public List<Booking> getBookingList() {
-        return bookingList;
-    }
-
-    public void setBookingList(List<Booking> bookingList) {
-        this.bookingList = bookingList;
-    }
-
-
 
 }

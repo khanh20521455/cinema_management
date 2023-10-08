@@ -18,14 +18,20 @@ import java.util.List;
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
     @Query("FROM Movie as m ORDER  BY m.name")
     public Page<Movie> findAllOrderByMovieDateAsc(Pageable pageable);
+
     @Query("FROM Movie as m ORDER  BY m.name")
     public List<Movie> movieList();
+
     @Query("FROM Movie as m WHERE m.start > :now")
     public List<Movie> movieUpcoming(@Param("now") Date now);
+
     @Query("FROM Movie as m WHERE m.start <= :now and m.end >= :now")
     public List<Movie> moviePlaying(@Param("now") Date now);
+
     public List<Movie> findByNameContainingAndEndAfter (String name, @Param("now")Date now);
+
     public List<Movie> findByNameContaining(String name);
+
     @Query("FROM Movie as m where m.end >= :now")
     public List<Movie> movieUpcomingAndPlaying(@Param("now")Date now);
 

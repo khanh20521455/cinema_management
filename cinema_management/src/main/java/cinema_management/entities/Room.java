@@ -14,12 +14,13 @@ public class Room {
     private String name;
     private String typeScreen;
     private String status;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name="theaterId")
+    private Theater theater;
 
     public Room() {
     }
-    @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
-    private List<Showtimes> showtimesList;
 
     public int getId() {
         return id;
@@ -53,11 +54,4 @@ public class Room {
         this.status = status;
     }
 
-    public List<Showtimes> getShowtimesList() {
-        return showtimesList;
-    }
-
-    public void setShowtimesList(List<Showtimes> showtimesList) {
-        this.showtimesList = showtimesList;
-    }
 }

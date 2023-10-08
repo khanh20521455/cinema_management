@@ -14,8 +14,8 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
+    //Thời lượng phim
     private String time;
-
     private String[] genre;
     private String director;
     private  String actor;

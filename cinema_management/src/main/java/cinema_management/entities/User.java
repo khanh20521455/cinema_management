@@ -26,30 +26,11 @@ public class User {
     private String email;
     private String password;
     private String phone;
-    private Date dateOfBirth;
-    private String gender;
     @Column(length = 50)
     private String about;
-
     private String role;
     private boolean enable;
-
     private String imgUrl;
-    private int refundAmount;
-    private ArrayList<Movie> moviesFavorite;
-
-    public ArrayList<Movie> getMoviesFavorite() {
-        return moviesFavorite;
-    }
-
-    public void setMoviesFavorite(ArrayList<Movie> moviesFavorite) {
-        this.moviesFavorite = moviesFavorite;
-    }
-
-    @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "user")
-    private List<Booking> bookingList;
-
 
     public User() {
         super();
@@ -62,7 +43,6 @@ public class User {
     public void setUserId(int userId) {
         this.userId = userId;
     }
-
 
     public String getUserName() {
         return userName;
@@ -94,22 +74,6 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public String getAbout() {
@@ -144,27 +108,10 @@ public class User {
         this.imgUrl = imgUrl;
     }
 
-    public int getRefundAmount() {
-        return refundAmount;
-    }
-
-    public void setRefundAmount(int refundAmount) {
-        this.refundAmount = refundAmount;
-    }
-
-
-    public List<Booking> getBookingList() {
-        return bookingList;
-    }
-
-    public void setBookingList(List<Booking> bookingList) {
-        this.bookingList = bookingList;
-    }
-
     @Override
     public String toString() {
         return "User [userId=" + userId + ", userName=" + userName + ", email=" + email + ", password=" + password
-                + ", phone=" + phone + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", about=" + about
-                + ", role=" + role + ", enable=" + enable + ", imgUrl=" + imgUrl + ", refundAmount=" + refundAmount + "]";
+                + ", phone=" + phone + ", about=" + about
+                + ", role=" + role + ", enable=" + enable + ", imgUrl=" + imgUrl  + "]";
     }
 }
