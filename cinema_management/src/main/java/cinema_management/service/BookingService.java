@@ -37,6 +37,8 @@ public class BookingService {
     private MovieService movieService;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private TheaterRepository theaterRepository;
     public String buyTicket(Integer id, Model model){
         Booking booking=new Booking();
         model.addAttribute("booking", booking);
@@ -88,21 +90,30 @@ public class BookingService {
         }
         return movieService.homeScreen(model);
     }
-    public String getBookingWaitConfirm(Integer page, Model model) {
+    public String getTheaterForBookingManagement(Integer page, Model model){
+        Pageable pageable = PageRequest.of(page, 10);
+        Page<Theater> theaterList = theaterRepository.findAllOrderByNameAsc(pageable);
+        model.addAttribute("theaterList",theaterList);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", theaterList.getTotalPages());
+        return "adminuser/booking/theater_screen";
+    }
+    public String getBookingWaitConfirm(Integer theaterId, Integer page, Model model) {
 
         Pageable pageable = PageRequest.of(page, 10);
-        Page<Booking> bookingList= bookingRepository.bookingWaitConfirm(pageable);
+        Page<Booking> bookingList= bookingRepository.bookingWaitConfirm(theaterId, pageable);
         model.addAttribute("bookingList", bookingList);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", bookingList.getTotalPages());
-        return "adminuser/booking_management";
+        return "adminuser/booking/booking_management";
     }
     public String confirmBooking(Integer id){
         Booking booking= this.bookingRepository.getById(id);
         booking.setStatus(2);
         booking.setCompletedAt(new Date(System.currentTimeMillis()));
         bookingRepository.save(booking);
-        return "redirect:/admin/booking_management/0";
+        Integer theaterId = booking.getShowtimes().getRoom().getTheater().getId();
+        return "redirect:/admin/booking_management/"+theaterId+"/0";
     }
     public String cancelBooking(Integer id){
         Booking booking= this.bookingRepository.getById(id);
@@ -115,7 +126,8 @@ public class BookingService {
             seat.setStatus(0);
             this.seatRepository.save(seat);
         }
-        return "redirect:/admin/booking_management/0";
+        Integer theaterId = booking.getShowtimes().getRoom().getTheater().getId();
+        return  "redirect:/admin/booking_management/"+theaterId+"/0";
     }
     public String getMovieWatched(Principal principal, Model model, Integer page){
         Pageable pageable = PageRequest.of(page, 10);

@@ -19,8 +19,8 @@ import java.util.List;
 
 @Repository
 public interface ShowtimesRepository extends JpaRepository<Showtimes, Integer> {
-    @Query("FROM Showtimes as s ORDER  BY s.date DESC")
-    public Page<Showtimes> findAllOrderByDateDesc(Pageable pageable);
+    @Query("FROM Showtimes as s  WHERE s.room.theater.id=:id ORDER  BY s.date DESC, s.time DESC")
+    public Page<Showtimes> findAllOrderByDateDesc(@PathVariable("id") Integer id,Pageable pageable);
 
     @Query("FROM Showtimes as s WHERE s.movie.id=:id")
     public List<Showtimes> findByMovieId(@PathVariable("id") Integer id);

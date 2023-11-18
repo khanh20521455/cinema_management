@@ -9,29 +9,33 @@
 <section>
     <div class="card ms-3 me-3">
         <div class="card-body">
-            <h1 class="text-center"> QUẢN LÝ PHÒNG CHIẾU </h1>
+            <h1 class="text-center"> QUẢN LÝ ĐỒ ĂN VẶT </h1>
             <div class="col border-end d-flex justify-content-center align-items-center">
-                <a href="#" th:href="@{'/admin/add_room/'+${theaterId}}">
-                    <button class="btn bg-primary text-white boldText"> Thêm phòng chiếu </button>
+                <a href="#" th:href="@{/admin/add_snacks}">
+                    <button class="btn bg-primary text-white boldText"> Thêm mới </button>
                 </a>
             </div>
+
             <table class="table mt-3">
                 <thead>
                 <tr style="font-size: 20px;">
-                    <th scope="col">Tên phòng</th>
-                    <th scope="col">Loại màn hình</th>
+                    <th scope="col">Hình ảnh</th>
+                    <th scope="col">Tên </th>
+                    <th scope="col">Giá bán</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Hành động</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="room : ${roomList} ">
-                    <td th:text="${room.name}"></td>
-                    <td th:text="${room.typeScreen}"></td>
-                    <td th:text="${room.status}"></td>
+                <tr th:each="snacks : ${listSnacks} ">
                     <td>
-                        <a th:href = "@{'/admin/update_room/'+${room.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Cập nhật </a>
-                        <a th:href = "@{'/admin/delete_room/'+${room.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Xóa </a>
+                        <img scr="" class="my_image" th:src="@{'/img/'+${snacks.image}}" alt="snack image" style="width:250px;height:250px;"/>
+                    </td>
+                    <td th:text="${snacks.name}"></td>
+                    <td th:text="${snacks.price}"></td>
+                    <td th:text="${snacks.status}"></td>
+                    <td>
+                        <a th:href = "@{'/admin/update_snacks/'+${snacks.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Cập nhật </a>
                     </td>
                 </tr>
                 </tbody>
@@ -39,15 +43,15 @@
             <nav aria-label="Page navigation example">
                 <ul th:if="${totalPages != 0}" class="pagination boldText">
                     <li th:if="${currentPage != 0}" class="page-item">
-                        <a th:href="@{'/admin/room_management/'+${currentPage-1}}"  class="page-link" href="#"> Trang Trước </a></li>
+                        <a th:href="@{'/admin/snacks_management/'+${currentPage-1}}"  class="page-link" href="#"> Trang Trước </a></li>
                     <li th:classappend="${currentPage==iter-1?'active':''}"
                         th:each="iter : ${#numbers.sequence(1,totalPages)}"
                         class="page-item">
-                        <a th:href="@{'/admin/room_management/'+${iter-1}}" class="page-link" href="#">
+                        <a th:href="@{'/admin/snacks_management/'+${iter-1}}" class="page-link" href="#">
                             <span th:text="${iter}"> </span>
                         </a></li>
                     <li th:if="${currentPage+1 != totalPages}" class="page-item">
-                        <a th:href="@{'/admin/room_management/'+${currentPage+1}}" class="page-link" href="#"> Trang Sau </a></li>
+                        <a th:href="@{'/admin/snacks_management/'+${currentPage+1}}" class="page-link" href="#"> Trang Sau </a></li>
                 </ul>
             </nav>
         </div>

@@ -1,9 +1,10 @@
 package cinema_management.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="OFFER")
@@ -15,18 +16,18 @@ public class Offer {
     @ManyToOne
     @JoinColumn(name="movieId")
     private Movie movie;
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name="theaterId")
-    private Theater theater;
     private int percent;
-    private Date startAt;
-    private Date endAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime startAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime endAt;
 
-    public Offer(int id, Movie movie, Theater theater, int percent, Date startAt, Date endAt) {
+    public Offer() {
+    }
+
+    public Offer(int id, Movie movie, int percent, LocalDateTime startAt, LocalDateTime endAt) {
         this.id = id;
         this.movie = movie;
-        this.theater = theater;
         this.percent = percent;
         this.startAt = startAt;
         this.endAt = endAt;
@@ -48,13 +49,6 @@ public class Offer {
         this.movie = movie;
     }
 
-    public Theater getTheater() {
-        return theater;
-    }
-
-    public void setTheater(Theater theater) {
-        this.theater = theater;
-    }
 
     public int getPercent() {
         return percent;
@@ -64,19 +58,20 @@ public class Offer {
         this.percent = percent;
     }
 
-    public Date getStartAt() {
+    public LocalDateTime getStartAt() {
         return startAt;
     }
 
-    public void setStartAt(Date startAt) {
+    public void setStartAt(LocalDateTime startAt) {
         this.startAt = startAt;
     }
 
-    public Date getEndAt() {
+    public LocalDateTime getEndAt() {
         return endAt;
     }
 
-    public void setEndAt(Date endAt) {
+    public void setEndAt(LocalDateTime endAt) {
         this.endAt = endAt;
     }
+
 }

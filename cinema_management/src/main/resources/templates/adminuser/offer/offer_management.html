@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="adminuser/base::layout(~{::section})">
+
+<head>
+    <meta charset = "UTF-8" />
+</head>
+<body>
+<section>
+    <div class="card ms-3 me-3">
+        <div class="card-body">
+            <h1 class="text-center"> QUẢN LÝ GIẢM GIÁ </h1>
+            <div class="col border-end d-flex justify-content-center align-items-center">
+                <a href="#" th:href="@{/admin/add_offer}">
+                    <button class="btn bg-primary text-white boldText"> Thêm mới </button>
+                </a>
+            </div>
+
+            <table class="table mt-3">
+                <thead>
+                <tr style="font-size: 20px;">
+                    <th scope="col">Phim </th>
+                    <th scope="col">Tên Phim </th>
+                    <th scope="col">Phần trăm</th>
+                    <th scope="col">Bắt đầu</th>
+                    <th scope="col">Kết Thúc</th>
+                    <th scope="col">Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="offer : ${offerList} ">
+                    <td>
+                        <img scr="" class="my_image" th:src="@{'/img/'+${offer.movie.poster}}" alt="snack image" style="width:250px;height:250px;"/>
+                    </td>
+                    <td th:text="${offer.movie.name}"></td>
+                    <td th:text="${offer.percent}"></td>
+                    <td th:text="${offer.startAt}"></td>
+                    <td th:text="${offer.endAt}"></td>
+                    <td>
+                        <a th:href = "@{'/admin/update_offer/'+${offer.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Cập nhật </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul th:if="${totalPages != 0}" class="pagination boldText">
+                    <li th:if="${currentPage != 0}" class="page-item">
+                        <a th:href="@{'/admin/offer_management/'+${currentPage-1}}"  class="page-link" href="#"> Trang Trước </a></li>
+                    <li th:classappend="${currentPage==iter-1?'active':''}"
+                        th:each="iter : ${#numbers.sequence(1,totalPages)}"
+                        class="page-item">
+                        <a th:href="@{'/admin/offer_management/'+${iter-1}}" class="page-link" href="#">
+                            <span th:text="${iter}"> </span>
+                        </a></li>
+                    <li th:if="${currentPage+1 != totalPages}" class="page-item">
+                        <a th:href="@{'/admin/offer_management/'+${currentPage+1}}" class="page-link" href="#"> Trang Sau </a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+</body>
+</html>

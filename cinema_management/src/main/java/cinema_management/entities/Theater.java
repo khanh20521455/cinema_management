@@ -11,7 +11,7 @@ public class Theater {
     private String name;
     private String province;
     //1: hoạt động bình thường, 0: Bảo trì
-    private int status;
+    private String status;
 
     public Theater() {
 
@@ -41,11 +41,11 @@ public class Theater {
         this.province = province;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

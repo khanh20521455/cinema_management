@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="adminuser/base::layout(~{::section})">
+
+<head>
+    <meta charset = "UTF-8" />
+</head>
+<body>
+<section>
+    <div class="card me-3 ms-3">
+        <div class="card-body">
+            <h1 class="text-center"> RẠP PHIM <span th:text="${theater.name}"></span> </h1>
+            <div class="container-fluid m1-1">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        <form action="#"
+                              th:object="${theater}"
+                              enctype="multipart/form-data"
+                              method="POST"
+                              th:action="@{'/admin/update_theater_process/'+${theater.id}}"
+                        >
+
+                            <!--Theater Name-->
+                            <div class="form-group">
+                                <label  for="theater_name_field" class="form-label">Tên rạp:</label><br>
+                                <input
+                                        th:value="${theater.name}"
+                                        name="name"
+                                        type="text"
+                                        class="form-control"
+                                        id="theater_name_field"
+                                        placeholder="Cập nhật tên rạp"
+                                />
+                            </div>
+
+                            <!--province-->
+                            <div class="form-group">
+                                <label  for="province" class="form-label">Tỉnh thành:</label><br>
+                                <input
+                                        th:value="${theater.province}"
+                                        class="form-control"
+                                        name="province"
+                                        id="province"
+                                        enable="false"
+                                >
+                                </input>
+                            </div>
+
+                            <!--Status-->
+                            <div class="form-group">
+                                <label  for="theater_status_field" class="form-label">Trạng thái:</label><br>
+                                <select
+                                        class="form-control"
+                                        name="status"
+                                        id="theater_status_field"
+                                >
+                                    <option th:value="${theater.status}" th:text="${theater.status}" ></option>
+                                    <option>Đang hoạt động</option>
+                                    <option>Đang bảo trì</option>
+                                </select>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="container text-center mb-3">
+                                <button class="btn bg-primary text-white boldText"> Cập nhật </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

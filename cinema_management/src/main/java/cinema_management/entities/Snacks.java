@@ -9,12 +9,21 @@ public class Snacks {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
+
+    private String image;
     private int price;
 
-    public Snacks(int id, String name, int price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
+    private String status;
+
+    public Snacks() {
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getId() {
@@ -39,5 +48,13 @@ public class Snacks {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

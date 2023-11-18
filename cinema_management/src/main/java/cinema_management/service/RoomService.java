@@ -2,11 +2,9 @@ package cinema_management.service;
 
 import cinema_management.entities.Room;
 import cinema_management.entities.Showtimes;
+import cinema_management.entities.Theater;
 import cinema_management.helper.Message;
-import cinema_management.repository.BookingRepository;
-import cinema_management.repository.RoomRepository;
-import cinema_management.repository.SeatRepository;
-import cinema_management.repository.ShowtimesRepository;
+import cinema_management.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,31 +30,44 @@ public class RoomService {
     private SeatRepository seatRepository;
     @Autowired
     private BookingRepository bookingRepository;
-    public String getRoomManagement(Integer page, Model model) {
+    @Autowired
+    private TheaterRepository theaterRepository;
+    public String getTheaterForRoomManagement(Integer page, Model model){
         Pageable pageable = PageRequest.of(page, 10);
-        Page<Room> roomList = roomRepository.findAllOrderByRoomNameAsc(pageable);
+        Page<Theater> theaterList = theaterRepository.findAllOrderByNameAsc(pageable);
+        model.addAttribute("theaterList",theaterList);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", theaterList.getTotalPages());
+        return "adminuser/room/theater_screen";
+    }
+    public String getRoomManagement(Integer page, Model model, Integer theaterId) {
+        Pageable pageable = PageRequest.of(page, 10);
+        Page<Room> roomList = roomRepository.roomBaseTheater(theaterId, pageable);
         model.addAttribute("title", "Get room list");
         model.addAttribute("roomList", roomList);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", roomList.getTotalPages());
+        model.addAttribute("theaterId", theaterId);
         return "adminuser/room/room_management";
     }
 
-    public String addRoom(Model model) {
+    public String addRoom(Model model,Integer theaterId) {
         model.addAttribute("title", "Add Room");
         model.addAttribute("room", new Room());
+        model.addAttribute("theaterId", theaterId);
         return "adminuser/room/add_room";
     }
 
-    public String addRoomProcess(Room room, HttpSession session) {
+    public String addRoomProcess(Room room, HttpSession session, Integer theaterId) {
         try {
+            room.setTheater(theaterRepository.getById(theaterId));
             roomRepository.save(room);
             session.setAttribute("message", new Message("Thêm phòng mới thành công!", "success"));
         } catch (Exception e) {
             e.printStackTrace();
             session.setAttribute("message", new Message("Đã xảy ra lỗi, vui lòng thử lại ! ", "danger"));
         }
-        return "redirect:/admin/room_management/0";
+        return "redirect:/admin/room_management/"+theaterId+"/0";
 
     }
 
@@ -80,9 +91,7 @@ public class RoomService {
 
         try {
             room.setId(oldRoomDetail.getId());
-            room.setName(room.getName());
-            room.setTypeScreen(room.getTypeScreen());
-            room.setStatus(room.getStatus());
+            room.setTheater(oldRoomDetail.getTheater());
             this.roomRepository.save(room);
 
             session.setAttribute("message", new Message("Cập nhập phòng thành công!", "success"));
@@ -96,7 +105,8 @@ public class RoomService {
 
         m.addAttribute("Title", "Update Room");
         m.addAttribute("room", room);
-        return "redirect:/admin/room_management/0";
+        Integer theaterId= oldRoomDetail.getTheater().getId();
+        return "redirect:/admin/room_management/"+theaterId+"/0";
     }
     public String deleteRoom(Integer id){
         List<Showtimes> showtimesList= this.showtimesRepository.findByRoomId(id);

@@ -19,6 +19,8 @@ public class Room {
     @JoinColumn(name="theaterId")
     private Theater theater;
 
+
+
     public Room() {
     }
 
@@ -52,6 +54,13 @@ public class Room {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    public Theater getTheater() {
+        return theater;
+    }
+
+    public void setTheater(Theater theater) {
+        this.theater = theater;
     }
 
 }

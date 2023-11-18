@@ -17,7 +17,7 @@
 							th:object="${room}"
 							enctype="multipart/form-data"
 							method="POST"
-							th:action="@{/admin/add_room_process}"
+							th:action="@{'/admin/add_room_process/'+${theaterId}}"
 						>
 						
 						<!--Room name-->

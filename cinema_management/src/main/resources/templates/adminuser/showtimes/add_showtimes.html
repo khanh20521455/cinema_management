@@ -17,7 +17,7 @@
                         th:object="${showtimes}"
                         enctype="multipart/form-data"
                         method="POST"
-                        th:action="@{/admin/add_showtimes_process}"
+                        th:action="@{'/admin/add_showtimes_process/'+${theaterId}}"
                         >
 
                             <!--Movie-->
