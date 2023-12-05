@@ -19,7 +19,7 @@ import java.util.List;
 
 @Repository
 public interface ShowtimesRepository extends JpaRepository<Showtimes, Integer> {
-    @Query("FROM Showtimes as s  WHERE s.room.theater.id=:id ORDER  BY s.date DESC, s.time DESC")
+    @Query("FROM Showtimes as s  WHERE s.room.theater.id=:id AND s.status = 1 ORDER  BY s.date DESC, s.time DESC")
     public Page<Showtimes> findAllOrderByDateDesc(@PathVariable("id") Integer id,Pageable pageable);
 
     @Query("FROM Showtimes as s WHERE s.movie.id=:id")
@@ -41,5 +41,6 @@ public interface ShowtimesRepository extends JpaRepository<Showtimes, Integer> {
 
     @Query("FROM Showtimes as s WHERE s.movie.id=:id and s.date=:date and s.room.typeScreen=:typeScreen")
     public List<Showtimes> timeShowtimes(@RequestParam("id") Integer id, @RequestParam("date") Date date, @RequestParam("typeScreen")String typeScreen);
-
+    @Query("SELECT MAX(id) FROM Showtimes")
+    public Integer newShowtime();
 }

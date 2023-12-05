@@ -23,7 +23,7 @@
           <i class="fa fa-chart-area fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
           <div class="ms-3">
             <p class="mb-2" style="font-size: 18px;"> Doanh thu hôm nay </p>
-            <h6 class="mb-0" id="revenueOfToday"></h6>
+            <h6 class="mb-0" id="revenueOfToday" th:text="${#numbers.formatDecimal(yourNumberFromDatabase,3,'COMMA',2,'POINT')}"></h6>
           </div>
         </div>
       </div>
@@ -128,7 +128,8 @@
         fetch(url4)
         .then(response => response.json())
         .then(result => {
-            document.getElementById("revenueOfYear").innerHTML=result;
+         var spacedNumber = Number(result).toLocaleString('en-US', { useGrouping: true });
+            document.getElementById("revenueOfYear").innerHTML=spacedNumber.replace(/,/g, ',') +" VND";
         })
         .catch(error => {
             console.error(error);
@@ -229,12 +230,13 @@ function statistic_movie() {
         .then(data => {
             let resultList = [];
             data.forEach(result => {
+               var result4 = Number(result[4]).toLocaleString('en-US', { useGrouping: true }).replace(/,/g, ',') +" VND";
                 let resultItem = `<tr>
                                      <td>${result[0]}</td>
                                      <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
                                      <td>${result[2]}</td>
                                      <td>${result[3]}</td>
-                                     <td>${result[4]}</td>
+                                     <td>${result4}</td>
                                  </tr>`;
                 resultList.push(resultItem);
             });
@@ -264,12 +266,13 @@ function statistic_ticket_onclick(){
         .then(data => {
             let resultList = [];
             data.forEach(result => {
+                var result4 = Number(result[4]).toLocaleString('en-US', { useGrouping: true }).replace(/,/g, ',') +" VND";
                 let resultItem = `<tr>
                                      <td>${result[0]}</td>
                                      <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
                                      <td>${result[2]}</td>
                                      <td>${result[3]}</td>
-                                     <td>${result[4]}</td>
+                                     <td>${result4}</td>
                                  </tr>`;
                 resultList.push(resultItem);
             });
@@ -298,12 +301,13 @@ function statistic_revenue_onclick(){
         .then(data => {
             let resultList = [];
             data.forEach(result => {
+               var result4 = Number(result[4]).toLocaleString('en-US', { useGrouping: true }).replace(/,/g, ',') +" VND";
                 let resultItem = `<tr>
                                      <td>${result[0]}</td>
                                      <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
                                      <td>${result[2]}</td>
                                      <td>${result[3]}</td>
-                                     <td>${result[4]}</td>
+                                     <td>${result4}</td>
                                  </tr>`;
                 resultList.push(resultItem);
             });

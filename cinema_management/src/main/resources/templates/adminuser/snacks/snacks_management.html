@@ -32,7 +32,7 @@
                         <img scr="" class="my_image" th:src="@{'/img/'+${snacks.image}}" alt="snack image" style="width:250px;height:250px;"/>
                     </td>
                     <td th:text="${snacks.name}"></td>
-                    <td th:text="${snacks.price}"></td>
+                    <td th:value="${snacks.price}" th:text="${#numbers.formatDecimal(snacks.price,3,'COMMA',0,'POINT')} + ' VNĐ'"></td>
                     <td th:text="${snacks.status}"></td>
                     <td>
                         <a th:href = "@{'/admin/update_snacks/'+${snacks.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Cập nhật </a>

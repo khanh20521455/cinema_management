@@ -148,9 +148,9 @@ public class AdminController {
     public String updateShowtimesProcess(@PathVariable("id") Integer id,@ModelAttribute Showtimes showtimes, Model model,HttpSession session){
         return showtimesService.showtimesUpdateProcess(id, showtimes,model,session);
     }
-    @GetMapping("/delete_showtimes/{id}")
+    @GetMapping("/cancel_showtimes/{id}")
     public String deleteShowtimes(@PathVariable("id") Integer id){
-        return showtimesService.deleteShowtimes(id);
+        return showtimesService.cancelShowtimes(id);
     }
 
     //Booking management
@@ -240,7 +240,7 @@ public class AdminController {
     }
     @PostMapping("/update_snacks_process/{id}")
     public String updateSnackProcess(@PathVariable("id") Integer id, @ModelAttribute Snacks snacks, @RequestParam("imageUrl") MultipartFile file, Model model, HttpSession httpSession){
-        return snacksService.updateSnackProcess(id, snacks, file, model, httpSession);
+        return snacksService.updateSnackProcess(id, snacks, file,  httpSession);
     }
     //Offer_management
     @GetMapping("/offer_management/{page}")

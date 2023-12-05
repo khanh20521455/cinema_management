@@ -49,8 +49,9 @@ public class SnacksService {
                 Path path =   Paths.get(saveFile.getAbsolutePath()+File.separator+file.getOriginalFilename());
                 Files.copy(file.getInputStream(), path , StandardCopyOption.REPLACE_EXISTING);
             }
-            session.setAttribute("message", new Message("Thêm mới thành công", "success"));
             snacksRepository.save(snacks);
+            session.setAttribute("message", new Message("Thêm mới thành công", "success"));
+
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -63,9 +64,10 @@ public class SnacksService {
         model.addAttribute("snacks", snacks);
         return "adminuser/snacks/update_snacks";
     }
-    public String updateSnackProcess(Integer id, Snacks snacks, MultipartFile file, Model model, HttpSession session){
+    public String updateSnackProcess(Integer id, Snacks snacks, MultipartFile file, HttpSession session){
        Snacks oldSnacks = snacksRepository.getById(id);
         try {
+            String price = String.valueOf(snacks.getPrice());
             if (!file.isEmpty()) {
                 //delete
                 File deleteFile = new ClassPathResource("static/img").getFile();
@@ -76,6 +78,7 @@ public class SnacksService {
                 Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
                 Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
                 snacks.setImage(file.getOriginalFilename());
+
             } else {
                snacks.setImage(oldSnacks.getImage());
             }

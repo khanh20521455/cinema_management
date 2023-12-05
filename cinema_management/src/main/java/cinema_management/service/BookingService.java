@@ -48,27 +48,27 @@ public class BookingService {
         model.addAttribute("showtimesList", showtimesList);
         return "normaluser/booking/buy_ticket";
     }
-    public String buyTicketProcess(Booking booking, Integer movieId,
-                                   Principal principal, Model model, HttpSession session) {
-        Movie movie=this.movieRepository.getById(movieId);
-        model.addAttribute("movie", movie);
-
-        try {
-            User user = this.userRepository.getUserByUserName(principal.getName());
-            booking.setUser(user);
-            booking.setStatus(0);
-            booking.setTotal(booking.getNumberOfSeat()*booking.getShowtimes().getPrice());
-            this.bookingRepository.save(booking);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            session.setAttribute("message", new Message("Đã xảy ra lỗi, vui lòng thử lại ! ", "danger"));
-        }
-        int total= booking.getNumberOfSeat()*booking.getShowtimes().getPrice();
-        model.addAttribute("total",total);
-        model.addAttribute("booking",booking);
-        return "normaluser/booking/confirm_buy_ticket";
-    }
+//    public String buyTicketProcess(Booking booking, Integer movieId,
+//                                   Principal principal, Model model, HttpSession session) {
+//        Movie movie=this.movieRepository.getById(movieId);
+//        model.addAttribute("movie", movie);
+//
+//        try {
+//            User user = this.userRepository.getUserByUserName(principal.getName());
+//            booking.setUser(user);
+//            booking.setStatus(0);
+//            booking.setTotal(booking.getNumberOfSeat()*booking.getShowtimes().getPrice());
+//            this.bookingRepository.save(booking);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            session.setAttribute("message", new Message("Đã xảy ra lỗi, vui lòng thử lại ! ", "danger"));
+//        }
+//        int total= booking.getNumberOfSeat()*booking.getShowtimes().getPrice();
+//        model.addAttribute("total",total);
+//        model.addAttribute("booking",booking);
+//        return "normaluser/booking/confirm_buy_ticket";
+//    }
 
 
     public String confirmTicket(Integer id, Booking booking, Model model,HttpSession session){

@@ -203,3 +203,15 @@ function starmark(item)
 function result(){
 }
 
+function formatInputValue(input) {
+    var inputValue = input.value;
+    var numericValue = inputValue.replace(/[^\d.]/g, '');
+    var formattedValue = formatNumberWithSpaces(numericValue);
+    input.value = formattedValue;
+}
+function formatNumberWithSpaces(number) {
+    var spacedNumber = Number(number).toLocaleString('en-US', { useGrouping: true });
+    return spacedNumber.replace(/,/g, ',');
+}
+
+

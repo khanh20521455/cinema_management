@@ -55,24 +55,60 @@ public class ShowtimesService {
         model.addAttribute("movieList", movieList);
         model.addAttribute("roomList", roomList);
         model.addAttribute("theaterId", id);
-        System.out.println(roomList);
         return "adminuser/showtimes/add_showtimes";
     }
     public String addShowtimesProcess(Integer theaterId, Showtimes showtimes, HttpSession session){
         try {
-           showtimesRepository.save(showtimes);
+            showtimes.setStatus(true);
+            java.util.Date utilDate = new java.util.Date(showtimes.getDate().getTime());
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            calendar.setTime(utilDate);
+            int dayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK);
+            if(showtimes.getRoom().getTypeScreen().equals("2D")){
+                if(dayOfWeek == 2 || dayOfWeek == 3 || dayOfWeek ==5){
+                    if(showtimes.getTime().compareTo("12:01") <0)
+                        showtimes.setPrice(70000);
+                    else showtimes.setPrice(85000);
+                }
+                else if(dayOfWeek == 4)
+                {
+                    showtimes.setPrice(75000);
+                }
+                else
+                {
+                    showtimes.setPrice(105000);
+                }
+            }
+            else  if(showtimes.getRoom().getTypeScreen().equals("3D"))
+            {
+                if(dayOfWeek == 2 || dayOfWeek == 3 || dayOfWeek ==5){
+                    if(showtimes.getTime().compareTo("12:01") <0)
+                        showtimes.setPrice(75000);
+                    else showtimes.setPrice(90000);
+                }
+                else if(dayOfWeek == 4)
+                {
+                    showtimes.setPrice(85000);
+                }
+                else
+                {
+                    showtimes.setPrice(120000);
+                }
+            }
+            showtimesRepository.save(showtimes);
             session.setAttribute("message", new Message("New showtime has successfully added", "success"));
         } catch (Exception e) {
             e.printStackTrace();
             session.setAttribute("message", new Message("Something went wrong, try again ! ", "danger"));
         }
-//        for (int i=0; i<35;i++){
-//            Seat seat=new Seat();
-//            seat.setSeat(i+1);
-//            seat.setStatus(0);
-//            seat.setShowtimes(showtimes);
-//            seatRepository.save(seat);
-//        }
+
+        for (int i=0; i<35;i++){
+            Seat seat=new Seat();
+            seat.setSeat(i+1);
+            seat.setStatus(0);
+            seat.setShowtimes(showtimesRepository.getById(showtimesRepository.newShowtime()));
+            seatRepository.save(seat);
+        }
         return "redirect:/admin/showtimes_management/"+theaterId+"/0";
     }
     public String updateShowtimes(Integer id, Model model){
@@ -91,7 +127,6 @@ public class ShowtimesService {
             @ModelAttribute Showtimes showtimes,
             Model m, HttpSession session) {
 
-
         Optional<Showtimes> showtimesOptional = showtimesRepository.findById(id);
         Showtimes oldShowtimesDetail=showtimesOptional.get();
 
@@ -101,8 +136,43 @@ public class ShowtimesService {
             showtimes.setRoom(showtimes.getRoom());
             showtimes.setTime(showtimes.getTime());
             showtimes.setDate(showtimes.getDate());
-            showtimes.setPrice(showtimes.getPrice());
-            this.showtimesRepository.save(showtimes);
+            showtimes.setStatus(true);
+            java.util.Date utilDate = new java.util.Date(showtimes.getDate().getTime());
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            calendar.setTime(utilDate);
+            int dayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK);
+            if(showtimes.getRoom().getTypeScreen().equals("2D")){
+                if(dayOfWeek == 2 || dayOfWeek == 3 || dayOfWeek ==5){
+                    if(showtimes.getTime().compareTo("12:01") <0)
+                        showtimes.setPrice(70000);
+                    else showtimes.setPrice(85000);
+                }
+                else if(dayOfWeek == 4)
+                {
+                    showtimes.setPrice(75000);
+                }
+                else
+                {
+                    showtimes.setPrice(105000);
+                }
+            }
+            else  if(showtimes.getRoom().getTypeScreen().equals("3D"))
+            {
+                if(dayOfWeek == 2 || dayOfWeek == 3 || dayOfWeek ==5){
+                    if(showtimes.getTime().compareTo("12:01") <0)
+                        showtimes.setPrice(75000);
+                    else showtimes.setPrice(90000);
+                }
+                else if(dayOfWeek == 4)
+                {
+                    showtimes.setPrice(85000);
+                }
+                else
+                {
+                    showtimes.setPrice(120000);
+                }
+            }
+            showtimesRepository.save(showtimes);
             session.setAttribute("message", new Message("showtimes Updated Successfully.", "success"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,13 +180,14 @@ public class ShowtimesService {
             session.setAttribute("message", new Message("Something went wrong. " + e.getMessage(), "danger"));
         }
         Integer theaterId = oldShowtimesDetail.getRoom().getTheater().getId();
-        m.addAttribute("showtimes", showtimes);
         return "redirect:/admin/showtimes_management/" +theaterId + "/0";
     }
-    public String deleteShowtimes(Integer id){
-        bookingRepository.deleteBookingBaseShowtimes(id);
-        seatRepository.deleteSeatBaseShowtimes(id);
-        showtimesRepository.deleteById(id);
-        return "redirect:/admin/showtimes_management/0";
+    public String cancelShowtimes(Integer id){
+        Optional<Showtimes> showtimesOptional = showtimesRepository.findById(id);
+        Showtimes oldShowtimesDetail=showtimesOptional.get();
+        Integer theaterId = oldShowtimesDetail.getRoom().getTheater().getId();
+        oldShowtimesDetail.setStatus(false);
+        showtimesRepository.save(oldShowtimesDetail);
+        return "redirect:/admin/showtimes_management/" +theaterId + "/0";
     }
 }

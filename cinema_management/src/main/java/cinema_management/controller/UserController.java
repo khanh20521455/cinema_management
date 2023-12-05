@@ -67,11 +67,11 @@ public class UserController {
     public String buyTicket(@PathVariable("id") Integer id, Model model){
         return bookingService.buyTicket(id,model);
     }
-    @PostMapping("/buy_ticket_process/{movieId}")
-    public String buyTicketProcess(@ModelAttribute Booking booking, @PathVariable("movieId") Integer movieId,
-                                   Principal principal, Model model, HttpSession session) {
-        return bookingService.buyTicketProcess(booking,movieId,principal,model,session);
-    }
+//    @PostMapping("/buy_ticket_process/{movieId}")
+//    public String buyTicketProcess(@ModelAttribute Booking booking, @PathVariable("movieId") Integer movieId,
+//                                   Principal principal, Model model, HttpSession session) {
+//        return bookingService.buyTicketProcess(booking,movieId,principal,model,session);
+//    }
     @PostMapping("/confirm_booking/{id}")
     public String confirmBooking(@PathVariable("id") Integer id,@ModelAttribute Booking booking, Model model, HttpSession session){
         return this.bookingService.confirmTicket(id,booking,model,session);

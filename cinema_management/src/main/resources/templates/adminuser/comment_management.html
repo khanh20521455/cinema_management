@@ -32,7 +32,7 @@
           <td th:text="${comment.commentString}"></td>
           <td>
             <a th:href = "@{'/admin/confirm_comment/'+${comment.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Xác nhận </a>
-            <a th:href = "@{'/admin/cancel_comment/'+${comment.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Hủy bình luận </a>
+            <a th:href = "@{'/admin/cancel_comment/'+${comment.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Xóa </a>
           </td>
         </tr>
         </tbody>

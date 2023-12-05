@@ -9,7 +9,7 @@
 <section>
     <div class="card me-3 ms-3">
         <div class="card-body">
-            <h1 class="text-center"> CẬP NHẬT </h1>
+            <h1 class="text-center"> CẬP NHẬT ĐỒ ĂN</h1>
             <div class="container-fluid m1-1">
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
@@ -33,6 +33,7 @@
                             <div class="form-group">
                                 <label  for="snacks_price_field" class="form-label">Giá thành:</label><br>
                                 <input
+                                        oninput="formatInputValue(this)"
                                         th:value="${snacks.price}"
                                         name="price"
                                         type="text"
@@ -54,7 +55,7 @@
                                 </select>
                             </div>
                             <div class="container mt-3">
-                                <img class="rounded mx-auto d-block .my_user_profile2" src="" th:src="@{'/img/'+${snacks.image}}" />
+                                <img class="rounded mx-auto d-block .my_user_profile2" src="" th:src="@{'/img/'+${snacks.image}}" style="width:350px;height:350px;" />
                             </div>
                             <div class="custom-file mt-3">
                                 <input

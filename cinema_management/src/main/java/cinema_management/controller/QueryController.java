@@ -99,11 +99,17 @@ public class QueryController {
     public int getTicketYear(){
         Date current=new Date(System.currentTimeMillis());
         int year = current.toLocalDate().getYear();
+        if(this.bookingRepository.ticketOfYear(year) ==null){
+            return 0;
+        }
         return this.bookingRepository.ticketOfYear(year);
     }
     @GetMapping("/revenueOfYear")
     public long getRevenueOfYear(){
         Date current=new Date(System.currentTimeMillis());
+        if(this.bookingRepository.revenueOfYear(current.toLocalDate().getYear())==null){
+            return 0;
+        }
         return this.bookingRepository.revenueOfYear(current.toLocalDate().getYear());
     }
     @GetMapping("/ticketOfToday")
@@ -167,11 +173,18 @@ public class QueryController {
     public int getTicketYearTheater(@PathVariable("id") Integer id) {
         Date current=new Date(System.currentTimeMillis());
         int year = current.toLocalDate().getYear();
-        return this.bookingRepository.ticketOfYearTheater(id,year);
+        if(this.bookingRepository.ticketOfYearTheater(id,year)!=null){
+            return this.bookingRepository.ticketOfYearTheater(id,year);
+        }
+        return 0;
     }
     @GetMapping("/revenueOfYear/{id}")
     public long getRevenueOfYearTheater(@PathVariable("id") Integer id){
         Date current=new Date(System.currentTimeMillis());
+        if( this.bookingRepository.revenueOfYearTheater(id,current.toLocalDate().getYear())==null)
+        {
+            return 0;
+        }
         return this.bookingRepository.revenueOfYearTheater(id,current.toLocalDate().getYear());
     }
     @GetMapping("/ticketOfToday/{id}")

@@ -21,7 +21,7 @@
                 <tr style="font-size: 20px;">
                     <th scope="col">Phim </th>
                     <th scope="col">Tên Phim </th>
-                    <th scope="col">Phần trăm</th>
+                    <th scope="col">Giảm giá</th>
                     <th scope="col">Bắt đầu</th>
                     <th scope="col">Kết Thúc</th>
                     <th scope="col">Hành động</th>
@@ -30,12 +30,12 @@
                 <tbody>
                 <tr th:each="offer : ${offerList} ">
                     <td>
-                        <img scr="" class="my_image" th:src="@{'/img/'+${offer.movie.poster}}" alt="snack image" style="width:250px;height:250px;"/>
+                        <img scr="" class="my_image" th:src="@{'/img/'+${offer.movie.poster}}" alt="movie image" style="width:250px;height:250px;"/>
                     </td>
                     <td th:text="${offer.movie.name}"></td>
-                    <td th:text="${offer.percent}"></td>
-                    <td th:text="${offer.startAt}"></td>
-                    <td th:text="${offer.endAt}"></td>
+                    <td th:text="${offer.percent} + '%'"></td>
+                    <td th:text="${#temporals.format(offer.startAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${#temporals.format(offer.endAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     <td>
                         <a th:href = "@{'/admin/update_offer/'+${offer.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Cập nhật </a>
                     </td>

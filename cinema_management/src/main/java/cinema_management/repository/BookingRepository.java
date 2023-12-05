@@ -58,10 +58,10 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     public List<Object[]> revenuePerMonth();
 
     @Query("SELECT SUM(b.numberOfSeat) FROM Booking as b WHERE b.status=2 AND YEAR(b.completedAt)=:year")
-    public int ticketOfYear(@Param("year") int year);
+    public Integer ticketOfYear(@Param("year") int year);
 
     @Query("SELECT SUM(b.total) FROM Booking as b WHERE b.status=2 AND YEAR(b.completedAt)=:year")
-    public long revenueOfYear(@Param("year") int year);
+    public Long revenueOfYear(@Param("year") int year);
 
     @Query("SELECT SUM(b.numberOfSeat) FROM Booking as b WHERE b.status=2 AND b.completedAt=:now")
     public Integer ticketOfToday(@Param("now") Date now);
@@ -93,10 +93,10 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     public List<Object[]> revenuePerMonthTheater(@PathVariable("id") Integer id);
 
     @Query("SELECT SUM(b.numberOfSeat) FROM Booking as b WHERE b.showtimes.room.theater.id=:id AND b.status=2 AND YEAR(b.completedAt)=:year")
-    public int ticketOfYearTheater(@PathVariable("id") Integer id, @Param("year") int year);
+    public Integer ticketOfYearTheater(@PathVariable("id") Integer id, @Param("year") int year);
 
     @Query("SELECT SUM(b.total) FROM Booking as b WHERE b.showtimes.room.theater.id=:id AND b.status=2 AND YEAR(b.completedAt)=:year")
-    public long revenueOfYearTheater(@PathVariable("id") Integer id, @Param("year") int year);
+    public Long revenueOfYearTheater(@PathVariable("id") Integer id, @Param("year") int year);
 
     @Query("SELECT SUM(b.numberOfSeat) FROM Booking as b WHERE b.showtimes.room.theater.id=:id AND b.status=2 AND b.completedAt=:now")
     public Integer ticketOfTodayTheater(@PathVariable("id") Integer id, @Param("now") Date now);
