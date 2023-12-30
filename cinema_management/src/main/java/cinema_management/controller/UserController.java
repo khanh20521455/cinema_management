@@ -85,8 +85,8 @@ public class UserController {
         return bookingService.buyTicketProcess(booking,movieId,principal,model,session);
     }
     @PostMapping("/confirm_booking/{id}")
-    public String confirmBooking(@PathVariable("id") Integer id,@ModelAttribute Booking booking, Model model, HttpSession session){
-        return this.bookingService.confirmTicket(id,booking,model,session);
+    public String confirmBooking(@PathVariable("id") Integer id, Principal principal, Model model, HttpSession session){
+        return this.bookingService.confirmTicket(id,principal,model,session);
     }
     @GetMapping("/movie_watched/{page}")
     public String movieWatched(Principal principal, Model model,@PathVariable("page") Integer page){
@@ -115,8 +115,8 @@ public class UserController {
         return this.bookingService.getHistoryTransaction(page,principal,model);
     }
     @GetMapping("/cancel_booking/{id}")
-    public String cancelBooking(@PathVariable("id") Integer id){
-        return this.bookingService.cancelBookingUser(id);
+    public String cancelBooking(@PathVariable("id") Integer id, Principal principal){
+        return this.bookingService.cancelBookingUser(id, principal);
     }
 
     @GetMapping("/order_snack/{id}")

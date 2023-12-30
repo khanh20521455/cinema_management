@@ -22,7 +22,7 @@
                     <i class="fa fa-chart-area fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
                     <div class="ms-3">
                         <p class="mb-2" style="font-size: 18px;"> Doanh thu hôm nay </p>
-                        <h6 class="mb-0" id="revenueOfToday"></h6>
+                        <h6 class="mb-0" id="revenueOfToday"> VNĐ</h6>
                     </div>
                 </div>
             </div>
@@ -30,8 +30,8 @@
                 <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                     <i class="fa fa-chart-bar fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
                     <div class="ms-3">
-                        <p class="mb-2" style="font-size: 18px;"> Tổng lượt vé </p>
-                        <h6 class="mb-0" id="ticketOfYear"></h6>
+                        <p class="mb-2" style="font-size: 18px;"> Vé hủy hôm nay </p>
+                        <h6 class="mb-0" id="ticketCancelOfToday"></h6>
                     </div>
                 </div>
             </div>
@@ -39,8 +39,8 @@
                 <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                     <i class="fa fa-chart-pie fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
                     <div class="ms-3">
-                        <p class="mb-2" style="font-size: 18px;"> Tổng doanh thu </p>
-                        <h6 class="mb-0" id="revenueOfYear"> VNĐ </h6>
+                        <p class="mb-2" style="font-size: 18px;"> Tỉ lệ hủy hôm nay </p>
+                        <h6 class="mb-0" id="ratioCancelOfToday">%</h6>
                     </div>
                 </div>
             </div>
@@ -86,11 +86,15 @@
                             <button class="btn bg-primary text-white btn-sm boldText"
                                     onclick="statistic_ticket_onclick()"
                                     style="width: 170px;"
-                                    id="button_statistic_ticket">Lượt vé tăng dần</button>
+                                    id="button_statistic_ticket">Lượt xem tăng dần</button>
                             <button class="btn bg-primary text-white btn-sm boldText"
                                     onclick="statistic_revenue_onclick()"
                                     style="width: 170px;"
                                     id="button_statistic_revenue">Doanh thu tăng dần</button>
+                            <button class="btn bg-primary text-white btn-sm boldText"
+                                    onclick="statistic_cancel_onclick()"
+                                    style="width: 170px;"
+                                    id="button_statistic_cancel">Lượt hủy tăng dần</button>
                         </div>
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
                             <thead>
@@ -98,8 +102,9 @@
                                 <th scope="col">Id</th>
                                 <th scope="col">Phim</th>
                                 <th scope="col">Tên</th>
-                                <th scope="col">Lượt vé</th>
+                                <th scope="col">Lượt xem</th>
                                 <th scope="col">Doanh thu</th>
+                                <th scope="col">Lượt hủy</th>
                             </tr>
                             </thead>
                             <tbody class="statistic_movie_result"></tbody>
@@ -115,6 +120,8 @@
         let url4=`http://localhost:8082/revenueOfYear`;
         let url5=`http://localhost:8082/ticketOfToday`;
         let url6=`http://localhost:8082/revenueOfToday`;
+        let url7=`http://localhost:8082/ticketCancelOfToday`;
+        let url8=`http://localhost:8082/ratioCancelOfToday`;
         fetch(url3)
         .then(response => response.json())
         .then(result => {
@@ -143,7 +150,24 @@
         fetch(url6)
         .then(response => response.json())
         .then(result => {
-            document.getElementById("revenueOfToday").innerHTML=result;
+        var spacedNumber = Number(result).toLocaleString('en-US', { useGrouping: true });
+            document.getElementById("revenueOfToday").innerHTML=spacedNumber.replace(/,/g, ',') +" VND";
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        fetch(url7)
+        .then(response => response.json())
+        .then(result => {
+            document.getElementById("ticketCancelOfToday").innerHTML=result;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        fetch(url8)
+        .then(response => response.json())
+        .then(result => {
+        document.getElementById("ratioCancelOfToday").innerHTML=result + " %";
         })
         .catch(error => {
             console.error(error);
@@ -235,6 +259,7 @@ function statistic_movie() {
                                      <td>${result[2]}</td>
                                      <td>${result[3]}</td>
                                      <td>${result4}</td>
+                                     <td>${result[5]}</td>
                                  </tr>`;
                 resultList.push(resultItem);
             });
@@ -251,12 +276,12 @@ function statistic_ticket_onclick(){
     let start = document.getElementById("movie_start_field").value;
     let end = document.getElementById("movie_end_field").value;
     let button= document.getElementById("button_statistic_ticket").innerText;
-    if(button === "Lượt vé tăng dần"){
+    if(button === "Lượt xem tăng dần"){
         document.getElementById("button_statistic_ticket").innerText="Lượt vé giảm dần";
          var url = `http://localhost:8082/bookingForStatistic_ticket_asc/?start=${start}&end=${end}`;
     }
     else{
-        document.getElementById("button_statistic_ticket").innerText="Lượt vé tăng dần";
+        document.getElementById("button_statistic_ticket").innerText="Lượt xem tăng dần";
         var url = `http://localhost:8082/bookingForStatistic_ticket_desc/?start=${start}&end=${end}`;
     }
     fetch(url)
@@ -272,6 +297,7 @@ function statistic_ticket_onclick(){
                                      <td>${result[2]}</td>
                                      <td>${result[3]}</td>
                                      <td>${result4}</td>
+                                     <td>${result[5]}</td>
                                  </tr>`;
                 resultList.push(resultItem);
             });
@@ -307,6 +333,43 @@ function statistic_revenue_onclick(){
                                      <td>${result[2]}</td>
                                      <td>${result[3]}</td>
                                      <td>${result4}</td>
+                                     <td>${result[5]}</td>
+                                 </tr>`;
+                resultList.push(resultItem);
+            });
+
+            $(".table-statistic").show();
+            $(".statistic_movie_result").html(resultList.join(""));
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+function statistic_cancel_onclick(){
+    let start = document.getElementById("movie_start_field").value;
+    let end = document.getElementById("movie_end_field").value;
+    let button= document.getElementById("button_statistic_cancel").innerText;
+    if(button === "Lượt hủy tăng dần"){
+        document.getElementById("button_statistic_cancel").innerText="Lượt hủy giảm dần";
+        var url = `http://localhost:8082/bookingForStatistic_cancel_asc/?start=${start}&end=${end}`;
+    }
+    else{
+        document.getElementById("button_statistic_cancel").innerText="Lượt hủy tăng dần";
+        var url = `http://localhost:8082/bookingForStatistic_cancel_desc/?start=${start}&end=${end}`;
+    }
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let resultList = [];
+            data.forEach(result => {
+            var result4 = Number(result[4]).toLocaleString('en-US', { useGrouping: true }).replace(/,/g, ',') +" VND";
+                let resultItem = `<tr>
+                                     <td>${result[0]}</td>
+                                     <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
+                                     <td>${result[2]}</td>
+                                     <td>${result[3]}</td>
+                                     <td>${result4}</td>
+                                     <td>${result[5]}</td>
                                  </tr>`;
                 resultList.push(resultItem);
             });

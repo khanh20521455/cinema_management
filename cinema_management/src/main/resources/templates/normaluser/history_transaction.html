@@ -35,15 +35,12 @@
                     <td th:text="${#strings.listJoin(booking.seatList, ' ')}"></td>
                     <td th:text="${booking.total}"></td>
                     <div th:if="${booking.status == 1}">
-                        <td style="color: #e4a8a8; font-weight: bold;">Đang chờ xác nhận
+                        <td style="color: #e4a8a8; font-weight: bold;">Đã đặt vé
                             <br>
                             <a th:href = "@{'/user/cancel_booking/'+${booking.id}}" class="btn btn-outline-warning btn-sm boldText"> Huỷ đặt </a>
                         </td>
                     </div>
                     <div th:if="${booking.status == 2}">
-                        <td style="color: #e4a8a8; font-weight: bold;">Đã được xác nhận</td>
-                    </div>
-                    <div th:if="${booking.status == 3}">
                         <td style="color: #e4a8a8; font-weight: bold;">Đã hủy</td>
                     </div>
                 </tr>

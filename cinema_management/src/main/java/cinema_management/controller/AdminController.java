@@ -86,10 +86,6 @@ public class AdminController {
             Model model, HttpSession session) {
         return roomService.roomUpdateProcess(id,room, model,session);
     }
-    @GetMapping("/delete_room/{id}")
-    public String deleteRoom(@PathVariable("id") Integer id){
-        return roomService.deleteRoom(id);
-    }
 
     //Movie management
     @GetMapping("/movie_management/{page}")
@@ -118,11 +114,6 @@ public class AdminController {
                                      Model model, HttpSession session){
         return movieService.movieUpdateProcess(id, movie,file,model,session);
     }
-    @GetMapping("/delete_movie/{id}")
-    public String deleteMovie(@PathVariable("id") Integer id){
-        return movieService.deleteMovie(id);
-    }
-
     //Showtimes management
     @GetMapping("/theater_showtimes_management/{page}")
     public String getTheaterForShowtimeManagement(@PathVariable("page") Integer page, Model model){
@@ -154,22 +145,14 @@ public class AdminController {
     }
 
     //Booking management
-    @GetMapping("/theater_booking_management/{page}")
-    public String getTheaterScreen(@PathVariable("page") Integer page, Model model){
-        return bookingService.getTheaterForBookingManagement(page, model);
-    }
-    @GetMapping("/booking_management/{id}/{page}")
-    public String getBookingWaitConfirm(@PathVariable("id") Integer id, @PathVariable("page") Integer page,Model model){
-        return bookingService.getBookingWaitConfirm(id, page,model);
-    }
-    @GetMapping("/confirm_booking/{id}")
-    public String confirmBooking(@PathVariable("id") Integer id){
-        return this.bookingService.confirmBooking(id);
-    }
-    @GetMapping("/cancel_booking/{id}")
-    public String cancelBooking(@PathVariable("id") Integer id){
-        return  this.bookingService.cancelBooking(id);
-    }
+//    @GetMapping("/theater_booking_management/{page}")
+//    public String getTheaterScreen(@PathVariable("page") Integer page, Model model){
+//        return bookingService.getTheaterForBookingManagement(page, model);
+//    }
+//    @GetMapping("/booking_management/{id}/{page}")
+//    public String getBookingWaitConfirm(@PathVariable("id") Integer id, @PathVariable("page") Integer page,Model model){
+//        return bookingService.getBookingWaitConfirm(id, page,model);
+//    }
     //Statistic
     @GetMapping("theater_statistic_management/{page}")
     public String getTheaterForStatistic(@PathVariable("page") Integer page, Model model){

@@ -16,6 +16,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.Math.round;
+
 @RestController
 public class QueryController {
     @Autowired
@@ -92,6 +94,10 @@ public class QueryController {
     public  List<Object[]> getBookingForStatisticRevenueASC(@RequestParam("start") Date start, @RequestParam("end") Date end){
         return this.bookingRepository.bookingForStatisticRevenueASC(start, end);
     }
+    @GetMapping("/bookingForStatistic_cancel_asc")
+    public  List<Object[]> getBookingForStatisticCancelASC(@RequestParam("start") Date start, @RequestParam("end") Date end){
+        return this.bookingRepository.bookingForStatisticCancelASC(start, end);
+    }
     @GetMapping("/bookingForStatistic_ticket_desc")
     public  List<Object[]> getBookingForStatisticTicketDESC(@RequestParam("start") Date start, @RequestParam("end") Date end){
         return this.bookingRepository.bookingForStatisticTicketDESC(start, end);
@@ -99,6 +105,10 @@ public class QueryController {
     @GetMapping("/bookingForStatistic_revenue_desc")
     public  List<Object[]> getBookingForStatisticRevenueDESC(@RequestParam("start") Date start, @RequestParam("end") Date end){
         return this.bookingRepository.bookingForStatisticRevenueDESC(start, end);
+    }
+    @GetMapping("/bookingForStatistic_cancel_desc")
+    public  List<Object[]> getBookingForStatisticCancelDESC(@RequestParam("start") Date start, @RequestParam("end") Date end){
+        return this.bookingRepository.bookingForStatisticCancelDESC(start, end);
     }
     @GetMapping("/ticketFerMonth")
     public int[] getTicketMonthly(){
@@ -268,5 +278,30 @@ public class QueryController {
         this.userRepository.save(user);
         this.bookingRepository.save(booking);
         return booking.getActualTotal();
+    }
+    @GetMapping("/queryCancelOfToday/{id}")
+    public Integer cancelOfToday(@PathVariable("id") Integer id){
+        return this.bookingRepository.ticketCancelOfTodayTheater(id, new Date(System.currentTimeMillis()));
+    }
+    @GetMapping("/queryCancelOfYear/{id}")
+    public Integer cancelOfYear(@PathVariable("id") Integer id){
+        Date current=new Date(System.currentTimeMillis());
+        int year = current.toLocalDate().getYear();
+        return this.bookingRepository.ticketCancelOfYearTheater(id, year);
+    }
+    @GetMapping("/ticketCancelOfToday")
+    public Integer cancelOfTodayALl(){
+        return this.bookingRepository.ticketCancelOfToday( new Date(System.currentTimeMillis()));
+    }
+    public Double round(Double value, int places) {
+        double scale = Math.pow(10, places);
+        return Math.round(value * scale) / scale;
+    }
+    @GetMapping("/ratioCancelOfToday")
+    public Double cancelOfYearAll(){
+        int cancel = this.bookingRepository.ticketCancelOfToday( new Date(System.currentTimeMillis()));
+        int ticket = this.bookingRepository.ticketOfToday(new Date(System.currentTimeMillis()));
+        Double ratio= (double) cancel / ticket * 100;
+        return round(ratio, 2);
     }
 }

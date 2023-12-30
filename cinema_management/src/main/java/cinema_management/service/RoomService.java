@@ -108,14 +108,5 @@ public class RoomService {
         Integer theaterId= oldRoomDetail.getTheater().getId();
         return "redirect:/admin/room_management/"+theaterId+"/0";
     }
-    public String deleteRoom(Integer id){
-        List<Showtimes> showtimesList= this.showtimesRepository.findByRoomId(id);
-        for(Showtimes showtimes: showtimesList){
-            this.seatRepository.deleteSeatBaseShowtimes(showtimes.getId());
-            this.bookingRepository.deleteBookingBaseShowtimes(showtimes.getId());
-        }
-        showtimesRepository.deleteBaseOnRoom(id);
-        roomRepository.deleteById(id);
-        return "redirect:/admin/room_management/0";
-    }
+
 }

@@ -143,17 +143,7 @@ public class MovieService {
         m.addAttribute("movie", movie);
         return "redirect:/admin/movie_management/0";
     }
-    public String deleteMovie(Integer id){
-        List<Showtimes> showtimesList= this.showtimesRepository.ShowtimesBaseOnMovie(id);
-        for(Showtimes showtimes:showtimesList){
-            this.bookingRepository.deleteBookingBaseShowtimes(showtimes.getId());
-            this.seatRepository.deleteSeatBaseShowtimes(showtimes.getId());
-            this.showtimesRepository.deleteById(showtimes.getId());
-        }
-        this.commentRepository.deleteCommentMovie(id);
-        movieRepository.deleteById(id);
-        return "redirect:/admin/movie_management/0";
-    }
+
 
     //User
     public String movieDetail(Principal principal,Integer id, Model model){
