@@ -27,6 +27,9 @@ public class Booking {
     private int statusComment;
     private Date completedAt;
     private int total;
+    private boolean isPoint;
+    //Tổng tiền khi chưa áp dụng điểm tích lũy
+    private int actualTotal;
 
     public int getTotal() {
         return total;
@@ -98,6 +101,22 @@ public class Booking {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public boolean isPoint() {
+        return isPoint;
+    }
+
+    public void setPoint(boolean point) {
+        isPoint = point;
+    }
+
+    public int getActualTotal() {
+        return actualTotal;
+    }
+
+    public void setActualTotal(int actualTotal) {
+        this.actualTotal = actualTotal;
     }
 
     public Booking() {

@@ -25,15 +25,43 @@
             <br>
         </div>
         <div class="upcoming-movie-list">
-            <h3 class="boldText ps-4">PHIM SẮP CHIẾU</h3>
+            <h3 class="boldText ps-4">BẠN CÓ THỂ YÊU THÍCH</h3>
             <br>
             <div class="container" style="display: grid; grid-template-columns: auto auto auto auto; grid-gap: 30px">
                 <div class="d-flex justify-content-between flex-wrap"
-                th:each="movie: ${movieUpcomingList}">
+                     th:each="movie: ${maybeLike}">
+                    <div class="card movie-item" style=" width:300px">
+                        <img class="card-img-top img-movie"
+                             th:src="@{'/img/'+${movie.poster}}"
+                             alt=" " style="width:100%;height:400px;">
+                        <div class="card-body align-self-center">
+                            <h4 class="card-title boldText" th:text="${movie.name}"></h4>
+                            <a class="text-decoration-none" href="#" th:href="@{'/user/movie_detail/'+${movie.id}}"
+                               style="margin-right:40px">
+                                <button class="btn btn-outline-warning boldText" style="width: 100px">Chi tiết</button>
+                            </a>
+                            <a class="text-decoration-none" href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}">
+                                <button class="btn btn-outline-danger boldText" style="width: 100px">Đặt vé</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <br>
+            <br>
+            <br>
+        <div class="playing-movie-list">
+            <h3 class="boldText ps-4">PHIM ĐANG CHIẾU</h3>
+            <br>
+            <div class="container"  style="display: grid; grid-template-columns: auto auto auto; grid-gap: 30px">
+                <div class="d-flex justify-content-between flex-wrap"
+                th:each="movie: ${moviePlayingList}">
                     <div class="card movie-item" style=" width:300px">
                         <img class="card-img-top img-movie"
                         th:src="@{'/img/'+${movie.poster}}"
-                        alt=" " style="width:100%">
+                        alt=" " style="width:100%;height:400px;">
                         <div class="card-body align-self-center">
                             <h4 class="card-title boldText" th:text="${movie.name}"></h4>
                             <a class="text-decoration-none" href="#" th:href="@{'/user/movie_detail/'+${movie.id}}"
@@ -48,24 +76,24 @@
                 </div>
             </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <div class="upcoming-movie-list">
+            <h3 class="boldText ps-4">PHIM SẮP CHIẾU</h3>
             <br>
-            <br>
-            <br>
-        <div class="playing-movie-list">
-            <h3 class="boldText ps-4">PHIM ĐANG CHIẾU</h3>
-            <br>
-            <div class="container"  style="display: grid; grid-template-columns: auto auto auto; grid-gap: 30px">
+            <div class="container" style="display: grid; grid-template-columns: auto auto auto auto; grid-gap: 30px">
                 <div class="d-flex justify-content-between flex-wrap"
-                th:each="movie: ${moviePlayingList}">
+                     th:each="movie: ${movieUpcomingList}">
                     <div class="card movie-item" style=" width:300px">
                         <img class="card-img-top img-movie"
-                        th:src="@{'/img/'+${movie.poster}}"
-                        alt=" " style="width:100%">
+                             th:src="@{'/img/'+${movie.poster}}"
+                             alt=" " style="width:100%;height:400px;">
                         <div class="card-body align-self-center">
                             <h4 class="card-title boldText" th:text="${movie.name}"></h4>
                             <a class="text-decoration-none" href="#" th:href="@{'/user/movie_detail/'+${movie.id}}"
-                            style="margin-right:40px">
-                            <button class="btn btn-outline-warning boldText" style="width: 100px">Chi tiết</button>
+                               style="margin-right:40px">
+                                <button class="btn btn-outline-warning boldText" style="width: 100px">Chi tiết</button>
                             </a>
                             <a class="text-decoration-none" href="#" th:href="@{'/user/buy_ticket/'+${movie.id}}">
                                 <button class="btn btn-outline-danger boldText" style="width: 100px">Đặt vé</button>

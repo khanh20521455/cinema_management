@@ -8,11 +8,13 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.security.Principal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class QueryController {
@@ -24,26 +26,55 @@ public class QueryController {
     private BookingRepository bookingRepository;
     @Autowired
     private MovieRepository movieRepository;
+    @Autowired
+    private TheaterRepository theaterRepository;
+    @Autowired
+    private UserRepository userRepository;
     @GetMapping("/search/{query}")
     public List<Movie> searchByName(@PathVariable("query") String query){
-        return this.movieRepository.findByNameContainingAndEndAfter(query,new Date(System.currentTimeMillis()));
+        List<Movie> movieList = this.movieRepository.findByNameContainingAndEndAfter(query, new Date(System.currentTimeMillis()));
+        List<Movie> m1List= this.movieRepository.findByActorContainingAndEndAfter(query, new Date(System.currentTimeMillis()));
+        List<Movie> m2List= this.movieRepository.findByDirectorContainingAndEndAfter(query, new Date(System.currentTimeMillis()));
+        for (Movie m : m1List){
+            if(!movieList.contains(m))
+                movieList.add(m);
+        }
+        for (Movie m : m2List){
+            if(!movieList.contains(m))
+                movieList.add(m);
+        }
+        return movieList;
     }
     @GetMapping("/search_admin/{query}")
     public  List<Movie> searchByNameAdmin(@PathVariable("query") String query){
-        return this.movieRepository.findByNameContaining(query);
-    }
-    @GetMapping("/query")
-    public List<Room> getTypeScreen(@RequestParam("id") Integer id, @RequestParam("date") Date date){
-        List<Room> roomList=new ArrayList<>();
-        List<Showtimes> showtimesList=this.showtimesRepository.typeScreenShowtimes(id, date);
-        for(Showtimes showtimes: showtimesList){
-            roomList.add(showtimes.getRoom());
+        List<Movie> movieList = this.movieRepository.findByNameContaining(query);
+        List<Movie> m1List= this.movieRepository.findByActorContaining(query);
+        List<Movie> m2List= this.movieRepository.findByDirectorContaining(query);
+        for (Movie m : m1List){
+            if(!movieList.contains(m))
+                movieList.add(m);
         }
-        return roomList;
+        for (Movie m : m2List){
+            if(!movieList.contains(m))
+                movieList.add(m);
+        }
+        return movieList;
+    }
+    @GetMapping("/queryProvince")
+    public List<String> listProvince(){
+        return this.theaterRepository.listProvince();
+    }
+    @GetMapping("/queryTheater")
+    public List<Theater> getTheaterList(@RequestParam("id")Integer id, @RequestParam("province") String province){
+        return this.showtimesRepository.theaterShowtimes(id, province);
+    }
+    @GetMapping("/queryTypeScreen")
+    public List<String> getTypeScreen(@RequestParam("id") Integer id,@RequestParam("theaterId") Integer theaterId, @RequestParam("date") Date date){
+        return this.showtimesRepository.typeScreenShowtimes(id, theaterId, date);
     }
     @GetMapping("/queryShowtimes")
-    public List<Showtimes> getTime(@RequestParam("id") Integer id, @RequestParam("date") Date date, @RequestParam("typeScreen")String typeScreen){
-        return this.showtimesRepository.timeShowtimes(id, date, typeScreen);
+    public List<Showtimes> getTime(@RequestParam("id") Integer id,@RequestParam("theaterId") Integer theaterId, @RequestParam("date") Date date, @RequestParam("typeScreen")String typeScreen){
+        return this.showtimesRepository.timeShowtimes(id, theaterId, date, typeScreen);
     }
     @GetMapping("/querySeatNotSelect")
     public  List<Seat> getSeatNotSelectYet(@RequestParam("id")Integer showtimesId){
@@ -202,5 +233,40 @@ public class QueryController {
             return 0;
         }
         return this.bookingRepository.revenueOfTodayTheater(id,current);
+    }
+    @GetMapping("/queryTotal")
+    public Integer getFinalTotal(@RequestParam("total") Integer total, @RequestParam("bookingId") Integer bookingId, Principal principal){
+        Optional<Booking> b = this.bookingRepository.findById(bookingId);
+        Booking booking= b.get();
+        User user = this.userRepository.getUserByUserName(principal.getName());
+        if(user.getPoint()<=(total/1000)){
+            Integer ftotal = total - (user.getPoint()*1000);
+            booking.setTotal(ftotal);
+            booking.setPoint(true);
+            user.setPoint(0);
+            this.bookingRepository.save(booking);
+            this.userRepository.save(user);
+            return ftotal;
+        }
+        else {
+            booking.setTotal(0);
+            booking.setPoint(true);
+            user.setPoint(user.getPoint()-(total/1000));
+            this.bookingRepository.save(booking);
+            this.userRepository.save(user);
+            return 0;
+        }
+
+    }
+    @GetMapping("/queryTotalAdd")
+    public Integer getTotal(@RequestParam("total") Integer total, @RequestParam("bookingId") Integer bookingId, Principal principal){
+        Booking booking= this.bookingRepository.getById(bookingId);
+        User user = this.userRepository.getUserByUserName(principal.getName());
+        user.setPoint(user.getPoint()+((booking.getActualTotal()-booking.getTotal())/1000));
+        booking.setTotal(booking.getActualTotal());
+        booking.setPoint(false);
+        this.userRepository.save(user);
+        this.bookingRepository.save(booking);
+        return booking.getActualTotal();
     }
 }

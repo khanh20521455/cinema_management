@@ -5,15 +5,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "USER")
@@ -31,7 +23,12 @@ public class User {
     private String role;
     private boolean enable;
     private String imgUrl;
-
+    @Column(columnDefinition = "int default 0")
+    private Integer point;
+    @ManyToMany
+    @JsonBackReference
+    @JoinColumn(name="favorite_list")
+    private List<Movie> favorites;
     public User() {
         super();
     }
@@ -106,6 +103,22 @@ public class User {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public Integer getPoint() {
+        return point;
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
+    }
+
+    public List<Movie> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(List <Movie> favorites) {
+        this.favorites = favorites;
     }
 
     @Override

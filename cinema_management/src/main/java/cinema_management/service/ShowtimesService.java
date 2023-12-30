@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,7 +97,24 @@ public class ShowtimesService {
                     showtimes.setPrice(120000);
                 }
             }
+            long days = ChronoUnit.DAYS.between(showtimes.getDate().toLocalDate(), showtimes.getMovie().getStart().toLocalDate());
+            if(days <= 7){
+                showtimes.setPrice(showtimes.getPrice()/5*4);
+            }
+            else if(days >7 && days <=14){
+                showtimes.setPrice(showtimes.getPrice()/10*9);
+            }
+            else{
+                showtimes.setPrice(showtimes.getPrice());
+            }
             showtimesRepository.save(showtimes);
+            for (int i=0; i<40;i++){
+                Seat seat=new Seat();
+                seat.setSeat(i+1);
+                seat.setStatus(0);
+                seat.setShowtimes(showtimes);
+                seatRepository.save(seat);
+            }
             session.setAttribute("message", new Message("New showtime has successfully added", "success"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,6 +160,8 @@ public class ShowtimesService {
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTime(utilDate);
             int dayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK);
+            long days = ChronoUnit.DAYS.between(showtimes.getDate().toLocalDate(), showtimes.getMovie().getStart().toLocalDate());
+
             if(showtimes.getRoom().getTypeScreen().equals("2D")){
                 if(dayOfWeek == 2 || dayOfWeek == 3 || dayOfWeek ==5){
                     if(showtimes.getTime().compareTo("12:01") <0)
@@ -172,6 +193,16 @@ public class ShowtimesService {
                     showtimes.setPrice(120000);
                 }
             }
+            if(days <= 7){
+                showtimes.setPrice(showtimes.getPrice()/5*4);
+            }
+            else if(days >7 && days <=14){
+                showtimes.setPrice(showtimes.getPrice()/10*9);
+            }
+            else{
+                showtimes.setPrice(showtimes.getPrice());
+            }
+
             showtimesRepository.save(showtimes);
             session.setAttribute("message", new Message("showtimes Updated Successfully.", "success"));
         } catch (Exception e) {

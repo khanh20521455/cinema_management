@@ -34,8 +34,8 @@
                     </td>
                     <td th:text="${offer.movie.name}"></td>
                     <td th:text="${offer.percent} + '%'"></td>
-                    <td th:text="${#temporals.format(offer.startAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                    <td th:text="${#temporals.format(offer.endAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${#temporals.format(offer.startAt, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                    <td th:text="${#temporals.format(offer.endAt, 'dd/MM/yyyy HH:mm:ss')}"></td>
                     <td>
                         <a th:href = "@{'/admin/update_offer/'+${offer.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Cập nhật </a>
                     </td>

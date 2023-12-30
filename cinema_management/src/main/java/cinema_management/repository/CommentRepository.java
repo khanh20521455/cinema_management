@@ -1,6 +1,7 @@
 package cinema_management.repository;
 
 import cinema_management.entities.Comment;
+import cinema_management.entities.Movie;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -29,5 +31,9 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     @Query("DELETE FROM Comment as s WHERE s.movie.id=:id")
     public void deleteCommentMovie(@Param("id") Integer id);
 
-
+    @Query("SELECT c.movie " +
+            "FROM Comment c " +
+            "WHERE c.movie.end >= :now " +
+            "GROUP BY c.movie.id ")
+    List<Movie> findMoviesByAverageRating(@Param("now") Date now, Pageable pageable);
 }

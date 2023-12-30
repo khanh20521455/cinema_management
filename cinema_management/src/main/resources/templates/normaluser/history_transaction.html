@@ -33,7 +33,7 @@
                     <td th:text="${booking.showtimes.movie.name}"></td>
                     <td th:text="${booking.showtimes.time}+' ngày '+${booking.showtimes.date}"></td>
                     <td th:text="${#strings.listJoin(booking.seatList, ' ')}"></td>
-                    <td th:text="${booking.numberOfSeat * booking.showtimes.price}"></td>
+                    <td th:text="${booking.total}"></td>
                     <div th:if="${booking.status == 1}">
                         <td style="color: #e4a8a8; font-weight: bold;">Đang chờ xác nhận
                             <br>

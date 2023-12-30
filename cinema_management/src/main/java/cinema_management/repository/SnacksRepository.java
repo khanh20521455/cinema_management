@@ -8,9 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
 
 @Repository
 public interface SnacksRepository extends JpaRepository<Snacks,Integer> {
     @Query("FROM Snacks as s ORDER  BY s.name")
     public Page<Snacks> getAll(Pageable pageable);
+    @Query("FROM Snacks as s WHERE s.status = 'Đang bán' ORDER  BY s.name ")
+    public List<Snacks> snacksListBuying();
+
 }

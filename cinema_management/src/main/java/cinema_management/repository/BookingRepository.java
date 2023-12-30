@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import cinema_management.entities.Movie;
 import java.sql.Date;
 import java.util.List;
 
@@ -103,4 +103,9 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
     @Query("SELECT SUM(b.total) FROM Booking as b WHERE b.showtimes.room.theater.id=:id AND b.status=2 AND b.completedAt=:now")
     public Long revenueOfTodayTheater(@PathVariable("id") Integer id, @Param("now") Date now);
+
+    @Query("SELECT b.showtimes.movie FROM Booking as b WHERE b.showtimes.movie.end >= :now GROUP BY b.showtimes.movie ORDER BY SUM(b.numberOfSeat) DESC ")
+    public List<Movie> listMovieBestSale(@Param("now") Date now, Pageable pageable);
+
 }
+
