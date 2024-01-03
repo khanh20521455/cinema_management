@@ -69,28 +69,34 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     @Query("SELECT SUM(b.total) FROM Booking as b WHERE  YEAR(b.completedAt)=:year")
     public Long revenueOfYear(@Param("year") int year);
 
-    @Query("SELECT SUM(b.numberOfSeat) FROM Booking as b WHERE b.status=1 AND b.completedAt=:now")
+    @Query("SELECT SUM(b.numberOfSeat) FROM Booking as b WHERE b.completedAt=:now")
     public Integer ticketOfToday(@Param("now") Date now);
 
     @Query("SELECT SUM(b.total) FROM Booking as b WHERE b.status=1 AND b.completedAt=:now")
     public Long revenueOfToday(@Param("now") Date now);
 
     // Statistic for per theater
-    @Query("SELECT b.showtimes.movie.id, b.showtimes.movie.poster ,b.showtimes.movie.name, SUM(b.numberOfSeat), SUM(b.total) FROM Booking as b WHERE b.status = 1 AND b.showtimes.room.theater.id=:id AND b.completedAt >= :start AND" +
+    @Query("SELECT b.showtimes.movie.id, b.showtimes.movie.poster ,b.showtimes.movie.name, SUM(b.numberOfSeat), SUM(b.total), b.showtimes.movie.cancel FROM Booking as b WHERE b.status = 1 AND b.showtimes.room.theater.id=:id AND b.completedAt >= :start AND" +
             " b.completedAt <= :end GROUP BY b.showtimes.movie.id ORDER BY SUM(b.numberOfSeat) DESC")
     public List<Object[]> bookingForStatisticTicketDESCTheater(@PathVariable("id") Integer id, @RequestParam("start") Date start, @RequestParam("end") Date end);
 
-    @Query("SELECT b.showtimes.movie.id, b.showtimes.movie.poster ,b.showtimes.movie.name, SUM(b.numberOfSeat), SUM(b.total) FROM Booking as b WHERE b.status = 1 AND b.showtimes.room.theater.id=:id AND b.completedAt >= :start AND" +
+    @Query("SELECT b.showtimes.movie.id, b.showtimes.movie.poster ,b.showtimes.movie.name, SUM(b.numberOfSeat), SUM(b.total), b.showtimes.movie.cancel FROM Booking as b WHERE b.status = 1 AND b.showtimes.room.theater.id=:id AND b.completedAt >= :start AND" +
             " b.completedAt <= :end GROUP BY b.showtimes.movie.id ORDER BY SUM(b.total) DESC")
     public List<Object[]> bookingForStatisticRevenueDESCTheater(@PathVariable("id") Integer id, @RequestParam("start") Date start, @RequestParam("end") Date end);
 
-    @Query("SELECT b.showtimes.movie.id, b.showtimes.movie.poster ,b.showtimes.movie.name, SUM(b.numberOfSeat), SUM(b.total) FROM Booking as b WHERE b.status = 1 AND b.showtimes.room.theater.id=:id AND b.completedAt >= :start AND" +
+    @Query("SELECT b.showtimes.movie.id, b.showtimes.movie.poster ,b.showtimes.movie.name, SUM(b.numberOfSeat), SUM(b.total), b.showtimes.movie.cancel FROM Booking as b WHERE b.status = 1 AND b.showtimes.room.theater.id=:id AND b.completedAt >= :start AND" +
             " b.completedAt <= :end GROUP BY b.showtimes.movie.id ORDER BY SUM(b.numberOfSeat) ASC")
     public List<Object[]> bookingForStatisticTicketASCTheater(@PathVariable("id") Integer id, @RequestParam("start") Date start, @RequestParam("end") Date end);
 
-    @Query("SELECT b.showtimes.movie.id, b.showtimes.movie.poster ,b.showtimes.movie.name, SUM(b.numberOfSeat), SUM(b.total) FROM Booking as b WHERE b.status = 1 AND b.showtimes.room.theater.id=:id AND b.completedAt >= :start AND" +
+    @Query("SELECT b.showtimes.movie.id, b.showtimes.movie.poster ,b.showtimes.movie.name, SUM(b.numberOfSeat), SUM(b.total), b.showtimes.movie.cancel FROM Booking as b WHERE b.status = 1 AND b.showtimes.room.theater.id=:id AND b.completedAt >= :start AND" +
             " b.completedAt <= :end GROUP BY b.showtimes.movie.id ORDER BY SUM(b.total) ASC")
     public List<Object[]> bookingForStatisticRevenueASCTheater(@PathVariable("id") Integer id, @RequestParam("start") Date start, @RequestParam("end") Date end);
+    @Query("SELECT b.showtimes.movie.id, b.showtimes.movie.poster ,b.showtimes.movie.name, SUM(b.numberOfSeat), SUM(b.total), b.showtimes.movie.cancel FROM Booking as b WHERE b.status = 1 AND b.showtimes.room.theater.id=:id AND b.completedAt >= :start AND" +
+            " b.completedAt <= :end GROUP BY b.showtimes.movie.id ORDER BY SUM( b.showtimes.movie.cancel) ASC")
+    public List<Object[]> bookingForStatisticCancelASCTheater(@PathVariable("id") Integer id, @RequestParam("start") Date start, @RequestParam("end") Date end);
+    @Query("SELECT b.showtimes.movie.id, b.showtimes.movie.poster ,b.showtimes.movie.name, SUM(b.numberOfSeat), SUM(b.total), b.showtimes.movie.cancel FROM Booking as b WHERE b.status = 1 AND b.showtimes.room.theater.id=:id AND b.completedAt >= :start AND" +
+            " b.completedAt <= :end GROUP BY b.showtimes.movie.id ORDER BY SUM(b.showtimes.movie.cancel) DESC")
+    public List<Object[]> bookingForStatisticCancelDESCTheater(@PathVariable("id") Integer id, @RequestParam("start") Date start, @RequestParam("end") Date end);
 
     @Query("SELECT MONTH(b.completedAt),SUM(b.numberOfSeat) FROM Booking as b WHERE b.showtimes.room.theater.id=:id AND b.status = 1 GROUP BY MONTH(b.completedAt)")
     public List<Object[]> ticketPerMonthTheater(@PathVariable("id") Integer id);

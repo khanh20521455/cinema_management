@@ -27,7 +27,7 @@
                         <img scr="" class="my_movie_poster" th:src="@{'/img/'+${booking.showtimes.movie.poster}}" alt="movie poster" />
                     </td>
                     <td th:text="${booking.showtimes.movie.name}"></td>
-                    <td th:text="${booking.showtimes.time}+' ngày '+${booking.showtimes.date}"></td>
+                    <td th:text="${booking.showtimes.time}+' ngày '+${#dates.format(booking.showtimes.date, 'dd/MM/yyyy')}"></td>
                     <td>
                         <div th:if="${booking.statusComment == 0}">
                         <a th:href = "@{'/user/add_comment/'+${booking.showtimes.movie.id}}" class="btn btn-outline-warning btn-sm boldText"> Bình luận </a>

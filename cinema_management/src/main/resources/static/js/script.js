@@ -310,8 +310,9 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch(url)
               .then(response => response.json())
               .then(result => {
+              var spacedNumber = Number(result).toLocaleString('en-US', { useGrouping: true });
                 totalMoney=result
-                 document.getElementById("total-money").innerHTML = result;
+                 document.getElementById("total-money").innerHTML = spacedNumber.replace(/,/g, ',');
                  document.getElementById("total-money").value = result;
               });
 
@@ -323,8 +324,9 @@ document.addEventListener('DOMContentLoaded', function () {
                  fetch(url)
                    .then(response => response.json())
                    .then(result => {
+                    var spacedNumber = Number(result).toLocaleString('en-US', { useGrouping: true });
                      totalMoney=result
-                      document.getElementById("total-money").innerHTML = result;
+                      document.getElementById("total-money").innerHTML = spacedNumber.replace(/,/g, ',');
                       document.getElementById("total-money").value = result;
                    });
     }

@@ -184,6 +184,14 @@ public class QueryController {
     public  List<Object[]> getBookingForStatisticRevenueDESCTheater(@PathVariable("id") Integer id,@RequestParam("start") Date start, @RequestParam("end") Date end){
         return this.bookingRepository.bookingForStatisticRevenueDESCTheater(id,start, end);
     }
+    @GetMapping("/bookingForStatistic_cancel_asc/{id}")
+    public  List<Object[]> getBookingForStatisticCancelASCTheater(@PathVariable("id") Integer id,@RequestParam("start") Date start, @RequestParam("end") Date end){
+        return this.bookingRepository.bookingForStatisticCancelASCTheater(id,start, end);
+    }
+    @GetMapping("/bookingForStatistic_cancel_desc/{id}")
+    public  List<Object[]> getBookingForStatisticCancelDESCTheater(@PathVariable("id") Integer id,@RequestParam("start") Date start, @RequestParam("end") Date end){
+        return this.bookingRepository.bookingForStatisticCancelDESCTheater(id,start, end);
+    }
     @GetMapping("/ticketFerMonth/{id}")
     public int[] getTicketMonthlyTheater(@PathVariable("id") Integer id){
         int[] result=new int[12];
@@ -301,6 +309,17 @@ public class QueryController {
     public Double cancelOfYearAll(){
         int cancel = this.bookingRepository.ticketCancelOfToday( new Date(System.currentTimeMillis()));
         int ticket = this.bookingRepository.ticketOfToday(new Date(System.currentTimeMillis()));
+        Double ratio= (double) cancel / ticket * 100;
+        return round(ratio, 2);
+    }
+    @GetMapping("/ticketCancelOfToday/{id}")
+    public Integer cancelOfTodayALlTheater(@PathVariable("id") Integer id){
+        return this.bookingRepository.ticketCancelOfTodayTheater( id,new Date(System.currentTimeMillis()));
+    }
+    @GetMapping("/ratioCancelOfToday/{id}")
+    public Double cancelOfYearAllTheater(@PathVariable("id") Integer id){
+        int cancel = this.bookingRepository.ticketCancelOfTodayTheater( id,new Date(System.currentTimeMillis()));
+        int ticket = this.bookingRepository.ticketOfTodayTheater(id,new Date(System.currentTimeMillis()));
         Double ratio= (double) cancel / ticket * 100;
         return round(ratio, 2);
     }

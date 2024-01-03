@@ -26,6 +26,7 @@
                     <th scope="col">Phòng chiếu</th>
                     <th scope="col">Giờ chiếu</th>
                     <th scope="col">Ngày chiếu</th>
+                    <th scope="col">Giá vé</th>
                     <th scope="col">Hành động</th>
                 </tr>
                 </thead>
@@ -38,6 +39,7 @@
                     <td th:text="${showtimes.room.name}"></td>
                     <td th:text="${showtimes.time}"></td>
                     <td th:text="${#dates.format(showtimes.date, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${#numbers.formatDecimal(showtimes.price, 0, 'COMMA', 0, 'POINT')}"></td>
                     <td>
                         <a th:href = "@{'/admin/update_showtimes/'+${showtimes.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Cập nhật </a>
                         <a th:href = "@{'/admin/cancel_showtimes/'+${showtimes.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Hủy lịch </a>
