@@ -11,7 +11,7 @@
         <div class="card-body">
             <h1 class="text-center"> QUẢN LÝ PHÒNG CHIẾU </h1>
             <div class="col border-end d-flex justify-content-center align-items-center">
-                <a href="#" th:href="@{/admin/add_room}">
+                <a href="#" th:href="@{'/admin/add_room/'+${theaterId}}">
                     <button class="btn bg-primary text-white boldText"> Thêm phòng chiếu </button>
                 </a>
             </div>
@@ -31,7 +31,6 @@
                     <td th:text="${room.status}"></td>
                     <td>
                         <a th:href = "@{'/admin/update_room/'+${room.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Cập nhật </a>
-                        <a th:href = "@{'/admin/delete_room/'+${room.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Xóa </a>
                     </td>
                 </tr>
                 </tbody>

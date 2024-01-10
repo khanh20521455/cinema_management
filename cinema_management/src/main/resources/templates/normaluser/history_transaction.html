@@ -18,7 +18,7 @@
                     <th scope="col">Id</th>
                     <th scope="col">Phim</th>
                     <th scope="col">Tên phim</th>
-                    <th scope="col">Phòng chiếu</th>
+                    <th scope="col">Giờ chiếu</th>
                     <th scope="col">Ghế ngồi</th>
                     <th scope="col">Giá tiền</th>
                     <th scope="col">Trạng thái</th>
@@ -31,19 +31,16 @@
                         <img scr="" class="my_movie_poster" th:src="@{'/img/'+${booking.showtimes.movie.poster}}" alt="movie poster" />
                     </td>
                     <td th:text="${booking.showtimes.movie.name}"></td>
-                    <td th:text="${booking.showtimes.time}+' ngày '+${booking.showtimes.date}"></td>
+                    <td th:text="${booking.showtimes.time}+' ngày '+${#dates.format(booking.showtimes.date, 'dd/MM/yyyy')}"></td>
                     <td th:text="${#strings.listJoin(booking.seatList, ' ')}"></td>
-                    <td th:text="${booking.numberOfSeat * booking.showtimes.price}"></td>
+                    <td th:text="${#numbers.formatDecimal(booking.total, 0, 'COMMA', 0, 'POINT')}"></td>
                     <div th:if="${booking.status == 1}">
-                        <td style="color: #e4a8a8; font-weight: bold;">Đang chờ xác nhận
+                        <td style="color: #e4a8a8; font-weight: bold;">Đã đặt vé
                             <br>
                             <a th:href = "@{'/user/cancel_booking/'+${booking.id}}" class="btn btn-outline-warning btn-sm boldText"> Huỷ đặt </a>
                         </td>
                     </div>
                     <div th:if="${booking.status == 2}">
-                        <td style="color: #e4a8a8; font-weight: bold;">Đã được xác nhận</td>
-                    </div>
-                    <div th:if="${booking.status == 3}">
                         <td style="color: #e4a8a8; font-weight: bold;">Đã hủy</td>
                     </div>
                 </tr>

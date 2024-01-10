@@ -22,11 +22,15 @@ public class Booking {
     private Showtimes showtimes;
     private int numberOfSeat;
     private int[] seatList;
-    //1: Đặt vé, 2: xác nhận, 3: hủy
+    //0: Đặt vé, 1: xác nhận, 2: hủy
     private int status;
     private int statusComment;
     private Date completedAt;
     private int total;
+    private boolean isPoint;
+    //Tổng tiền khi chưa áp dụng điểm tích lũy
+    private int actualTotal;
+    private Date cancelDate;
 
     public int getTotal() {
         return total;
@@ -98,6 +102,30 @@ public class Booking {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public boolean isPoint() {
+        return isPoint;
+    }
+
+    public void setPoint(boolean point) {
+        isPoint = point;
+    }
+
+    public int getActualTotal() {
+        return actualTotal;
+    }
+
+    public void setActualTotal(int actualTotal) {
+        this.actualTotal = actualTotal;
+    }
+
+    public Date getCancelDate() {
+        return cancelDate;
+    }
+
+    public void setCancelDate(Date cancelDate) {
+        this.cancelDate = cancelDate;
     }
 
     public Booking() {

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="adminuser/base::layout(~{::section})">
+
+<head>
+    <meta charset = "UTF-8" />
+</head>
+<body>
+<section>
+    <div class="card me-3 ms-3">
+        <div class="card-body">
+            <h1 class="text-center"> THÊM ĐỒ ĂN VẶT MỚI </h1>
+            <div class="container-fluid m1-1">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        <form action="#"
+                              th:object="${snacks}"
+                              enctype="multipart/form-data"
+                              method="POST"
+                              th:action="@{/admin/add_snacks_process}"
+                        >
+
+                            <!--Name-->
+                            <div class="form-group">
+                                <label  for="movie_name_field" class="form-label">Tên :</label><br>
+                                <input
+                                        name="name"
+                                        type="text"
+                                        class="form-control"
+                                        id="movie_name_field"
+                                        placeholder="Nhập tên đồ ăn"
+                                        required/>
+                            </div>
+
+                            <!--Price-->
+                            <div class="form-group">
+                                <label  for="movie_time_field" class="form-label">Giá bán:</label><br>
+                                <input
+                                        name="price"
+                                        type="text"
+                                        class="form-control"
+                                        id="movie_time_field"
+                                        placeholder="Nhập giá bán"
+                                >
+                            </div>
+
+                            <!--Status-->
+                            <div class="form-group">
+                                <label  for="status_field" class="form-label">Trạng thái:</label><br>
+                                <select class="form-control"
+                                        name="status"
+                                        id="status_field"
+                                        required>
+                                    <option>Đang bán</option>
+                                    <option>Dừng bán</option>
+                                </select>
+                            </div>
+                            <!--Choose image-->
+                            <div class="custom-file mt-3">
+                                <input
+                                        type="file"
+                                        name="imageUrl"
+                                        class="form-control"
+                                        id="formFile"
+                                        onchange="preview()"
+                                />
+                                <img id="frame" src="" class="rounded mx-auto d-block mt-3" />
+                            </div>
+
+                            <script>
+                            function preview() {
+                                frame.src = URL.createObjectURL(event.target.files[0]);
+                            }
+                            function clearImage() {
+                                document.getElementById('formFile').value = null;
+                                frame.src = "";
+                            }
+                        </script>
+                            <br>
+                            <br>
+
+                            <!--Button Confirm-->
+                            <div class="container text-center mb-3">
+                                <button class="btn bg-primary text-white boldText"> Thêm </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{assets/bootstrap-select-1.13.9/dist/js/bootstrap-select.js}"></script>
+</body>
+</html>

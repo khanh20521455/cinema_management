@@ -17,7 +17,7 @@
 							th:object="${room}"
 							enctype="multipart/form-data"
 							method="POST"
-							th:action="@{/admin/add_room_process}"
+							th:action="@{'/admin/add_room_process/'+${theaterId}}"
 						>
 						
 						<!--Room name-->
@@ -41,11 +41,8 @@
 									id="typeScreen_field"
 									required>
 								<option>--- Chọn loại màn hình---</option>
-								<option>Màn hình thẳng</option>
-								<option>Màn hình cong</option>
-								<option>Màn hình IMAX</option>
-								<option>Màn hình 3D</option>
-								<option>Màn hình LED</option>
+								<option>2D</option>
+								<option>3D</option>
 							</select>
 						</div>
 							<div class="form-group">
@@ -62,7 +59,7 @@
 							<br>
 							<br>
 						<div class="container text-center mb-3">
-							<button class="btn bg-primary text-white boldText"> Thêm phòng chiếu </button>
+							<button class="btn bg-primary text-white boldText"> Thêm </button>
 						</div>
 						</form>
 					</div>

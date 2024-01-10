@@ -26,6 +26,11 @@ public class Showtimes {
     private String time;
     private Date date;
     private int price;
+    @Column(columnDefinition = "boolean default true")
+    private Boolean status ;
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER, mappedBy = "showtimes")
+    private List<Booking> bookingList;
 
     public Showtimes() {
     }
@@ -77,4 +82,19 @@ public class Showtimes {
         this.price = price;
     }
 
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
+
+    public void setBookingList(List<Booking> bookingList) {
+        this.bookingList = bookingList;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 }

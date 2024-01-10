@@ -18,11 +18,11 @@ public class TheaterService {
     private TheaterRepository theaterRepository;
     public String theaterManagement(Model model, Integer page){
         Pageable pageable = PageRequest.of(page, 10);
-        Page<Theater> theaterList = theaterRepository.findAllOrderByNameDesc(pageable);
+        Page<Theater> theaterList = theaterRepository.findAllOrderByNameAsc(pageable);
         model.addAttribute("theaterList",theaterList);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", theaterList.getTotalPages());
-        return "admiuser/theater/theater_managemnet";
+        return "adminuser/theater/theater_management";
     }
     public String addTheater(Model model) {
         model.addAttribute("theater", new Theater());
@@ -57,6 +57,7 @@ public class TheaterService {
         return "redirect:/admin/theater_management/0";
     }
     public String deleteTheater(Integer id){
+
         return "redirect:/admin/theater_management/0";
     }
 

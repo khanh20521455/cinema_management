@@ -95,18 +95,76 @@ const searchByMovieNameUser = () => {
             });
     }
 };
-function onSelectDate() {
+function getProvince() {
+   let url = `http://localhost:8082/queryProvince`;
+   fetch(url)
+       .then(response => response.json())
+       .then(data => {
+           const select = document.getElementById("province_showtimes_field");
+           data.forEach(result => {
+               const option = document.createElement("option");
+               option.textContent  = result;
+               option.value=result;
+               select.add(option);
+           });
+       })
+       .catch(error => {
+           console.error(error);
+       });
+}
+function onSelectProvince() {
+   document.getElementById("theater_showtimes_field").options.length = 1;
+   document.getElementById("date_showtimes_field").value = 0;
+   document.getElementById("typeScreen_showtimes_field").options.length = 1;
+   document.getElementById("time_showtimes_field").options.length = 1;
+   document.getElementById("numberSeat_field").value = 0;
+   document.getElementById("seatList_field").value = "";
+   $(".seatNumber").removeClass("seatSelected");
    let date = document.getElementById("date_showtimes_field").value;
    let movieId = document.getElementById("movie-id-data").innerText;
-   let url = `http://localhost:8082/query/?id=${movieId}&date=${date}`;
+   let province = document.getElementById("province_showtimes_field").value
+   let url = `http://localhost:8082/queryTheater/?id=${movieId}&province=${province}`;
+   fetch(url)
+       .then(response => response.json())
+       .then(data => {
+           const select = document.getElementById("theater_showtimes_field");
+           data.forEach(result => {
+               const option = document.createElement("option");
+               option.textContent  = result.name;
+               option.value=result.id;
+               select.add(option);
+           });
+       })
+       .catch(error => {
+           console.error(error);
+       });
+}
+function onSelectTheater(){
+   document.getElementById("date_showtimes_field").value = 0;
+   document.getElementById("typeScreen_showtimes_field").options.length = 1;
+   document.getElementById("time_showtimes_field").options.length = 1;
+   document.getElementById("numberSeat_field").value = 0;
+   document.getElementById("seatList_field").value = "";
+   $(".seatNumber").removeClass("seatSelected");
+}
+function onSelectDate() {
+      document.getElementById("typeScreen_showtimes_field").options.length = 1;
+      document.getElementById("time_showtimes_field").options.length = 1;
+      document.getElementById("numberSeat_field").value = 0;
+      document.getElementById("seatList_field").value = "";
+      $(".seatNumber").removeClass("seatSelected");
+   let date = document.getElementById("date_showtimes_field").value;
+   let movieId = document.getElementById("movie-id-data").innerText;
+   let theaterId = document.getElementById("theater_showtimes_field").value;
+   let url = `http://localhost:8082/queryTypeScreen/?id=${movieId}&theaterId=${theaterId}&date=${date}`;
    fetch(url)
        .then(response => response.json())
        .then(data => {
            const select = document.getElementById("typeScreen_showtimes_field");
            data.forEach(result => {
                const option = document.createElement("option");
-               option.textContent  = result.typeScreen;
-               option.value=result.typeScreen;
+               option.textContent  = result;
+               option.value=result;
                select.add(option);
            });
        })
@@ -120,10 +178,15 @@ $(document).ready(function() {
     $("form")[0].reset();
 });
 function onSelectTypeScreen(){
+      document.getElementById("time_showtimes_field").options.length = 1;
+      document.getElementById("numberSeat_field").value = 0;
+      document.getElementById("seatList_field").value = "";
+      $(".seatNumber").removeClass("seatSelected");
    let date = document.getElementById("date_showtimes_field").value;
    let movieId = document.getElementById("movie-id-data").innerText;
    let typeScreen=document.getElementById("typeScreen_showtimes_field").value;
-   let url = `http://localhost:8082/queryShowtimes/?id=${movieId}&date=${date}&typeScreen=${typeScreen}`;
+   let theaterId = document.getElementById("theater_showtimes_field").value;
+   let url = `http://localhost:8082/queryShowtimes/?id=${movieId}&theaterId=${theaterId}&date=${date}&typeScreen=${typeScreen}`;
       fetch(url)
           .then(response => response.json())
           .then(data => {
@@ -139,7 +202,10 @@ function onSelectTypeScreen(){
               console.error(error);
           });
 }
-function onSelectNumberSeat(){
+function onSelectTime(){
+      document.getElementById("numberSeat_field").value = 0;
+      document.getElementById("seatList_field").value = "";
+      $(".seatNumber").removeClass("seatSelected");
     let showtimesId=document.getElementById("time_showtimes_field").value;
     let url = `http://localhost:8082/querySeatNotSelect/?id=${showtimesId}`;
     fetch(url)
@@ -156,6 +222,7 @@ function onSelectNumberSeat(){
                   console.error(error);
               });
 }
+
 var selectedSeats = [];
 $(".seatNumber").click(
         function () {
@@ -202,103 +269,68 @@ function starmark(item)
 
 function result(){
 }
-$(".table-statistic").hide();
-function statistic_movie() {
 
-    let start = document.getElementById("movie_start_field").value;
-    let end = document.getElementById("movie_end_field").value;
-    let url = `http://localhost:8082/bookingForStatistic_ticket_desc/?start=${start}&end=${end}`;
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            let resultList = [];
-            data.forEach(result => {
-                let resultItem = `<tr>
-                                     <td>${result[0]}</td>
-                                     <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
-                                     <td>${result[2]}</td>
-                                     <td>${result[3]}</td>
-                                     <td>${result[4]}</td>
-                                 </tr>`;
-                resultList.push(resultItem);
-            });
-
-            $(".table-statistic").show();
-            $(".statistic_movie_result").html(resultList.join(""));
-        })
-        .catch(error => {
-            console.error(error);
-        });
+function formatInputValue(input) {
+    var inputValue = input.value;
+    var numericValue = inputValue.replace(/[^\d.]/g, '');
+    var formattedValue = formatNumberWithSpaces(numericValue);
+    input.value = formattedValue;
+}
+function formatNumberWithSpaces(number) {
+    var spacedNumber = Number(number).toLocaleString('en-US', { useGrouping: true });
+    return spacedNumber.replace(/,/g, ',');
 }
 
-function statistic_ticket_onclick(){
-    let start = document.getElementById("movie_start_field").value;
-    let end = document.getElementById("movie_end_field").value;
-    let button= document.getElementById("button_statistic_ticket").innerText;
-    if(button === "Lượt vé tăng dần"){
-        document.getElementById("button_statistic_ticket").innerText="Lượt vé giảm dần";
-         var url = `http://localhost:8082/bookingForStatistic_ticket_asc/?start=${start}&end=${end}`;
-    }
-    else{
-        document.getElementById("button_statistic_ticket").innerText="Lượt vé tăng dần";
-        var url = `http://localhost:8082/bookingForStatistic_ticket_desc/?start=${start}&end=${end}`;
-    }
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            let resultList = [];
-            data.forEach(result => {
-                let resultItem = `<tr>
-                                     <td>${result[0]}</td>
-                                     <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
-                                     <td>${result[2]}</td>
-                                     <td>${result[3]}</td>
-                                     <td>${result[4]}</td>
-                                 </tr>`;
-                resultList.push(resultItem);
-            });
+function formatDate(input) {
+    // Parse the input value as a date
+    var selectedDate = new Date(input.value);
 
-            $(".table-statistic").show();
-            $(".statistic_movie_result").html(resultList.join(""));
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    // Format the date as dd/MM/yyyy
+    var formattedDate = ("0" + selectedDate.getDate()).slice(-2) + "/" +
+                        ("0" + (selectedDate.getMonth() + 1)).slice(-2) + "/" +
+                        selectedDate.getFullYear();
+
+    // Set the formatted date back to the input value
+    input.value = formattedDate;
 }
-function statistic_revenue_onclick(){
-    let start = document.getElementById("movie_start_field").value;
-    let end = document.getElementById("movie_end_field").value;
-    let button= document.getElementById("button_statistic_revenue").innerText;
-    if(button === "Doanh thu tăng dần"){
-        document.getElementById("button_statistic_revenue").innerText="Doanh thu giảm dần";
-        var url = `http://localhost:8082/bookingForStatistic_revenue_asc/?start=${start}&end=${end}`;
-    }
-    else{
-        document.getElementById("button_statistic_revenue").innerText="Doanh thu tăng dần";
-        var url = `http://localhost:8082/bookingForStatistic_revenue_desc/?start=${start}&end=${end}`;
-    }
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            let resultList = [];
-            data.forEach(result => {
-                let resultItem = `<tr>
-                                     <td>${result[0]}</td>
-                                     <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
-                                     <td>${result[2]}</td>
-                                     <td>${result[3]}</td>
-                                     <td>${result[4]}</td>
-                                 </tr>`;
-                resultList.push(resultItem);
-            });
+document.addEventListener('DOMContentLoaded', function () {
+  var checkbox = document.getElementById('flexSwitchCheckDefault');
+  checkbox.addEventListener('change', function () {
+   var isChecked = checkbox.checked;
+   var checkboxLabel = document.querySelector('.form-check-input');
+   var totalMoney = parseInt(document.getElementById("total-money").innerHTML);
+   const tMoney= totalMoney
+   let bookingId = document.getElementById("booking-id-data").innerText;
+    if (isChecked) {
+      checkboxLabel.style.backgroundColor = '#FF7171'; // Thay đổi thành màu đỏ
+      checkboxLabel.style.color = ' #FF7171'
+      checkboxLabel.style.borderColor = ' #FF7171'
+      checkbox.setAttribute('isPoint', 'true');
+            let url = `http://localhost:8082/queryTotal/?total=${totalMoney}&bookingId=${bookingId}`;
+            fetch(url)
+              .then(response => response.json())
+              .then(result => {
+              var spacedNumber = Number(result).toLocaleString('en-US', { useGrouping: true });
+                totalMoney=result
+                 document.getElementById("total-money").innerHTML = spacedNumber.replace(/,/g, ',');
+                 document.getElementById("total-money").value = result;
+              });
 
-            $(".table-statistic").show();
-            $(".statistic_movie_result").html(resultList.join(""));
-        })
-        .catch(error => {
-            console.error(error);
-        });
-}
-
+    } else {
+      // Change color back when unchecked
+      checkboxLabel.style.backgroundColor = ''; // Set to an empty string to remove inline style
+      checkbox.setAttribute('isPoint', 'false');
+      let url = `http://localhost:8082/queryTotalAdd/?total=${totalMoney}&bookingId=${bookingId}`;
+                 fetch(url)
+                   .then(response => response.json())
+                   .then(result => {
+                    var spacedNumber = Number(result).toLocaleString('en-US', { useGrouping: true });
+                     totalMoney=result
+                      document.getElementById("total-money").innerHTML = spacedNumber.replace(/,/g, ',');
+                      document.getElementById("total-money").value = result;
+                   });
+    }
+  });
+});
 
 

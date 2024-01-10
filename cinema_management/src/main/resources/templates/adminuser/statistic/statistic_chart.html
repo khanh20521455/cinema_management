@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="adminuser/base::layout(~{::section})">
+
+<head>
+    <meta charset = "UTF-8" />
+</head>
+<body>
+<section>
+    <div class="card ms-3 me-3">
+        <div class="row g-4">
+            <div class="col-sm-6 col-xl-3">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-chart-line fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
+                    <div class="ms-3">
+                        <p class="mb-2" style="font-size: 18px;"> Lượt vé hôm nay </p>
+                        <h6 class="mb-0" id="ticketOfToday"></h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-chart-area fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
+                    <div class="ms-3">
+                        <p class="mb-2" style="font-size: 18px;"> Doanh thu hôm nay </p>
+                        <h6 class="mb-0" id="revenueOfToday"> VNĐ</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-chart-bar fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
+                    <div class="ms-3">
+                        <p class="mb-2" style="font-size: 18px;"> Vé hủy hôm nay </p>
+                        <h6 class="mb-0" id="ticketCancelOfToday"></h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-chart-pie fa-3x" style="color:rgba(219, 27, 27, 0.5);"></i>
+                    <div class="ms-3">
+                        <p class="mb-2" style="font-size: 18px;"> Tỉ lệ hủy hôm nay </p>
+                        <h6 class="mb-0" id="ratioCancelOfToday">%</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row g-4">
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-light rounded h-100 p-4">
+                    <h6 class="mb-4" style="font-size: 20px;"> Biểu đồ lượt vé </h6>
+                    <canvas id="chart1"></canvas>
+                </div>
+            </div>
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-light rounded h-100 p-4">
+                    <h6 class="mb-4" style="font-size: 20px;"> Biểu đồ doanh thu </h6>
+                    <canvas id="chart2"></canvas>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row g-4">
+            <div class="container-fluid pt-4 ">
+                <div class="bg-light rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-4" style="font-size: 20px;">Nhập thời gian cần thống kê</h6>
+                    </div>
+                    <div class="mb-3">
+                        <label for="movie_start_field" class="form-label">Từ ngày:</label>
+                        <input type="date" class="form-control" id="movie_start_field" oninput="statistic_movie()">
+                    </div>
+                    <div class="mb-3">
+                        <label for="movie_end_field" class="form-label">Đến ngày:</label>
+                        <input type="date" class="form-control" id="movie_end_field" oninput="statistic_movie()">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="container-fluid pt-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="table-statistic">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <button class="btn bg-primary text-white btn-sm boldText"
+                                    onclick="statistic_ticket_onclick()"
+                                    style="width: 170px;"
+                                    id="button_statistic_ticket">Lượt xem tăng dần</button>
+                            <button class="btn bg-primary text-white btn-sm boldText"
+                                    onclick="statistic_revenue_onclick()"
+                                    style="width: 170px;"
+                                    id="button_statistic_revenue">Doanh thu tăng dần</button>
+                            <button class="btn bg-primary text-white btn-sm boldText"
+                                    onclick="statistic_cancel_onclick()"
+                                    style="width: 170px;"
+                                    id="button_statistic_cancel">Lượt hủy tăng dần</button>
+                        </div>
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                            <tr class="text-dark" style="font-size: 18px;">
+                                <th scope="col">Id</th>
+                                <th scope="col">Phim</th>
+                                <th scope="col">Tên</th>
+                                <th scope="col">Lượt xem</th>
+                                <th scope="col">Doanh thu</th>
+                                <th scope="col">Lượt hủy</th>
+                            </tr>
+                            </thead>
+                            <tbody class="statistic_movie_result"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let url3=`http://localhost:8082/ticketOfYear`;
+        let url4=`http://localhost:8082/revenueOfYear`;
+        let url5=`http://localhost:8082/ticketOfToday`;
+        let url6=`http://localhost:8082/revenueOfToday`;
+        let url7=`http://localhost:8082/ticketCancelOfToday`;
+        let url8=`http://localhost:8082/ratioCancelOfToday`;
+        fetch(url3)
+        .then(response => response.json())
+        .then(result => {
+            document.getElementById("ticketOfYear").innerHTML=result;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        fetch(url4)
+        .then(response => response.json())
+        .then(result => {
+         var spacedNumber = Number(result).toLocaleString('en-US', { useGrouping: true });
+            document.getElementById("revenueOfYear").innerHTML=spacedNumber.replace(/,/g, ',') +" VND";
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        fetch(url5)
+        .then(response => response.json())
+        .then(result => {
+            document.getElementById("ticketOfToday").innerHTML=result;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        fetch(url6)
+        .then(response => response.json())
+        .then(result => {
+        var spacedNumber = Number(result).toLocaleString('en-US', { useGrouping: true });
+            document.getElementById("revenueOfToday").innerHTML=spacedNumber.replace(/,/g, ',') +" VND";
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        fetch(url7)
+        .then(response => response.json())
+        .then(result => {
+            document.getElementById("ticketCancelOfToday").innerHTML=result;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        fetch(url8)
+        .then(response => response.json())
+        .then(result => {
+        document.getElementById("ratioCancelOfToday").innerHTML=result + " %";
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        var ctx1 = document.getElementById('chart1').getContext('2d');
+        var ctx2 = document.getElementById('chart2').getContext('2d');
+        var data1 =  new Array(12);
+        var data2 =  new Array(12);
+        let url1 = `http://localhost:8082/ticketFerMonth`;
+        fetch(url1)
+          .then(response => response.json())
+          .then(result => {
+            result.forEach((value, index) => {
+              data1[index] = parseInt(result[index]);
+            });
+            var chart1 = new Chart(ctx1, {
+              type: 'bar',
+              data: {
+                labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                datasets: [{
+                  label:'Lượt vé',
+                  data: data1,
+                  backgroundColor: '#eb91a2',
+                  borderColor: '#eb91a2',
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                responsive: true,
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+        let url2 = `http://localhost:8082/revenueFerMonth`;
+        fetch(url2)
+          .then(response => response.json())
+          .then(result => {
+            result.forEach((value, index) => {
+              data2[index] = parseInt(result[index]);
+            });
+            var chart2 = new Chart(ctx2, {
+              type: 'bar',
+              data: {
+                labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                datasets: [{
+                  label:'Doanh thu',
+                  data: data2,
+                  backgroundColor: 'rgba(219, 27, 27, 0.5)',
+                  borderColor: 'rgba(219, 27, 27, 0.5)',
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                responsive: true,
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          })
+          .catch(error => {
+            console.error(error);
+          });
+          $(".table-statistic").hide();
+function statistic_movie() {
+
+    let start = document.getElementById("movie_start_field").value;
+    let end = document.getElementById("movie_end_field").value;
+    let url = `http://localhost:8082/bookingForStatistic_ticket_desc/?start=${start}&end=${end}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let resultList = [];
+            data.forEach(result => {
+            var result4 = Number(result[4]).toLocaleString('en-US', { useGrouping: true }).replace(/,/g, ',') +" VND";
+                let resultItem = `<tr>
+                                     <td>${result[0]}</td>
+                                     <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
+                                     <td>${result[2]}</td>
+                                     <td>${result[3]}</td>
+                                     <td>${result4}</td>
+                                     <td>${result[5]}</td>
+                                 </tr>`;
+                resultList.push(resultItem);
+            });
+
+            $(".table-statistic").show();
+            $(".statistic_movie_result").html(resultList.join(""));
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+function statistic_ticket_onclick(){
+    let start = document.getElementById("movie_start_field").value;
+    let end = document.getElementById("movie_end_field").value;
+    let button= document.getElementById("button_statistic_ticket").innerText;
+    if(button === "Lượt xem tăng dần"){
+        document.getElementById("button_statistic_ticket").innerText="Lượt vé giảm dần";
+         var url = `http://localhost:8082/bookingForStatistic_ticket_asc/?start=${start}&end=${end}`;
+    }
+    else{
+        document.getElementById("button_statistic_ticket").innerText="Lượt xem tăng dần";
+        var url = `http://localhost:8082/bookingForStatistic_ticket_desc/?start=${start}&end=${end}`;
+    }
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let resultList = [];
+            data.forEach(result => {
+                var result4 = Number(result[4]).toLocaleString('en-US', { useGrouping: true }).replace(/,/g, ',') +" VND";
+
+                let resultItem = `<tr>
+                                     <td>${result[0]}</td>
+                                     <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
+                                     <td>${result[2]}</td>
+                                     <td>${result[3]}</td>
+                                     <td>${result4}</td>
+                                     <td>${result[5]}</td>
+                                 </tr>`;
+                resultList.push(resultItem);
+            });
+
+            $(".table-statistic").show();
+            $(".statistic_movie_result").html(resultList.join(""));
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+function statistic_revenue_onclick(){
+    let start = document.getElementById("movie_start_field").value;
+    let end = document.getElementById("movie_end_field").value;
+    let button= document.getElementById("button_statistic_revenue").innerText;
+    if(button === "Doanh thu tăng dần"){
+        document.getElementById("button_statistic_revenue").innerText="Doanh thu giảm dần";
+        var url = `http://localhost:8082/bookingForStatistic_revenue_asc/?start=${start}&end=${end}`;
+    }
+    else{
+        document.getElementById("button_statistic_revenue").innerText="Doanh thu tăng dần";
+        var url = `http://localhost:8082/bookingForStatistic_revenue_desc/?start=${start}&end=${end}`;
+    }
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let resultList = [];
+            data.forEach(result => {
+            var result4 = Number(result[4]).toLocaleString('en-US', { useGrouping: true }).replace(/,/g, ',') +" VND";
+                let resultItem = `<tr>
+                                     <td>${result[0]}</td>
+                                     <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
+                                     <td>${result[2]}</td>
+                                     <td>${result[3]}</td>
+                                     <td>${result4}</td>
+                                     <td>${result[5]}</td>
+                                 </tr>`;
+                resultList.push(resultItem);
+            });
+
+            $(".table-statistic").show();
+            $(".statistic_movie_result").html(resultList.join(""));
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+function statistic_cancel_onclick(){
+    let start = document.getElementById("movie_start_field").value;
+    let end = document.getElementById("movie_end_field").value;
+    let button= document.getElementById("button_statistic_cancel").innerText;
+    if(button === "Lượt hủy tăng dần"){
+        document.getElementById("button_statistic_cancel").innerText="Lượt hủy giảm dần";
+        var url = `http://localhost:8082/bookingForStatistic_cancel_asc/?start=${start}&end=${end}`;
+    }
+    else{
+        document.getElementById("button_statistic_cancel").innerText="Lượt hủy tăng dần";
+        var url = `http://localhost:8082/bookingForStatistic_cancel_desc/?start=${start}&end=${end}`;
+    }
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let resultList = [];
+            data.forEach(result => {
+            var result4 = Number(result[4]).toLocaleString('en-US', { useGrouping: true }).replace(/,/g, ',') +" VND";
+                let resultItem = `<tr>
+                                     <td>${result[0]}</td>
+                                     <td><img class="my_movie_poster" src="/img/${result[1]}" alt="movie poster"></td>
+                                     <td>${result[2]}</td>
+                                     <td>${result[3]}</td>
+                                     <td>${result4}</td>
+                                     <td>${result[5]}</td>
+                                 </tr>`;
+                resultList.push(resultItem);
+            });
+
+            $(".table-statistic").show();
+            $(".statistic_movie_result").html(resultList.join(""));
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+    </script>
+
+</section>
+</body>
+</html>

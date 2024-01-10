@@ -299,5 +299,7 @@ body{
     background-color: rgba(219, 27, 27, 0.5);;
     border-color: rgba(219, 27, 27, 0.5);;
 }
-
+.half-space{
+letter-spacing: 0.5em;
+}
 

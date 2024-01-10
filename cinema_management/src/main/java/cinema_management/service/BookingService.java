@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +38,8 @@ public class BookingService {
     private MovieService movieService;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private TheaterRepository theaterRepository;
     public String buyTicket(Integer id, Model model){
         Booking booking=new Booking();
         model.addAttribute("booking", booking);
@@ -56,6 +59,7 @@ public class BookingService {
             booking.setUser(user);
             booking.setStatus(0);
             booking.setTotal(booking.getNumberOfSeat()*booking.getShowtimes().getPrice());
+            booking.setActualTotal(booking.getNumberOfSeat()*booking.getShowtimes().getPrice());
             this.bookingRepository.save(booking);
 
         } catch (Exception e) {
@@ -67,13 +71,16 @@ public class BookingService {
         model.addAttribute("booking",booking);
         return "normaluser/booking/confirm_buy_ticket";
     }
+    
 
-
-    public String confirmTicket(Integer id, Booking booking, Model model,HttpSession session){
+    public String confirmTicket(Integer id, Principal principal, Model model,HttpSession session){
+        User user = this.userRepository.getUserByUserName(principal.getName());
         Optional<Booking> notConfirmOptional= this.bookingRepository.findById(id);
         Booking oldbooking=notConfirmOptional.get();
         try {
             oldbooking.setStatus(1);
+            oldbooking.setCompletedAt(new Date(System.currentTimeMillis()));
+            this.bookingRepository.save(oldbooking);
             for(int i=0;i<oldbooking.getNumberOfSeat();i++){
                 Integer showtimeId=oldbooking.getShowtimes().getId();
                 Integer seatNumber=oldbooking.getSeatList()[i];
@@ -81,6 +88,15 @@ public class BookingService {
                 seat.setStatus(1);
                 this.seatRepository.save(seat);
             }
+            Integer point = (user.getPoint() + (oldbooking.getActualTotal()/50000));
+            System.out.println(user.getPoint());
+            System.out.println((oldbooking.getActualTotal()/50000));
+            user.setPoint(point);
+            System.out.println(user.getPoint());
+            this.userRepository.save(user);
+            Movie movie= oldbooking.getShowtimes().getMovie();
+            movie.setTickets(movie.getTickets()+ oldbooking.getNumberOfSeat());
+            movieRepository.save(movie);
             session.setAttribute("message", new Message("Đặt vé thành công, chờ xác nhận!", "success"));
         }
         catch (Exception e){
@@ -88,35 +104,45 @@ public class BookingService {
         }
         return movieService.homeScreen(model);
     }
-    public String getBookingWaitConfirm(Integer page, Model model) {
-
-        Pageable pageable = PageRequest.of(page, 10);
-        Page<Booking> bookingList= bookingRepository.bookingWaitConfirm(pageable);
-        model.addAttribute("bookingList", bookingList);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", bookingList.getTotalPages());
-        return "adminuser/booking_management";
-    }
-    public String confirmBooking(Integer id){
-        Booking booking= this.bookingRepository.getById(id);
-        booking.setStatus(2);
-        booking.setCompletedAt(new Date(System.currentTimeMillis()));
-        bookingRepository.save(booking);
-        return "redirect:/admin/booking_management/0";
-    }
-    public String cancelBooking(Integer id){
-        Booking booking= this.bookingRepository.getById(id);
-        booking.setStatus(3);
-        bookingRepository.save(booking);
-        for(int i=0;i<booking.getNumberOfSeat();i++){
-            Integer showtimeId=booking.getShowtimes().getId();
-            Integer seatNumber=booking.getSeatList()[i];
-            Seat seat= this.seatRepository.choosingSeat(showtimeId,seatNumber);
-            seat.setStatus(0);
-            this.seatRepository.save(seat);
-        }
-        return "redirect:/admin/booking_management/0";
-    }
+//    public String getTheaterForBookingManagement(Integer page, Model model){
+//        Pageable pageable = PageRequest.of(page, 10);
+//        Page<Theater> theaterList = theaterRepository.findAllOrderByNameAsc(pageable);
+//        model.addAttribute("theaterList",theaterList);
+//        model.addAttribute("currentPage", page);
+//        model.addAttribute("totalPages", theaterList.getTotalPages());
+//        return "adminuser/booking/theater_screen";
+//    }
+//    public String getBookingWaitConfirm(Integer theaterId, Integer page, Model model) {
+//
+//        Pageable pageable = PageRequest.of(page, 10);
+//        Page<Booking> bookingList= bookingRepository.bookingWaitConfirm(theaterId, pageable);
+//        model.addAttribute("bookingList", bookingList);
+//        model.addAttribute("currentPage", page);
+//        model.addAttribute("totalPages", bookingList.getTotalPages());
+//        return "adminuser/booking/booking_management";
+//    }
+//    public String confirmBooking(Integer id, ){
+//        Booking booking= this.bookingRepository.getById(id);
+//        booking.setStatus(2);
+//        booking.setCompletedAt(new Date(System.currentTimeMillis()));
+//        bookingRepository.save(booking);
+//        Integer theaterId = booking.getShowtimes().getRoom().getTheater().getId();
+//        return "redirect:/admin/booking_management/"+theaterId+"/0";
+//    }
+//    public String cancelBooking(Integer id){
+//        Booking booking= this.bookingRepository.getById(id);
+//        booking.setStatus(3);
+//        bookingRepository.save(booking);
+//        for(int i=0;i<booking.getNumberOfSeat();i++){
+//            Integer showtimeId=booking.getShowtimes().getId();
+//            Integer seatNumber=booking.getSeatList()[i];
+//            Seat seat= this.seatRepository.choosingSeat(showtimeId,seatNumber);
+//            seat.setStatus(0);
+//            this.seatRepository.save(seat);
+//        }
+//        Integer theaterId = booking.getShowtimes().getRoom().getTheater().getId();
+//        return  "redirect:/admin/booking_management/"+theaterId+"/0";
+//    }
     public String getMovieWatched(Principal principal, Model model, Integer page){
         Pageable pageable = PageRequest.of(page, 10);
         Page<Booking> bookingList= bookingRepository.findFirstByStatusAndShowtimesDateLessThanEqualAndUserEmail(new Date(System.currentTimeMillis()),principal.getName(),pageable);
@@ -140,10 +166,15 @@ public class BookingService {
         model.addAttribute("totalPages", bookingList.getTotalPages());
         return "normaluser/history_transaction";
     }
-    public String cancelBookingUser(Integer id){
+    public String cancelBookingUser(Integer id, Principal principal){
+        User user = this.userRepository.getUserByUserName(principal.getName());
         Booking booking= this.bookingRepository.getById(id);
-        booking.setStatus(3);
+        booking.setStatus(2);
+        booking.setCancelDate(new Date(System.currentTimeMillis()));
         bookingRepository.save(booking);
+        Movie movie= booking.getShowtimes().getMovie();
+        movie.setCancel(movie.getCancel()+ booking.getNumberOfSeat());
+        movieRepository.save(movie);
         for(int i=0;i<booking.getNumberOfSeat();i++){
             Integer showtimeId=booking.getShowtimes().getId();
             Integer seatNumber=booking.getSeatList()[i];
@@ -151,6 +182,16 @@ public class BookingService {
             seat.setStatus(0);
             this.seatRepository.save(seat);
         }
+        Integer hourCancel =  Integer.parseInt(booking.getShowtimes().getTime().split(":")[0])-LocalDateTime.now().getHour() ;
+        Date showtimeDate = booking.getShowtimes().getDate();
+        Date currentDate = new Date(System.currentTimeMillis());
+        if(showtimeDate.toString().equals(currentDate.toString())  && hourCancel >= 1 && hourCancel <= 3 )
+            user.setPoint(user.getPoint()+ booking.getActualTotal()/4000);
+        else if(showtimeDate.toString().equals(currentDate.toString())  && hourCancel > 3 )
+            user.setPoint(user.getPoint()+ booking.getActualTotal()/2000);
+        else if(showtimeDate.compareTo(currentDate)  > 0 )
+            user.setPoint(user.getPoint()+ booking.getActualTotal()/1000);
+        this.userRepository.save(user);
         return "redirect:/user/history_transaction/0";
     }
 }
