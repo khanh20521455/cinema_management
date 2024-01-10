@@ -7,15 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="cinema_management" />
+        <module name="onlineMovieTicketBookingSystem" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="onlineMovieTicketBookingSystem" target="11" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="cinema_management" options="-parameters" />
+      <module name="onlineMovieTicketBookingSystem" options="-parameters" />
     </option>
   </component>
 </project>

@@ -97,7 +97,7 @@ public class ShowtimesService {
                     showtimes.setPrice(120000);
                 }
             }
-            long days = ChronoUnit.DAYS.between(showtimes.getDate().toLocalDate(), showtimes.getMovie().getStart().toLocalDate());
+            long days =  Math.abs(ChronoUnit.DAYS.between(showtimes.getDate().toLocalDate(), showtimes.getMovie().getStart().toLocalDate()));
             if(days <= 7){
                 showtimes.setPrice(showtimes.getPrice()/5*4);
             }
@@ -160,8 +160,8 @@ public class ShowtimesService {
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTime(utilDate);
             int dayOfWeek = calendar.get(java.util.Calendar.DAY_OF_WEEK);
-            long days = ChronoUnit.DAYS.between(showtimes.getDate().toLocalDate(), showtimes.getMovie().getStart().toLocalDate());
-
+            long days =  Math.abs(ChronoUnit.DAYS.between(showtimes.getDate().toLocalDate(), showtimes.getMovie().getStart().toLocalDate()));
+            System.out.println(days);
             if(showtimes.getRoom().getTypeScreen().equals("2D")){
                 if(dayOfWeek == 2 || dayOfWeek == 3 || dayOfWeek ==5){
                     if(showtimes.getTime().compareTo("12:01") <0)

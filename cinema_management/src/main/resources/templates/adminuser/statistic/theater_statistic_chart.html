@@ -152,7 +152,8 @@
         fetch(url6)
         .then(response => response.json())
         .then(result => {
-            document.getElementById("revenueOfToday").innerHTML=result;
+             var spacedNumber = Number(result).toLocaleString('en-US', { useGrouping: true });
+            document.getElementById("revenueOfToday").innerHTML=spacedNumber.replace(/,/g, ',') +" VND";
         })
         .catch(error => {
             console.error(error);

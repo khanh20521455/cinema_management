@@ -46,6 +46,7 @@ public class HomeController {
             user.setRole("ROLE_USER");
             user.setEnable(true);
             user.setImgUrl("User Profile Default Photo.png");
+            user.setPoint(0);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
 
             this.userRepository.save(user);

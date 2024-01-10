@@ -89,7 +89,10 @@ public class BookingService {
                 this.seatRepository.save(seat);
             }
             Integer point = (user.getPoint() + (oldbooking.getActualTotal()/50000));
+            System.out.println(user.getPoint());
+            System.out.println((oldbooking.getActualTotal()/50000));
             user.setPoint(point);
+            System.out.println(user.getPoint());
             this.userRepository.save(user);
             Movie movie= oldbooking.getShowtimes().getMovie();
             movie.setTickets(movie.getTickets()+ oldbooking.getNumberOfSeat());

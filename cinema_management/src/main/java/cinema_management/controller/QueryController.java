@@ -257,19 +257,20 @@ public class QueryController {
         Optional<Booking> b = this.bookingRepository.findById(bookingId);
         Booking booking= b.get();
         User user = this.userRepository.getUserByUserName(principal.getName());
-        if(user.getPoint()<=(total/1000)){
-            Integer ftotal = total - (user.getPoint()*1000);
+        if(user.getPoint()<=(booking.getTotal()/1000)){
+            Integer ftotal = booking.getTotal() - (user.getPoint()*1000);
             booking.setTotal(ftotal);
             booking.setPoint(true);
             user.setPoint(0);
             this.bookingRepository.save(booking);
             this.userRepository.save(user);
+            System.out.println(ftotal);
             return ftotal;
         }
         else {
             booking.setTotal(0);
             booking.setPoint(true);
-            user.setPoint(user.getPoint()-(total/1000));
+            user.setPoint(user.getPoint()-(booking.getActualTotal()/1000));
             this.bookingRepository.save(booking);
             this.userRepository.save(user);
             return 0;
