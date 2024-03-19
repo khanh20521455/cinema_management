@@ -4,6 +4,7 @@ import cinema_management.entities.*;
 import cinema_management.helper.Message;
 import cinema_management.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,8 +21,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +40,8 @@ public class MovieService {
     private SeatRepository seatRepository;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private UserRepository userRepository;
     public  String[] genreList= {"Hành động", "Tài liệu","Tình cảm", "Hài hước","Hoạt hình", "Khoa học viễn tưởng","Kinh dị", "Tội phạm", "Phiêu lưu", "Thần thoại"};
     //Management
     public String getMovieManagement(Integer page, Model model) {
@@ -138,20 +143,10 @@ public class MovieService {
         m.addAttribute("movie", movie);
         return "redirect:/admin/movie_management/0";
     }
-    public String deleteMovie(Integer id){
-        List<Showtimes> showtimesList= this.showtimesRepository.ShowtimesBaseOnMovie(id);
-        for(Showtimes showtimes:showtimesList){
-            this.bookingRepository.deleteBookingBaseShowtimes(showtimes.getId());
-            this.seatRepository.deleteSeatBaseShowtimes(showtimes.getId());
-            this.showtimesRepository.deleteById(showtimes.getId());
-        }
-        this.commentRepository.deleteCommentMovie(id);
-        movieRepository.deleteById(id);
-        return "redirect:/admin/movie_management/0";
-    }
+
 
     //User
-    public String movieDetail(Integer id, Model model){
+    public String movieDetail(Principal principal,Integer id, Model model){
         Optional<Movie> movieOptional = this.movieRepository.findById(id);
         Movie movie = movieOptional.get();
         List<Comment> commentList=this.commentRepository.commentMovie(id);
@@ -162,15 +157,86 @@ public class MovieService {
             sum += comment.getRating();
             dem++;
         }
-        Double avg= ((double) sum)/((double) dem);
-        String numberString = Double.toString(avg);
-        double roundedX = Math.round(avg * 10.0) / 10.0;
-        model.addAttribute("avg",roundedX);
+        Double avg= (double)0;
+        if(dem > 0){
+            avg = ((double) sum)/((double) dem);
+            double roundedX = Math.round(avg * 10.0) / 10.0;
+            model.addAttribute("avg",roundedX);
+        }
+        else
+            model.addAttribute("avg",0);
+        User user =  this.userRepository.getUserByUserName(principal.getName());
+        if(user.getFavorites().contains(movie))
+        {
+            model.addAttribute("isF",1);
+        }
+        else
+            model.addAttribute("isF",0);
         model.addAttribute("movie", movie);
+        return "normaluser/booking/movie_detail";
+    }
+    public String addFavoriteList(Principal principal, Integer id, Model model){
+        Optional<Movie> movieOptional = this.movieRepository.findById(id);
+        Movie movie = movieOptional.get();
+        List<Comment> commentList=this.commentRepository.commentMovie(id);
+        model.addAttribute("commentList",commentList);
+        int sum = 0;
+        int dem=0;
+        for (Comment comment: commentList){
+            sum += comment.getRating();
+            dem++;
+        }
+        Double avg= (double)0;
+        if(dem > 0){
+            avg = ((double) sum)/((double) dem);
+            double roundedX = Math.round(avg * 10.0) / 10.0;
+            model.addAttribute("avg",roundedX);
+        }
+        else
+            model.addAttribute("avg",0);
+        User user =  this.userRepository.getUserByUserName(principal.getName());
+        user.getFavorites().add(movie);
+        userRepository.save(user);
+        model.addAttribute("movie", movie);
+        model.addAttribute("isF",1);
+        return "normaluser/booking/movie_detail";
+    }
+    public String removeFavoriteList(Principal principal, Integer id, Model model){
+        Optional<Movie> movieOptional = this.movieRepository.findById(id);
+        Movie movie = movieOptional.get();
+        List<Comment> commentList=this.commentRepository.commentMovie(id);
+        model.addAttribute("commentList",commentList);
+        int sum = 0;
+        int dem=0;
+        for (Comment comment: commentList){
+            sum += comment.getRating();
+            dem++;
+        }
+        Double avg= (double) 0;
+        if(dem > 0){
+            avg = ((double) sum)/((double) dem);
+            double roundedX = Math.round(avg * 10.0) / 10.0;
+            model.addAttribute("avg",roundedX);
+        }
+        else
+            model.addAttribute("avg",0);
+        User user =  this.userRepository.getUserByUserName(principal.getName());
+        user.getFavorites().remove(movie);
+        userRepository.save(user);
+        model.addAttribute("movie", movie);
+        model.addAttribute("isF",0);
         return "normaluser/booking/movie_detail";
     }
     public String homeScreen(Model model){
         Date now= new Date(System.currentTimeMillis());
+        Pageable pageable = PageRequest.of(0, 3);
+        List<Movie> maybeLike = bookingRepository.listMovieBestSale(now,pageable);
+        List<Movie> movieBestRating = commentRepository.findMoviesByAverageRating(now, pageable);
+        for(Movie m : movieBestRating){
+            if(!maybeLike.contains(m))
+                maybeLike.add(m);
+        }
+        model.addAttribute("maybeLike", maybeLike);
         List<Movie> movieUpcomingList= movieRepository.movieUpcoming(now);
         model.addAttribute("movieUpcomingList", movieUpcomingList);
         List<Movie> moviePlayingList= movieRepository.moviePlaying(now);

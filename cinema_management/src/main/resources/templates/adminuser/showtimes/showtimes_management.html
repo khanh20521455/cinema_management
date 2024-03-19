@@ -14,7 +14,7 @@
 
             <h1 class="text-center"> QUẢN LÝ LỊCH CHIẾU </h1>
             <div class="col border-end d-flex justify-content-center align-items-center">
-                <a href="#" th:href="@{/admin/add_showtimes}">
+                <a href="#" th:href="@{'/admin/add_showtimes/'+${theaterId}}">
                     <button class="btn bg-primary text-white boldText"> Thêm lịch chiếu </button>
                 </a>
             </div>
@@ -38,11 +38,11 @@
                     <td th:text="${showtimes.movie.name}"></td>
                     <td th:text="${showtimes.room.name}"></td>
                     <td th:text="${showtimes.time}"></td>
-                    <td th:text="${showtimes.date}"></td>
-                    <td th:text="${showtimes.price}"></td>
+                    <td th:text="${#dates.format(showtimes.date, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${#numbers.formatDecimal(showtimes.price, 0, 'COMMA', 0, 'POINT')}"></td>
                     <td>
                         <a th:href = "@{'/admin/update_showtimes/'+${showtimes.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Cập nhật </a>
-                        <a th:href = "@{'/admin/delete_showtimes/'+${showtimes.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Xóa </a>
+                        <a th:href = "@{'/admin/cancel_showtimes/'+${showtimes.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Hủy lịch </a>
                     </td>
                 </tr>
                 </tbody>

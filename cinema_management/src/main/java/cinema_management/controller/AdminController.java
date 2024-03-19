@@ -7,6 +7,11 @@ import cinema_management.entities.*;
 import cinema_management.repository.*;
 import cinema_management.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +35,14 @@ public class AdminController {
     private TheaterService theaterService;
     @Autowired
     private MovieRepository movieRepository;
-
     @Autowired
     private CommentService commentService;
-
+    @Autowired
+    private SnacksService snacksService;
+    @Autowired
+    private OfferService offerService;
+    @Autowired
+    private TheaterRepository theaterRepository;
     // adding common data
     @ModelAttribute
     public void addCommonData(Model model, Principal principal) {
@@ -49,17 +58,21 @@ public class AdminController {
     }
 
     //Room management
-    @GetMapping("/room_management/{page}")
-    public String getRoom(@PathVariable("page") Integer page, Model model){
-        return roomService.getRoomManagement(page, model);
+    @GetMapping("/theater_room_management/{page}")
+    public String getTheaterForRoomManagement(@PathVariable("page") Integer page, Model model){
+        return this.roomService.getTheaterForRoomManagement(page,model);
     }
-    @GetMapping("/add_room")
-    public String addRoom(Model model){
-        return roomService.addRoom(model);
+    @GetMapping("/room_management/{id}/{page}")
+    public String getRoom(@PathVariable("page") Integer page, @PathVariable("id") Integer id, Model model){
+        return roomService.getRoomManagement(page, model, id);
     }
-    @PostMapping("/add_room_process")
-    public String addRoomProcess(@ModelAttribute Room room, HttpSession session){
-        return roomService.addRoomProcess(room,session);
+    @GetMapping("/add_room/{id}")
+    public String addRoom(Model model,@PathVariable("id") Integer theaterId){
+        return roomService.addRoom(model, theaterId);
+    }
+    @PostMapping("/add_room_process/{id}")
+    public String addRoomProcess(@ModelAttribute Room room, HttpSession session, @PathVariable("id") Integer theaterId){
+        return roomService.addRoomProcess(room,session, theaterId);
 
     }
     @GetMapping("/update_room/{id}")
@@ -72,10 +85,6 @@ public class AdminController {
             @ModelAttribute Room room,
             Model model, HttpSession session) {
         return roomService.roomUpdateProcess(id,room, model,session);
-    }
-    @GetMapping("/delete_room/{id}")
-    public String deleteRoom(@PathVariable("id") Integer id){
-        return roomService.deleteRoom(id);
     }
 
     //Movie management
@@ -105,23 +114,22 @@ public class AdminController {
                                      Model model, HttpSession session){
         return movieService.movieUpdateProcess(id, movie,file,model,session);
     }
-    @GetMapping("/delete_movie/{id}")
-    public String deleteMovie(@PathVariable("id") Integer id){
-        return movieService.deleteMovie(id);
-    }
-
     //Showtimes management
-    @GetMapping("/showtimes_management/{page}")
-    public String showtimesManagement(@PathVariable("page") Integer page, Model model){
-        return showtimesService.showtimesManagement(page,model);
+    @GetMapping("/theater_showtimes_management/{page}")
+    public String getTheaterForShowtimeManagement(@PathVariable("page") Integer page, Model model){
+        return this.showtimesService.getTheaterForShowtimeManagement(page,model);
     }
-    @GetMapping("/add_showtimes")
-    public String addShowtimes(Model model){
-        return showtimesService.addShowtimes(model);
+    @GetMapping("/showtimes_management/{id}/{page}")
+    public String showtimesManagement( @PathVariable("id")Integer id, @PathVariable("page") Integer page, Model model){
+        return showtimesService.showtimesManagement(id,page,model);
     }
-    @PostMapping("/add_showtimes_process")
-    public String addShowtimesProcess(@ModelAttribute Showtimes showtimes, HttpSession session){
-        return showtimesService.addShowtimesProcess(showtimes,session);
+    @GetMapping("/add_showtimes/{id}")
+    public String addShowtimes(@PathVariable("id") Integer id, Model model){
+        return showtimesService.addShowtimes(id, model);
+    }
+    @PostMapping("/add_showtimes_process/{id}")
+    public String addShowtimesProcess(@PathVariable("id")Integer theaterId,@ModelAttribute Showtimes showtimes, HttpSession session){
+        return showtimesService.addShowtimesProcess(theaterId,showtimes,session);
     }
     @GetMapping("/update_showtimes/{id}")
     public String updateShowtimes(@PathVariable("id") Integer id, Model model){
@@ -131,29 +139,38 @@ public class AdminController {
     public String updateShowtimesProcess(@PathVariable("id") Integer id,@ModelAttribute Showtimes showtimes, Model model,HttpSession session){
         return showtimesService.showtimesUpdateProcess(id, showtimes,model,session);
     }
-    @GetMapping("/delete_showtimes/{id}")
+    @GetMapping("/cancel_showtimes/{id}")
     public String deleteShowtimes(@PathVariable("id") Integer id){
-        return showtimesService.deleteShowtimes(id);
+        return showtimesService.cancelShowtimes(id);
     }
 
     //Booking management
-    @GetMapping("/booking_management/{page}")
-    public String getBookingWaitConfirm(@PathVariable("page") Integer page,Model model){
-        return bookingService.getBookingWaitConfirm(page,model);
-    }
-    @GetMapping("/confirm_booking/{id}")
-    public String confirmBooking(@PathVariable("id") Integer id){
-        return this.bookingService.confirmBooking(id);
-    }
-    @GetMapping("/cancel_booking/{id}")
-    public String cancelBooking(@PathVariable("id") Integer id){
-        return  this.bookingService.cancelBooking(id);
-    }
+//    @GetMapping("/theater_booking_management/{page}")
+//    public String getTheaterScreen(@PathVariable("page") Integer page, Model model){
+//        return bookingService.getTheaterForBookingManagement(page, model);
+//    }
+//    @GetMapping("/booking_management/{id}/{page}")
+//    public String getBookingWaitConfirm(@PathVariable("id") Integer id, @PathVariable("page") Integer page,Model model){
+//        return bookingService.getBookingWaitConfirm(id, page,model);
+//    }
     //Statistic
+    @GetMapping("theater_statistic_management/{page}")
+    public String getTheaterForStatistic(@PathVariable("page") Integer page, Model model){
+        Pageable pageable = PageRequest.of(page, 10);
+        Page<Theater> theaterList = theaterRepository.findAllOrderByNameAsc(pageable);
+        model.addAttribute("theaterList",theaterList);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", theaterList.getTotalPages());
+        return "adminuser/statistic/theater_screen";
+    }
     @GetMapping("/statistic_chart")
     public String statisticYear(){
-        return "adminuser/statistic_chart";
+        return "adminuser/statistic/statistic_chart";
     }
+    @GetMapping("/statistic_chart/{id}")
+    public String statisticYearTheater(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("theaterId", id);
+        return "adminuser/statistic/theater_statistic_chart";}
     @GetMapping("/comment_management/{page}")
     public String commentManagement(@PathVariable("page") Integer page, Model model){
         return this.commentService.getCommentWaitConfirm(page,model);
@@ -166,6 +183,10 @@ public class AdminController {
     @GetMapping("/cancel_comment/{id}")
     public String cancel_comment(@PathVariable("id") Integer id){
         return  this.commentService.cancelComment(id);
+    }
+    @GetMapping("/theater_management/{page}")
+    public String theater_management(@PathVariable("page") Integer page, Model model){
+        return this.theaterService.theaterManagement(model, page);
     }
     @GetMapping("/add_theater")
     public String addTheater(Model model){
@@ -183,7 +204,48 @@ public class AdminController {
     public String updateTheaterProcess(@PathVariable("id") Integer id, @ModelAttribute Theater theater, HttpSession httpSession){
         return theaterService.updateTheaterProcess(id, theater,httpSession);
     }
-
+    //Snack management
+    @GetMapping("/snacks_management/{page}")
+    public String getAll(@PathVariable("page") Integer page, Model model){
+        return snacksService.getAll(page, model);
+    }
+    @GetMapping("/add_snacks")
+    public  String addSnacks(Model model){
+        return snacksService.addSnacks(model);
+    }
+    @PostMapping("/add_snacks_process")
+    public  String addSnackProcess(@ModelAttribute Snacks snack, @RequestParam("imageUrl") MultipartFile file, HttpSession httpSession){
+        return snacksService.addSnackProcess(snack, file, httpSession);
+    }
+    @GetMapping("/update_snacks/{id}")
+    public  String updateSnacks(@PathVariable("id") Integer id, Model model){
+        return snacksService.updateSnacks(id, model);
+    }
+    @PostMapping("/update_snacks_process/{id}")
+    public String updateSnackProcess(@PathVariable("id") Integer id, @ModelAttribute Snacks snacks, @RequestParam("imageUrl") MultipartFile file, Model model, HttpSession httpSession){
+        return snacksService.updateSnackProcess(id, snacks, file,  httpSession);
+    }
+    //Offer_management
+    @GetMapping("/offer_management/{page}")
+    public String getAllOffer (@PathVariable("page") Integer page, Model model){
+        return offerService.getAll(page,model);
+    }
+    @GetMapping("/add_offer")
+    public String addOffer(Model model){
+        return offerService.addOffer(model);
+    }
+    @PostMapping("/add_offer_process")
+    public String addOfferProcess(@ModelAttribute Offer offer, HttpSession session) throws Exception{
+        return offerService.addOfferProcess(offer, session);
+    }
+    @GetMapping("/update_offer/{id}")
+    public String updateOffer(@PathVariable("id") Integer id, Model model){
+        return offerService.updateOffer(id, model);
+    }
+    @PostMapping("/update_offer_process/{id}")
+    public String updateOfferProcess(@PathVariable("id") Integer id, @ModelAttribute Offer offer, HttpSession session){
+        return offerService.updateOfferProcess(id, offer,session);
+    }
 }
 
 

@@ -3,6 +3,7 @@ package cinema_management.controller;
 import java.security.Principal;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +38,10 @@ public class UserController {
     private CommentService commentService;
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private BookingRepository bookingRepository;
+    @Autowired
+    private SnacksRepository snacksRepository;
     // adding common data
     @ModelAttribute
     public void addCommonData(Model model, Principal principal) {
@@ -60,8 +64,16 @@ public class UserController {
 
     //Booking process
     @GetMapping("/movie_detail/{id}")
-    public String movieDetail(@PathVariable("id") Integer id, Model model){
-       return movieService.movieDetail(id,model);
+    public String movieDetail(Principal principal,@PathVariable("id") Integer id, Model model){
+       return movieService.movieDetail(principal,id,model);
+    }
+    @GetMapping("/add_favorite/{id}")
+    public String addFavorite(Principal principal, @PathVariable("id")Integer id, Model model){
+        return this.movieService.addFavoriteList(principal,id, model);
+    }
+    @GetMapping("/remove_favorite/{id}")
+    public String removeFavorite(Principal principal, @PathVariable("id")Integer id, Model model){
+        return this.movieService.removeFavoriteList(principal,id, model);
     }
     @GetMapping("/buy_ticket/{id}")
     public String buyTicket(@PathVariable("id") Integer id, Model model){
@@ -73,8 +85,8 @@ public class UserController {
         return bookingService.buyTicketProcess(booking,movieId,principal,model,session);
     }
     @PostMapping("/confirm_booking/{id}")
-    public String confirmBooking(@PathVariable("id") Integer id,@ModelAttribute Booking booking, Model model, HttpSession session){
-        return this.bookingService.confirmTicket(id,booking,model,session);
+    public String confirmBooking(@PathVariable("id") Integer id, Principal principal, Model model, HttpSession session){
+        return this.bookingService.confirmTicket(id,principal,model,session);
     }
     @GetMapping("/movie_watched/{page}")
     public String movieWatched(Principal principal, Model model,@PathVariable("page") Integer page){
@@ -103,8 +115,15 @@ public class UserController {
         return this.bookingService.getHistoryTransaction(page,principal,model);
     }
     @GetMapping("/cancel_booking/{id}")
-    public String cancelBooking(@PathVariable("id") Integer id){
-        return this.bookingService.cancelBookingUser(id);
+    public String cancelBooking(@PathVariable("id") Integer id, Principal principal){
+        return this.bookingService.cancelBookingUser(id, principal);
+    }
+
+    @GetMapping("/order_snack/{id}")
+    public void getSnanckList(@PathVariable ("id") Integer id, Model model){
+        List<Snacks> snacksList = new ArrayList<>();
+        snacksList = this.snacksRepository.snacksListBuying();
+        model.addAttribute("snackList", snacksList);
     }
 }
 

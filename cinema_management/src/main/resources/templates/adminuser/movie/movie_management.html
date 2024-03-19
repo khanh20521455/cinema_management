@@ -43,11 +43,10 @@
                         <img scr="" class="my_movie_poster" th:src="@{'/img/'+${movie.poster}}" alt="movie poster" />
                     </td>
                     <td th:text="${movie.name}"></td>
-                    <td th:text="${movie.start}"></td>
-                    <td th:text="${movie.end}"></td>
+                    <td th:text="${#dates.format(movie.start, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${#dates.format(movie.end, 'dd/MM/yyyy')}"></td>
                     <td>
                         <a th:href = "@{'/admin/update_movie/'+${movie.id}}" class="btn btn-outline-warning btn-sm boldText" style="width: 80px;"> Cập nhật </a>
-                        <a th:href = "@{'/admin/delete_movie/'+${movie.id}}" class="btn btn-cus btn-sm boldText" style="width: 80px;"> Xóa </a>
                     </td>
                 </tr>
                 </tbody>

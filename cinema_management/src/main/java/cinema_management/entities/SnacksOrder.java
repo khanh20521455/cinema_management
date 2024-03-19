@@ -20,6 +20,9 @@ public class SnacksOrder {
     private Booking booking;
     private int quantity;
 
+    public SnacksOrder() {
+    }
+
     public SnacksOrder(int id, Snacks snacks, Booking booking, int quantity) {
         this.id = id;
         this.snacks = snacks;

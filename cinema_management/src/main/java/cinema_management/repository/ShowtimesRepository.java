@@ -2,6 +2,7 @@ package cinema_management.repository;
 
 import cinema_management.entities.Room;
 import cinema_management.entities.Showtimes;
+import cinema_management.entities.Theater;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,8 +20,8 @@ import java.util.List;
 
 @Repository
 public interface ShowtimesRepository extends JpaRepository<Showtimes, Integer> {
-    @Query("FROM Showtimes as s ORDER  BY s.date DESC")
-    public Page<Showtimes> findAllOrderByDateDesc(Pageable pageable);
+    @Query("FROM Showtimes as s  WHERE s.room.theater.id=:id AND s.status = 1 ORDER  BY s.date DESC, s.time DESC")
+    public Page<Showtimes> findAllOrderByDateDesc(@PathVariable("id") Integer id,Pageable pageable);
 
     @Query("FROM Showtimes as s WHERE s.movie.id=:id")
     public List<Showtimes> findByMovieId(@PathVariable("id") Integer id);
@@ -36,10 +37,15 @@ public interface ShowtimesRepository extends JpaRepository<Showtimes, Integer> {
     @Query("DELETE FROM Showtimes as s WHERE s.room.id=:id")
     public  void deleteBaseOnRoom(@PathVariable("id") Integer id);
 
-    @Query("FROM Showtimes as s WHERE s.movie.id=:id and s.date=:date")
-    public List<Showtimes> typeScreenShowtimes(@RequestParam("id") Integer id, @RequestParam("date") Date date);
+    @Query("SELECT DISTINCT s.room.typeScreen FROM Showtimes as s WHERE s.movie.id=:id and s.date=:date and s.room.theater.id =:theaterId and  s.status = true")
+    public List<String> typeScreenShowtimes(@RequestParam("id") Integer id, @RequestParam("theaterId") Integer theaterId, @RequestParam("date") Date date);
 
-    @Query("FROM Showtimes as s WHERE s.movie.id=:id and s.date=:date and s.room.typeScreen=:typeScreen")
-    public List<Showtimes> timeShowtimes(@RequestParam("id") Integer id, @RequestParam("date") Date date, @RequestParam("typeScreen")String typeScreen);
+    @Query("FROM Showtimes as s WHERE s.movie.id=:id and s.room.theater.id =:theaterId and s.date=:date and s.room.typeScreen=:typeScreen and s.status = true")
+    public List<Showtimes> timeShowtimes(@RequestParam("id") Integer id, @RequestParam("theaterId") Integer theaterId, @RequestParam("date") Date date, @RequestParam("typeScreen")String typeScreen);
+    @Query("SELECT MAX(id) FROM Showtimes")
+    public Integer newShowtime();
+
+    @Query("SELECT DISTINCT s.room.theater FROM Showtimes as s WHERE s.movie.id = :id and s.room.theater.province =:province and s.status = true")
+    public List<Theater> theaterShowtimes(@RequestParam("id") Integer id, @RequestParam("province") String province);
 
 }

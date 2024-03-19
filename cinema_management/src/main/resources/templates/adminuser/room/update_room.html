@@ -9,7 +9,7 @@
 <section>
     <div class="card me-3 ms-3">
         <div class="card-body">
-            <h1 class="text-center"> PHÒNG CHIẾU <span th:text="${room.name}"></span> </h1>
+            <h1 class="text-center"> CẬP NHẬT PHÒNG CHIẾU</h1>
             <div class="container-fluid m1-1">
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
@@ -42,11 +42,8 @@
                                 id="typeScreen_field"
                                 >
                                 <option th:value="${room.typeScreen}" th:text="${room.typeScreen}"></option>
-                                <option>Màn hình thẳng</option>
-                                <option>Màn hình cong</option>
-                                <option>Màn hình IMAX</option>
-                                <option>Màn hình 3D</option>
-                                <option>Màn hình LED</option>
+                                <option>2D</option>
+                                <option>3D</option>
                             </select>
                         </h5></div>
 

@@ -25,6 +25,7 @@ public class Movie {
     private String poster;
     private int tickets;
     private long revenue;
+    private int cancel;
 
     public int getTickets() {
         return tickets;
@@ -147,6 +148,15 @@ public class Movie {
     public void setShowtimesList(List<Showtimes> showtimesList) {
         this.showtimesList = showtimesList;
     }
+
+    public int getCancel() {
+        return cancel;
+    }
+
+    public void setCancel(int cancel) {
+        this.cancel = cancel;
+    }
+
     @Override
     public String toString() {
         return "Movie [id=" + id + ", name=" + name +",time="+time+ ", genre=" + genre + ", director =" + director
